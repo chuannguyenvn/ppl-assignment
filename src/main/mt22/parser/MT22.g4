@@ -8,8 +8,101 @@ options{
 	language=Python3;
 }
 
-program:  EOF ;
+program
+    : declaration+ EOF
+    ;
 
+declaration
+    : variable_declaration
+    | function_declaration
+    ;
+    
+variable_declaration
+    : identifier_list ':' type_specifier '=' expression_list ';'
+    ;
+
+parameter_declaration_list
+    : parameter_declaration (',' parameter_declaration)*
+    ;
+
+parameter_declaration
+    : INHERIT? OUT? IDENTIFIER ':' type_specifier ';'
+    ;
+    
+identifier_list
+    : IDENTIFIER (',' IDENTIFIER)*
+    ;
+
+// BUG: This may cause variable of type void to exist.
+type_specifier
+    : INTEGER
+    | FLOAT
+    | BOOLEAN
+    | STRING
+    | ARRAY
+    | VOID
+    ;
+
+function_declaration
+    : IDENTIFIER ':' FUNCTION type_specifier OPEN_PAREN parameter_declaration_list CLOSE_PAREN (INHERIT IDENTIFIER)?
+    ;
+
+function_body
+    : block_statement
+    ;
+    
+block_statement
+    : OPEN_BRACE statement* CLOSE_BRACE
+
+statement
+    :
+    ;
+    
+expression_list
+    : expression (',' expression)*
+    ;
+
+expression
+    : IDENTIFIER
+    | literal
+    ;
+    
+sign_expression
+    : MINUS 
+    ;
+    
+logic_flip_expression
+    :
+    ;
+    
+multiplying_expression
+    :
+    ;
+
+adding_expression
+    :
+    ;
+    
+logic_expression
+    :
+    ;
+
+relational_expression
+    :
+    ;
+
+string_expression
+    :
+    ;
+    
+literal
+    : IDENTIFIER
+    | INTEGER_LIT
+    | FLOAT_LIT
+    | BOOLEAN_LIT
+    | STRING_LIT
+    | ARRAY_LIT
+    ;
 
 // Keywords
 AUTO : 'auto';
