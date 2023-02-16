@@ -29,10 +29,10 @@ def main(argv):
         if len(argv) < 2:
             printUsage()
         elif argv[1] == 'LexerSuite':
-            from LexerSuite import LexerSuite
+            from test.LexerSuite import LexerSuite
             getAndTest(LexerSuite)
         elif argv[1] == 'ParserSuite':
-            from ParserSuite import ParserSuite
+            from test.ParserSuite import ParserSuite
             getAndTest(ParserSuite)
         else:
             printUsage()
