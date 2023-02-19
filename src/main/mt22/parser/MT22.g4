@@ -18,19 +18,19 @@ declaration
     ;
     
 variable_declaration
-    : identifier_list ':' type_specifier '=' expression_list ';'
+    : identifier_list COLON type_specifier ASSIGN expression_list SEMI_COLON
     ;
 
 parameter_declaration_list
-    : parameter_declaration (',' parameter_declaration)*
+    : parameter_declaration (COMMA parameter_declaration)*
     ;
 
 parameter_declaration
-    : INHERIT? OUT? IDENTIFIER ':' type_specifier ';'
+    : INHERIT? OUT? IDENTIFIER COLON type_specifier SEMI_COLON
     ;
     
 identifier_list
-    : IDENTIFIER (',' IDENTIFIER)*
+    : IDENTIFIER (COMMA IDENTIFIER)*
     ;
 
 // BUG: This may cause variable of type void to exist.
@@ -44,22 +44,69 @@ type_specifier
     ;
 
 function_declaration
-    : IDENTIFIER ':' FUNCTION type_specifier OPEN_PAREN parameter_declaration_list CLOSE_PAREN (INHERIT IDENTIFIER)?
+    : IDENTIFIER COLON FUNCTION type_specifier OPEN_PAREN parameter_declaration_list CLOSE_PAREN (INHERIT IDENTIFIER)?
     ;
 
 function_body
     : block_statement
     ;
     
-block_statement
-    : OPEN_BRACE statement* CLOSE_BRACE
-
 statement
-    :
+    : assignment_statement
+    | assignment_statement
+    | if_statement
+    | for_statement
+    | while_statement
+    | do_while_statement
+    | break_statement
+    | continue_statement
+    | return_statement
+    | call_statement
+    | block_statement
+    ;
+ 
+assignment_statement
+    : IDENTIFIER ASSIGN expression SEMI_COLON
     ;
     
+if_statement
+    : IF OPEN_PAREN expression CLOSE_PAREN statement (ELSE statement)?
+    ;
+    
+for_statement
+    : FOR OPEN_PAREN IDENTIFIER ASSIGN expression COMMA expression COMMA expression CLOSE_PAREN statement
+    ;
+    
+while_statement
+    : WHILE OPEN_PAREN expression CLOSE_PAREN statement
+    ;
+    
+do_while_statement
+    : DO block_statement WHILE OPEN_PAREN statement CLOSE_PAREN SEMI_COLON
+    ;
+    
+break_statement
+    : BREAK SEMI_COLON
+    ;
+    
+continue_statement
+    : CONTINUE SEMI_COLON
+    ;
+    
+return_statement
+    : RETURN expression SEMI_COLON
+    ;
+    
+call_statement
+    : IDENTIFIER OPEN_PAREN expression_list? CLOSE_PAREN SEMI_COLON
+    ;
+ 
+block_statement
+    : OPEN_BRACE statement* CLOSE_BRACE
+    ;
+       
 expression_list
-    : expression (',' expression)*
+    : expression (COMMA expression)*
     ;
 
 expression
@@ -75,7 +122,7 @@ string_expression
     
 relational_expression
     : relational_expression (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER | GREATER_EQUAL) logical_expression
-    | relational_expression
+    | logical_expression
     ;
 
 logical_expression
@@ -161,6 +208,10 @@ LESS_EQUAL : '<=';
 GREATER : '>';
 GREATER_EQUAL : '>=';
 DOUBLE_COLON : '::';
+ASSIGN : '=';
+COMMA : ',';
+COLON : ':';
+SEMI_COLON : ';';
 
 // Separators
 OPEN_PAREN : '(';
