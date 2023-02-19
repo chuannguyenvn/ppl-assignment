@@ -18,7 +18,17 @@ declaration
     ;
     
 variable_declaration
-    : identifier_list COLON type_specifier ASSIGN expression_list SEMI_COLON
+    : short_variable_declaration SEMI_COLON
+    | long_variable_declaration SEMI_COLON
+    ;
+    
+short_variable_declaration
+    : identifier_list COLON type_specifier 
+    ;
+    
+long_variable_declaration
+    : IDENTIFIER COLON type_specifier ASSIGN expression 
+    | IDENTIFIER COMMA long_variable_declaration COMMA expression
     ;
 
 parameter_declaration_list
@@ -227,11 +237,11 @@ IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
 
 // Literals
 fragment NON_ZERO_DIGIT 
-    : [1-9]
+    : [1-9_]
     ;
     
 fragment DIGIT 
-    : [0-9]
+    : [0-9_]
     ;
     
 fragment INTEGER_PART
@@ -249,14 +259,13 @@ fragment EXPONENT_PART
     
     
 INTEGER_LIT 
-    : INTEGER_PART
-    {self.text = self.text.replace('_','')}
+    : INTEGER_PART {self.text = self.text.replace('_','')}
     ;
 
 FLOAT_LIT
-    : INTEGER_PART DECIMAL_PART EXPONENT_PART?
-    | INTEGER_PART DECIMAL_PART
-    | INTEGER_PART EXPONENT_PART
+    : INTEGER_PART DECIMAL_PART EXPONENT_PART? {self.text = self.text.replace('_','')}
+    | INTEGER_PART DECIMAL_PART {self.text = self.text.replace('_','')}
+    | INTEGER_PART EXPONENT_PART {self.text = self.text.replace('_','')}
     ;
 
 BOOLEAN_LIT
@@ -279,7 +288,7 @@ fragment ESCAPE_SEQUENCE
     | '\\v';
 
 STRING_LIT
-    : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )* '"'
+    : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )* '"' {self.text = self.text[1:-1]}
     ;
 
 fragment ARRAY_ELEMENT
@@ -292,38 +301,8 @@ fragment ARRAY_ELEMENT
 ARRAY_LIT
     : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
     ;
-    
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
-
 
 ERROR_CHAR: .;
 UNCLOSE_STRING: .;

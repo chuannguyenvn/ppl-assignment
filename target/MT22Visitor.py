@@ -24,6 +24,16 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by MT22Parser#short_variable_declaration.
+    def visitShort_variable_declaration(self, ctx:MT22Parser.Short_variable_declarationContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#long_variable_declaration.
+    def visitLong_variable_declaration(self, ctx:MT22Parser.Long_variable_declarationContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by MT22Parser#parameter_declaration_list.
     def visitParameter_declaration_list(self, ctx:MT22Parser.Parameter_declaration_listContext):
         return self.visitChildren(ctx)
