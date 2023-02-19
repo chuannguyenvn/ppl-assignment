@@ -26,7 +26,7 @@ parameter_declaration_list
     ;
 
 parameter_declaration
-    : INHERIT? OUT? IDENTIFIER COLON type_specifier SEMI_COLON
+    : INHERIT? OUT? IDENTIFIER COLON type_specifier
     ;
     
 identifier_list
@@ -44,7 +44,7 @@ type_specifier
     ;
 
 function_declaration
-    : IDENTIFIER COLON FUNCTION type_specifier OPEN_PAREN parameter_declaration_list CLOSE_PAREN (INHERIT IDENTIFIER)?
+    : IDENTIFIER COLON FUNCTION type_specifier OPEN_PAREN parameter_declaration_list? CLOSE_PAREN (INHERIT IDENTIFIER)? function_body
     ;
 
 function_body
@@ -53,7 +53,6 @@ function_body
     
 statement
     : assignment_statement
-    | assignment_statement
     | if_statement
     | for_statement
     | while_statement
@@ -63,6 +62,7 @@ statement
     | return_statement
     | call_statement
     | block_statement
+    | declaration
     ;
  
 assignment_statement
@@ -150,15 +150,14 @@ sign_expression
     | operands
     ;
     
-    
 operands
     : literal
     | function_call
+    | IDENTIFIER
     ;
     
 literal
-    : IDENTIFIER
-    | INTEGER_LIT
+    : INTEGER_LIT
     | FLOAT_LIT
     | BOOLEAN_LIT
     | STRING_LIT
@@ -166,7 +165,7 @@ literal
     ;
     
 function_call
-    :
+    : IDENTIFIER OPEN_PAREN expression_list CLOSE_PAREN
     ;
 
 // Keywords
