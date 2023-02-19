@@ -65,34 +65,48 @@ expression_list
 expression
     : IDENTIFIER
     | literal
-    ;
-    
-sign_expression
-    : MINUS 
-    ;
-    
-logic_flip_expression
-    :
-    ;
-    
-multiplying_expression
-    :
-    ;
-
-adding_expression
-    :
-    ;
-    
-logic_expression
-    :
-    ;
-
-relational_expression
-    :
+    | string_expression
     ;
 
 string_expression
-    :
+    : string_expression DOUBLE_COLON relational_expression
+    | relational_expression
+    ;
+    
+relational_expression
+    : relational_expression (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER | GREATER_EQUAL) logical_expression
+    | relational_expression
+    ;
+
+logical_expression
+    : logical_expression (AND_AND | OR_OR) adding_expression
+    | adding_expression
+    ;
+    
+adding_expression
+    : adding_expression (ADD | MINUS) multiplying_expression
+    | multiplying_expression
+    ;
+
+multiplying_expression
+    : multiplying_expression (STAR | DIV) negate_expression
+    | negate_expression
+    ;
+    
+negate_expression
+    : NOT negate_expression
+    | sign_expression
+    ;
+    
+sign_expression
+    : MINUS sign_expression
+    | operands
+    ;
+    
+    
+operands
+    : literal
+    | function_call
     ;
     
 literal
@@ -102,6 +116,10 @@ literal
     | BOOLEAN_LIT
     | STRING_LIT
     | ARRAY_LIT
+    ;
+    
+function_call
+    :
     ;
 
 // Keywords
@@ -135,7 +153,7 @@ DIV : '/';
 MOD : '%';
 NOT : '!';
 AND_AND : '&&';
-OROR : '||';
+OR_OR : '||';
 EQUAL : '==';
 NOT_EQUAL : '!=';
 LESS : '<';
