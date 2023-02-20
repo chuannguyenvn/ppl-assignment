@@ -22,7 +22,7 @@ class LexerSuite(unittest.TestCase):
 
 lexer_suite_test_method_template = """
     def test{0}(self):
-        self.assertTrue(TestLexer.test("{1}", "{2}", {3}))
+        self.assertTrue(TestLexer.test(r\'\'\'{1}\'\'\', r\'\'\'{2}\'\'\', {3}))
 
 """
 
@@ -36,8 +36,8 @@ class ParserSuite(unittest.TestCase):
 
 parser_suite_test_method_template = """
     def test{0}(self):
-        input = \"\"\"{1}\"\"\"
-        expect = \"\"\"{2}\"\"\"
+        input = r\'\'\'{1}\'\'\'
+        expect = r\'\'\'{2}\'\'\'
         self.assertTrue(TestParser.test(input, expect, {3}))
 """
 

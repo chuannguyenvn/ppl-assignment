@@ -1,0 +1,32 @@
+``` Test 1: main()
+main: function void () {}
+```
+successful
+```
+
+``` Test 2: variable declaration
+main: function void () {
+a : float = "5\"";
+}
+```
+successful
+```
+
+
+``` sadf
+x: integer = 65;
+        fact: function integer (n: integer) {
+            if (n == 0) return 1;
+            else return n * fact(n - 1);
+        }
+        inc: function void(out n: integer, delta: integer) {
+            n = n + delta;
+        }
+        main: function void() {
+            delta: integer = fact(3);
+            inc(x, delta);
+            printInteger(x);
+        }
+```
+successful
+```

@@ -1,0 +1,13 @@
+``` variable
+abc
+```
+abc,<EOF>
+```
+
+``` string literal
+"asdfasdf"
+```
+asdfasdf,<EOF>
+```
+
+

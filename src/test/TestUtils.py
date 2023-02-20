@@ -10,6 +10,7 @@ from MT22Lexer import MT22Lexer
 from MT22Parser import MT22Parser
 from lexererr import *
 import subprocess
+from antlr4.tree.Trees import *
 
 JASMIN_JAR = "./external/jasmin.jar"
 TEST_DIR = "./test/testcases/"
@@ -94,6 +95,9 @@ class TestParser:
         listener = TestParser.createErrorListener()
         tokens = CommonTokenStream(lexer)
         parser = Parser(tokens)
+        # tree = parser.program()
+        # print(parser.getRuleIndexMap())
+        # print(Trees.toStringTree(tree))
         parser.removeErrorListeners()
         parser.addErrorListener(listener)
         try:
