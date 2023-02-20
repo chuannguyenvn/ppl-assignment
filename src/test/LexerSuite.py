@@ -5,14 +5,14 @@ from TestUtils import TestLexer
 
 class LexerSuite(unittest.TestCase):
 
-    def _L1__Test_1_(self):
+    def test_L1__Test_1_(self):
         self.assertTrue(TestLexer.test("abc", "abc", "_L1__Test_1_"))
 
 
-    def _L2__Test_2_(self):
+    def test_L2__Test_2_(self):
         self.assertTrue(TestLexer.test("def", "def", "_L2__Test_2_"))
 
 
-    def _L3___(self):
-        self.assertTrue(TestLexer.test("ghi", "ghi", "_L3___"))
+    def test_L3__Test_3_(self):
+        self.assertTrue(TestLexer.test("ghi", "ghi", "_L3__Test_3_"))
 

@@ -1,7 +1,7 @@
 ﻿``` Test 1: Test adsfasdf
-main function : {asdfasdf}
+main: function void () {}
 ``` 
-sadfasdfasd
+successful
 ```
 
 

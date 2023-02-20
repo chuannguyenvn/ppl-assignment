@@ -1,4 +1,6 @@
 ﻿import re
+import run
+import sys
 
 lexer_suite_class_template = """
 import unittest
@@ -9,7 +11,7 @@ class LexerSuite(unittest.TestCase):
 """
 
 lexer_suite_test_method_template = """
-    def {0}(self):
+    def test{0}(self):
         self.assertTrue(TestLexer.test("{1}", "{2}", {3}))
 
 """
@@ -23,16 +25,16 @@ class ParserSuite(unittest.TestCase):
 """
 
 parser_suite_test_method_template = """
-    def {0}(self):
+    def test{0}(self):
         input = \"\"\"{1}\"\"\"
         expect = \"\"\"{2}\"\"\"
         self.assertTrue(TestParser.test(input, expect, {3}))
 """
 
-lexer_tests_file = open("LexerTests.txt", 'r', encoding='utf-8-sig')
-parser_tests_file = open("ParserTests.txt", 'r', encoding='utf-8-sig')
-lexer_suite_file = open("LexerSuite.py", 'w', encoding='utf-8-sig')
-parser_suite_file = open("ParserSuite.py", 'w', encoding='utf-8-sig')
+lexer_tests_file = open("test/LexerTests.txt", 'r', encoding='utf-8-sig')
+parser_tests_file = open("test/ParserTests.txt", 'r', encoding='utf-8-sig')
+lexer_suite_file = open("test/LexerSuite.py", 'w', encoding='utf-8-sig')
+parser_suite_file = open("test/ParserSuite.py", 'w', encoding='utf-8-sig')
 
 file_id = 0
 file_id_prefix = ''
@@ -87,8 +89,8 @@ def generate_tests_from_file(test_file, file_to_write, starting_template, testca
         if parsing_test_name:
             if reached_sep:
                 filename = re.search('^\s*```\s*(.*)\n?$', line).group(1)
-                testcase_file = open('testcases/' + build_filename(filename), 'w')
-                solution_file = open('solutions/' + build_filename(filename), 'w')
+                # testcase_file = open('testcases/' + build_filename(filename), 'w')
+                # solution_file = open('solutions/' + build_filename(filename), 'w')
                 file_id += 1
                 formatted_filename = re.sub("[^\w\d]", '_', build_filename(filename)[:-3])
                 formatted_string_elements[0] = formatted_filename
@@ -100,7 +102,7 @@ def generate_tests_from_file(test_file, file_to_write, starting_template, testca
             if reached_sep:
                 end_parsing_testcase()
             else:
-                testcase_file.write(line)
+                # testcase_file.write(line)
                 formatted_string_elements[1] += line
             continue
 
@@ -113,7 +115,7 @@ def generate_tests_from_file(test_file, file_to_write, starting_template, testca
                                                     formatted_string_elements[3])
                 formatted_string_elements = ['', '', '', '']
             else:
-                solution_file.write(line)
+                # solution_file.write(line)
                 formatted_string_elements[2] += line
             continue
     file_to_write.write(content)
@@ -140,4 +142,10 @@ def generate_tests():
     generate_parser_tests()
 
 
-generate_tests()
+def main():
+    generate_tests()
+    run.main(['gen'])
+    run.main(['test', 'LexerSuite'])
+    run.main(['test', 'ParseSuite'])
+
+main()
