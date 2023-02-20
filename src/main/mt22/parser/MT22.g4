@@ -230,6 +230,8 @@ CLOSE_BRACK : ']';
 OPEN_BRACE : '{';
 CLOSE_BRACE : '}';
 
+// BUG: Move this mf somewhere else
+// https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
 // Identifiers
 fragment IDENTIFIER_START : [a-zA-Z_];
 fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
