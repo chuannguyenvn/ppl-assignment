@@ -1,8 +1,0 @@
-﻿``` Test 1: Test adsfasdf
-main: function void () {}
-``` 
-successful
-```
-
-
-
