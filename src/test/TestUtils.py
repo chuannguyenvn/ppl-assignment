@@ -17,7 +17,7 @@ from antlr4.tree.Trees import *
 JASMIN_JAR = "./external/jasmin.jar"
 TEST_DIR = "./test/testcases/"
 SOL_DIR = "./test/solutions/"
-RES_DIR = "./test/results/"
+OUT_DIR = "./test/outputs/"
 DIFF_DIR = "./test/differences/"
 Lexer = MT22Lexer
 Parser = MT22Parser
@@ -60,9 +60,12 @@ class TestLexer:
     @staticmethod
     def test(input, expect, num):
         inputfile = TestUtil.makeSource(input, num)
-        TestLexer.check(SOL_DIR, inputfile, num)
-        dest = open(SOL_DIR + str(num) + ".txt", "r")
+        TestLexer.check(OUT_DIR, inputfile, num)
+        dest = open(OUT_DIR + str(num) + ".txt", "r")
         line = dest.read()
+        sol = open(SOL_DIR + str(num) + ".txt", "w+")
+        sol.write(expect)
+        sol.close()
         if line != expect:
             generate_difference_file(num, input, line, expect)
         return line == expect

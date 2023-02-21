@@ -1,5 +1,0 @@
-// Watch \n // The // movie
-
-/,/,Watch,\,n,/,/,The,/,/,movie,<EOF>
-
-<EOF>

@@ -1,1 +1,1 @@
-integer,?,<EOF>
+integer,Error Token ?

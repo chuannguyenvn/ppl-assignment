@@ -1,5 +1,0 @@
-^abc
-
-^,abc,<EOF>
-
-Error Token ^

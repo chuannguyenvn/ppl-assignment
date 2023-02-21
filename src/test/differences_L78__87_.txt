@@ -1,5 +1,0 @@
-/* Hello /**/ I am comment block */
-
-/,*,Hello,/,*,*,/,I,am,comment,block,*,/,<EOF>
-
-I,am,comment,block,*,/,<EOF>

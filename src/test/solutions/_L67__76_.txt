@@ -1,1 +1,1 @@
-{"Principles", "Of", "Programming", "Language"},<EOF>
+{,Principles,,,Of,,,Programming,,,Language,},<EOF>

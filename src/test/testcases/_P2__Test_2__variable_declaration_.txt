@@ -1,3 +1,0 @@
-main: function void () {
-a : float = "5\"";
-}

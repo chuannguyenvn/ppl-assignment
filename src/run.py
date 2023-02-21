@@ -57,6 +57,12 @@ parsing_solution = False
 testcase_file = None
 solution_file = None
 
+required_dirs = ["./test/testcases/", "./test/outputs/", "./test/solutions/", "./test/differences/"]
+
+for dir in required_dirs:
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
 
 def end_parsing_test_name():
     global parsing_test_name

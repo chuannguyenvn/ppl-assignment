@@ -1,5 +1,0 @@
-integer?
-
-integer,?,<EOF>
-
-integer,Error Token ?

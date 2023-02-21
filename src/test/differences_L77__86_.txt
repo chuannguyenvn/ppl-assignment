@@ -1,5 +1,0 @@
-// Watch the movie!
-
-/,/,Watch,the,movie,!,<EOF>
-
-<EOF>

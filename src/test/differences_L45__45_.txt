@@ -1,5 +1,0 @@
-"Endline symbol endline \\n
-
-",Endline,symbol,endline,\,\,n,<EOF>
-
-Unclosed String: Endline symbol endline \\n

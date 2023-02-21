@@ -1,5 +1,0 @@
-"This string \\' contains \\' a tab symbol: \\t
-
-",This,string,\,\,',contains,\,\,',a,tab,symbol,:,\,\,t,<EOF>
-
-Unclosed String: This string \\' contains \\' a tab symbol: \\t

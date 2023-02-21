@@ -1,5 +1,0 @@
-"This string \\" contains \\" a form feed: \\f and carriage return: \\r
-
-This string \\" contains \\,a,form,feed,:,\,\,f,and,carriage,return,:,\,\,r,<EOF>
-
-Unclosed String: This string \\" contains \\" a form feed: \\f and carriage return: \\r
