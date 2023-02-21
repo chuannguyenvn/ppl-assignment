@@ -1,15 +1,31 @@
 Error on line 3 col 1: <EOF>
-(program 
-    (declaration 
-        (function_declaration main : function 
-            (type_specifier void) 
-            ( ) 
-            (function_body 
-                (block_statement { 
-                    (statement 
-                        (declaration 
-                            (variable_declaration 
-                                (long_variable_declaration a : 
-                                    (type_specifier float) = 
-                                    (expression 
+
+(program 
+
+    (declaration 
+
+        (function_declaration main : function 
+
+            (type_specifier void) 
+
+            ( ) 
+
+            (function_body 
+
+                (block_statement { 
+
+                    (statement 
+
+                        (declaration 
+
+                            (variable_declaration 
+
+                                (long_variable_declaration a : 
+
+                                    (type_specifier float) = 
+
+                                    (expression 
+
                                         (literal 5\"))) ;))) })))) <EOF>)
+                                        
+                                        

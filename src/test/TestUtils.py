@@ -2,6 +2,7 @@ import sys
 import os
 from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener, ErrorListener
+import pathlib
 
 if not './main/mt22/parser/' in sys.path:
     sys.path.append('./main/mt22/parser/')
@@ -16,6 +17,8 @@ from antlr4.tree.Trees import *
 JASMIN_JAR = "./external/jasmin.jar"
 TEST_DIR = "./test/testcases/"
 SOL_DIR = "./test/solutions/"
+RES_DIR = "./test/results/"
+DIFF_DIR = "./test/differences/"
 Lexer = MT22Lexer
 Parser = MT22Parser
 
@@ -30,6 +33,29 @@ class TestUtil:
         return FileStream(filename)
 
 
+def generate_difference_file(testcase_name, input, result, expect):
+    diff_filename = DIFF_DIR + str(testcase_name) + ".txt"
+    pathlib.Path(diff_filename).touch(exist_ok=True)
+    diff = open(diff_filename, "w+")
+    diff.write('================================================================================================================================================================================================================================\n')
+    diff.write('============== WRONG TESTCASE: ' + testcase_name + ' ==========================================================================================================================================================\n')
+    diff.write('================================================================================================================================================================================================================================\n\n\n')
+    diff.write("------------------------------------------------\n")
+    diff.write("|            Testcase's content                |\n")
+    diff.write("------------------------------------------------\n")
+    diff.write(input)
+    diff.write("\n")
+    diff.write("------------------------------------------------\n")
+    diff.write("|              Expected output                 |\n")
+    diff.write("------------------------------------------------\n")
+    diff.write(expect)
+    diff.write("\n")
+    diff.write("------------------------------------------------\n")
+    diff.write("|                Your output                   |\n")
+    diff.write("------------------------------------------------\n")
+    diff.write(result)
+    diff.close()
+
 class TestLexer:
     @staticmethod
     def test(input, expect, num):
@@ -37,6 +63,8 @@ class TestLexer:
         TestLexer.check(SOL_DIR, inputfile, num)
         dest = open(SOL_DIR + str(num) + ".txt", "r")
         line = dest.read()
+        if line != expect:
+            generate_difference_file(num, input, line, expect)
         return line == expect
 
     @staticmethod
@@ -107,6 +135,8 @@ class TestParser:
         TestParser.check(SOL_DIR, inputfile, num)
         dest = open(SOL_DIR + str(num) + ".txt", "r")
         line = dest.read()
+        if line != expect:
+            generate_difference_file(num, input, line, expect)
         return line == expect
 
     @staticmethod
@@ -127,7 +157,7 @@ class TestParser:
         except Exception as e:
             dest.write(str(e))
         finally:
-            dest.write('\n')
+            dest.write('\n\n')
             dest.write(clips_pprint(tree_content))
             dest.close()
 

@@ -1,0 +1,5 @@
+"This string \\t contains \\t a backspace symbol: \\b
+
+",This,string,\,\,t,contains,\,\,t,a,backspace,symbol,:,\,\,b,<EOF>
+
+Unclosed String: This string \\t contains \\t a backspace symbol: \\b

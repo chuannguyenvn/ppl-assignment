@@ -1,4 +1,5 @@
 Error on line 1 col 25: <EOF>
+
 (program 
     (declaration 
         (function_declaration main : function 

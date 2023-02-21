@@ -1,4 +1,5 @@
 Error on line 13 col 9: <EOF>
+
 (program 
     (declaration 
         (variable_declaration 

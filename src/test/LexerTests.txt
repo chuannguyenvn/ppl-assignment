@@ -1,13 +1,547 @@
-``` variable
-abc
+``` 1
+^abc
 ```
-abc,<EOF>
-```
-
-``` string literal
-"asdfasdf"
-```
-asdfasdf,<EOF>
+Error Token ^
 ```
 
+``` 2
+##
+```
+Error Token #
+```
 
+``` 3
+a_b_c
+```
+a_b_c,<EOF>
+```
+
+``` 4
+AbC
+```
+AbC,<EOF>
+```
+
+``` 5
+A__________________0
+```
+A__________________0,<EOF>
+```
+
+``` 6
+A123_456_789
+```
+A123_456_789,<EOF>
+```
+
+``` 7
+auto
+```
+auto,<EOF>
+```
+
+``` 8
+autoo
+```
+autoo,<EOF>
+```
+
+``` 9
+IDENTIFIER
+```
+IDENTIFIER,<EOF>
+```
+
+``` 10
+main
+```
+main,<EOF>
+```
+
+``` 11
+01
+```
+0,1,<EOF>
+```
+
+``` 12
+0
+```
+0,<EOF>
+```
+
+``` 13
+9
+```
+9,<EOF>
+```
+
+``` 14
+19
+```
+19,<EOF>
+```
+
+``` 15
+_123
+```
+_123,<EOF>
+```
+
+``` 16
+1_2345
+```
+12345,<EOF>
+```
+
+``` 17
+12_34_56_78
+```
+12345678,<EOF>
+```
+
+``` 18
+1234_
+```
+1234,_,<EOF>
+```
+
+``` 19
+0ab
+```
+0,ab,<EOF>
+```
+
+``` 20
+123__456__789
+```
+123,__456__789,<EOF>
+```
+
+``` 21
+1_2_3.456
+```
+123.456,<EOF>
+```
+
+``` 22
+12_3.45_6
+```
+123.45,_6,<EOF>
+```
+
+``` 23
+123.456
+```
+123.456,<EOF>
+```
+
+``` 24
+0e0
+```
+0e0,<EOF>
+```
+
+``` 25
+07e0
+```
+0,7e0,<EOF>
+```
+
+``` 26
+1_2_3e
+```
+123,e,<EOF>
+```
+
+``` 27
+.25e+3
+```
+.25e+3,<EOF>
+```
+
+``` 28
+.25
+```
+.,25,<EOF>
+```
+
+``` 29
+e10
+```
+e10,<EOF>
+```
+
+``` 30
+0.25E-3
+```
+0.25E-3,<EOF>
+```
+
+``` 31
+1.175eE+-3
+```
+1.175,eE,+,-,3,<EOF>
+```
+
+``` 32
+123E+5
+```
+123E+5,<EOF>
+```
+
+``` 33
+true
+```
+true,<EOF>
+```
+
+``` 34
+false
+```
+false,<EOF>
+```
+
+``` 35
+truee
+```
+truee,<EOF>
+```
+
+``` 36
+"This string \\' contains \\' a tab symbol: \\t"
+```
+This string \\' contains \\' a tab symbol: \\t,<EOF>
+```
+
+``` 37
+"This string \\\\ contains \\\\ a backlash symbol: \\\\"
+```
+This string \\\\ contains \\\\ a backlash symbol: \\\\,<EOF>
+```
+
+``` 38
+"This string \\t contains \\t a backspace symbol: \\b"
+```
+This string \\t contains \\t a backspace symbol: \\b,<EOF>
+```
+
+``` 39
+"This string \\" contains \\" a form feed: \\f and carriage return: \\r"
+```
+This string \\" contains \\" a form feed: \\f and carriage return: \\r,<EOF>
+```
+
+``` 40
+"Endline symbol endline \\n"
+```
+Endline symbol endline \\n,<EOF>
+```
+
+``` 41
+"This string \\' contains \\' a tab symbol: \\t
+```
+Unclosed String: This string \\' contains \\' a tab symbol: \\t
+```
+
+``` 42
+"This string \\\\ contains \\\\ a backlash symbol: \\\\
+```
+Unclosed String: This string \\\\ contains \\\\ a backlash symbol: \\\\
+```
+
+``` 43
+"This string \\t contains \\t a backspace symbol: \\b
+```
+Unclosed String: This string \\t contains \\t a backspace symbol: \\b
+```
+
+``` 44
+"This string \\" contains \\" a form feed: \\f and carriage return: \\r
+```
+Unclosed String: This string \\" contains \\" a form feed: \\f and carriage return: \\r
+```
+
+``` 45
+"Endline symbol endline \\n
+```
+Unclosed String: Endline symbol endline \\n
+```
+
+``` 54
++-123*/==79
+```
++,-,123,*,/,==,79,<EOF>
+```
+
+``` 55
+9>=3.::<
+```
+9,>=,3.,::,<,<EOF>
+```
+
+``` 56
+&&&
+```
+&&,Error Token &
+```
+
+``` 57
+:::
+```
+::,:,<EOF>
+```
+
+``` 58
+<==
+```
+<=,=,<EOF>
+```
+
+``` 59
+!=!
+```
+!=,!,<EOF>
+```
+
+``` 60
+{{{)))
+```
+{,{,{,),),),<EOF>
+```
+
+``` 61
+;<=12_34true>=:
+```
+;,<=,1234,true,>=,:,<EOF>
+```
+
+``` 62
+123 > 456
+```
+123,>,456,<EOF>
+```
+
+``` 63
+{a - [(b] + c) / d % e - f >= {g && h} || j :: k, l {m (n [ p ] ) q } r == s - t ! u && v < 01234 }
+```
+{,a,-,[,(,b,],+,c,),/,d,%,e,-,f,>=,{,g,&&,h,},||,j,::,k,,,l,{,m,(,n,[,p,],),q,},r,==,s,-,t,!,u,&&,v,<,0,1234,},<EOF>
+```
+
+``` 64
+true1.0e
+```
+true1,.,0,e,<EOF>
+```
+
+``` 65
+9_Abc
+```
+9,_Abc,<EOF>
+```
+
+``` 66
+.1234
+```
+.,1234,<EOF>
+```
+
+``` 67
+true.0e
+```
+true,.,0,e,<EOF>
+```
+
+``` 68
+0_123_4
+```
+0,_123_4,<EOF>
+```
+
+``` 70
+conti,nue
+```
+conti,,,nue,<EOF>
+```
+
+``` 71
+integer a, b, c = 1, 2, 3;
+```
+integer,a,,,b,,,c,=,1,,,2,,,3,;,<EOF>
+```
+
+``` 72
+float a "abc\\n" - integer || > <==
+```
+float,a,abc\\n,-,integer,||,>,<=,=,<EOF>
+```
+
+``` 73
+integer?
+```
+integer,Error Token ?
+```
+
+``` 74
+"What does the fox says - ding ding ding \\" What is that?"
+```
+What does the fox says - ding ding ding \\" What is that?,<EOF>
+```
+
+``` 75
+{1, 2, 3, 4, 5}
+```
+{,1,,,2,,,3,,,4,,,5,},<EOF>
+```
+
+``` 76
+{"Principles", "Of", "Programming", "Language"}
+```
+{,Principles,,,Of,,,Programming,,,Language,},<EOF>
+```
+
+``` 77
+x = readInteger();
+```
+x,=,readInteger,(,),;,<EOF>
+```
+
+``` 78
+autobreak
+```
+autobreak,<EOF>
+```
+
+``` 79
+aut0br3ak;
+```
+aut0br3ak,;,<EOF>
+```
+
+``` 80
+ID: [a-zA-Z_][a-zA-Z0-9_]*;
+```
+ID,:,[,a,-,zA,-,Z_,],[,a,-,zA,-,Z0,-,9,_,],*,;,<EOF>
+```
+
+``` 81
+a?b?c?
+```
+a,Error Token ?
+```
+
+``` 82
+{while (x < 5) x = x + 1;}
+```
+{,while,(,x,<,5,),x,=,x,+,1,;,},<EOF>
+```
+
+``` 83
+foo(x + 2; 4.0 / y ");
+```
+foo,(,x,+,2,;,4.0,/,y,Unclosed String: );
+```
+
+``` 84
+
+```
+<EOF>
+```
+
+``` 85
+                     
+```
+<EOF>
+```
+
+``` 86
+// Watch the movie!
+```
+<EOF>
+```
+
+``` 87
+/* Hello /**/ I am comment block */
+```
+I,am,comment,block,*,/,<EOF>
+```
+
+``` 88
+// /* I am Tai.
+```
+<EOF>
+```
+
+``` 89
+// /* \n I am TAI.               
+```
+I,am,TAI,.,<EOF>
+```
+
+``` 90
+// Watch \n // The // movie
+```
+<EOF>
+```
+
+``` 91
+checkPrime: function boolean (n : integer) {
+```
+checkPrime,:,function,boolean,(,n,:,integer,),{,<EOF>
+```
+
+``` 92
+if (n == 0 || n == 1) return false;
+```
+if,(,n,==,0,||,n,==,1,),return,false,;,<EOF>
+```
+
+``` 93
+i : integer;
+```
+i,:,integer,;,<EOF>
+```
+
+``` 94
+for(i = 2, i * i <= n, i = i + 1)
+```
+for,(,i,=,2,,,i,*,i,<=,n,,,i,=,i,+,1,),<EOF>
+```
+
+``` 95
+if (n % i == 0) return false;                 
+```
+if,(,n,%,i,==,0,),return,false,;,<EOF>
+```
+
+``` 96
+return true;}
+```
+return,true,;,},<EOF>
+```
+
+``` 97
+main: function void() {
+```
+main,:,function,void,(,),{,<EOF>
+```
+
+``` 98
+n : float = 7.5
+```
+n,:,float,=,7.5,<EOF>
+```
+
+``` 99
+n = n + string_to_int("1.0");        
+```
+n,=,n,+,string_to_int,(,1.0,),;,<EOF>
+```
+
+``` 100
+checkPrime(n);}
+```
+checkPrime,(,n,),;,},<EOF>
+```
+
+Còn sai 3 test, test {{{))), test d % e và test 42 backlash và 8 test illegal test
