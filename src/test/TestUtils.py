@@ -2,6 +2,7 @@ import sys
 import os
 from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener, ErrorListener
+
 if not './main/mt22/parser/' in sys.path:
     sys.path.append('./main/mt22/parser/')
 if os.path.isdir('../target/main/mt22/parser') and not '../target/main/mt22/parser/' in sys.path:
@@ -53,7 +54,7 @@ class TestLexer:
     def printLexeme(dest, lexer):
         tok = lexer.nextToken()
         if tok.type != Token.EOF:
-            dest.write(tok.text+",")
+            dest.write(tok.text + ",")
             TestLexer.printLexeme(dest, lexer)
         else:
             dest.write("<EOF>")
@@ -73,6 +74,26 @@ NewErrorListener.INSTANCE = NewErrorListener()
 class SyntaxException(Exception):
     def __init__(self, msg):
         self.message = msg
+
+
+def clips_pprint(clips_str: str) -> str:
+    LB = "("
+    RB = ")"
+    TAB = " " * 4
+    formatted_clips_str = ""
+    tab_count = 0
+    for c in clips_str:
+        if c == LB:
+            formatted_clips_str += os.linesep
+            for _i in range(tab_count):
+                formatted_clips_str += TAB
+
+            tab_count += 1
+        elif c == RB:
+            tab_count -= 1
+        formatted_clips_str += c
+
+    return formatted_clips_str.strip()
 
 
 class TestParser:
@@ -95,9 +116,7 @@ class TestParser:
         listener = TestParser.createErrorListener()
         tokens = CommonTokenStream(lexer)
         parser = Parser(tokens)
-        # tree = parser.program()
-        # print(parser.getRuleIndexMap())
-        # print(Trees.toStringTree(tree))
+        tree_content = Trees.toStringTree(parser.program(), None, parser)
         parser.removeErrorListeners()
         parser.addErrorListener(listener)
         try:
@@ -108,6 +127,8 @@ class TestParser:
         except Exception as e:
             dest.write(str(e))
         finally:
+            dest.write('\n')
+            dest.write(clips_pprint(tree_content))
             dest.close()
 
 
