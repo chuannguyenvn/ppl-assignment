@@ -368,3 +368,11 @@ class LexerSuite(unittest.TestCase):
     def test_L91__100_(self):
         self.assertTrue(TestLexer.test(r'''checkPrime(n);}''', r'''checkPrime,(,n,),;,},<EOF>''', "_L91__100_"))
 
+
+    def test_L92___(self):
+        self.assertTrue(TestLexer.test(r'''55.''', r'''55.,<EOF>''', "_L92___"))
+
+
+    def test_L93___(self):
+        self.assertTrue(TestLexer.test(r'''55__55''', r'''55,__55,<EOF>''', "_L93___"))
+

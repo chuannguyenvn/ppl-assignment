@@ -1,1 +1,1 @@
-foo,(,x,+,2,;,4.0,/,y,",),;,<EOF>
+foo,(,x,+,2,;,4.0,/,y,Unclosed String: );

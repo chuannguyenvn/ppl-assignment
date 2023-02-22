@@ -217,10 +217,7 @@ LESS_EQUAL : '<=';
 GREATER : '>';
 GREATER_EQUAL : '>=';
 DOUBLE_COLON : '::';
-ASSIGN : '=';
-COMMA : ',';
-COLON : ':';
-SEMI_COLON : ';';
+
 
 // Separators
 OPEN_PAREN : '(';
@@ -229,6 +226,11 @@ OPEN_BRACK : '[';
 CLOSE_BRACK : ']';
 OPEN_BRACE : '{';
 CLOSE_BRACE : '}';
+DOT : '.';
+ASSIGN : '=';
+COMMA : ',';
+COLON : ':';
+SEMI_COLON : ';';
 
 // BUG: Move this mf somewhere else
 // https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
@@ -238,17 +240,26 @@ fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
 IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
 
 // Literals
-fragment NON_ZERO_DIGIT 
-    : [1-9_]
+    
+fragment INTEGER_START
+    : [1-9]
+    ;  
+
+fragment DIGIT
+    : [0-9]
     ;
     
-fragment DIGIT 
-    : [0-9_]
+fragment UNDERSCORE
+    : '_'
+    ;
+    
+fragment INTEGER_CONTINUE
+    : UNDERSCORE? DIGIT
     ;
     
 fragment INTEGER_PART
     : '0' 
-    | NON_ZERO_DIGIT DIGIT*
+    | INTEGER_START INTEGER_CONTINUE*
     ;
     
 fragment DECIMAL_PART
@@ -304,8 +315,34 @@ ARRAY_LIT
     : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
     ;
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-ERROR_CHAR: .;
-UNCLOSE_STRING: .;
-ILLEGAL_ESCAPE: .;
+COMMENT_LINE
+    : '//' ~[\n\r\f]* -> skip
+    ;
+    
+COMMENT_BLOCK
+    : '/*' .*? '*/' -> skip
+    ;
+
+WS
+    : [ \t\r\n]+ -> skip 
+    ;
+
+
+fragment CHARACTER: ~[\b\f\r\n\t"\\] | ESCAPE;
+fragment ESCAPE: '\\' [bfrnt"\\];
+fragment NOT_ESCAPE: '\\' ~[bfrnt"\\] ;
+
+ERROR_CHAR: .{raise ErrorToken(self.text)};
+UNCLOSE_STRING: '"' CHARACTER* ([\b\f\r\n\t\\] | EOF) {
+    esc = ['\b', '\t', '\n', '\f', '\r', '\\']
+    temp = str(self.text)
+    if temp[-1] in esc:
+        raise UncloseString(temp[1:-1])
+    else :
+        raise UncloseString(temp[1:])
+};
+ILLEGAL_ESCAPE:'"' CHARACTER* NOT_ESCAPE {
+    temp = str(self.text)
+    raise IllegalEscape(temp[1:])
+};

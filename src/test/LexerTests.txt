@@ -544,4 +544,14 @@ checkPrime(n);}
 checkPrime,(,n,),;,},<EOF>
 ```
 
-Còn sai 3 test, test {{{))), test d % e và test 42 backlash và 8 test illegal test
+``` 
+55.
+```
+55.,<EOF>
+```
+
+```
+55__55
+```
+55,__55,<EOF>
+```

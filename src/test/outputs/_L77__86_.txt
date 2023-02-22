@@ -1,1 +1,1 @@
-/,/,Watch,the,movie,!,<EOF>
+<EOF>
