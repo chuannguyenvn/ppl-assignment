@@ -1,0 +1,9 @@
+Error on line 1 col 25: <EOF>
+
+(program 
+    (declaration 
+        (function_declaration main : function 
+            (return_type_specfier void) 
+            ( ) 
+            (function_body 
+                (block_statement { })))) <EOF>)

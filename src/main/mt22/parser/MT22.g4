@@ -23,12 +23,12 @@ variable_declaration
     ;
     
 short_variable_declaration
-    : identifier_list COLON type_specifier 
+    : identifier_list COLON parameter_type_specifier 
     ;
     
 long_variable_declaration
-    : IDENTIFIER COLON type_specifier ASSIGN expression 
-    | IDENTIFIER COMMA long_variable_declaration COMMA expression
+    : IDENTIFIER COLON parameter_type_specifier ASSIGN expression 
+    | IDENTIFIER COMMA long_variable_declaration COMMA expression 
     ;
 
 parameter_declaration_list
@@ -36,25 +36,28 @@ parameter_declaration_list
     ;
 
 parameter_declaration
-    : INHERIT? OUT? IDENTIFIER COLON type_specifier
+    : INHERIT? OUT? IDENTIFIER COLON parameter_type_specifier
     ;
     
 identifier_list
     : IDENTIFIER (COMMA IDENTIFIER)*
     ;
 
-// BUG: This may cause variable of type void to exist.
-type_specifier
+return_type_specifier
+    : parameter_type_specifier
+    | VOID
+    ;
+    
+parameter_type_specifier
     : INTEGER
     | FLOAT
     | BOOLEAN
     | STRING
     | ARRAY
-    | VOID
     ;
 
 function_declaration
-    : IDENTIFIER COLON FUNCTION type_specifier OPEN_PAREN parameter_declaration_list? CLOSE_PAREN (INHERIT IDENTIFIER)? function_body
+    : IDENTIFIER COLON FUNCTION return_type_specifier OPEN_PAREN parameter_declaration_list? CLOSE_PAREN (INHERIT IDENTIFIER)? function_body
     ;
 
 function_body
@@ -92,7 +95,7 @@ while_statement
     ;
     
 do_while_statement
-    : DO block_statement WHILE OPEN_PAREN statement CLOSE_PAREN SEMI_COLON
+    : DO block_statement WHILE OPEN_PAREN expression CLOSE_PAREN SEMI_COLON
     ;
     
 break_statement

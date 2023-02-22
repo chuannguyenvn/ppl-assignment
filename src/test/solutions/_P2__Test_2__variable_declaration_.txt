@@ -1,0 +1,17 @@
+Error on line 3 col 1: <EOF>
+
+(program 
+    (declaration 
+        (function_declaration main : function 
+            (return_type_specfier void) 
+            ( ) 
+            (function_body 
+                (block_statement { 
+                    (statement 
+                        (declaration 
+                            (variable_declaration 
+                                (long_variable_declaration a : 
+                                    (type_specifier 
+                                        (return_type_specfier float)) = 
+                                    (expression 
+                                        (literal 5\")) ;)))) })))) <EOF>)

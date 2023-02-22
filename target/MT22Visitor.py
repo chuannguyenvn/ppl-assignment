@@ -49,8 +49,13 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#type_specifier.
-    def visitType_specifier(self, ctx:MT22Parser.Type_specifierContext):
+    # Visit a parse tree produced by MT22Parser#return_type_specifier.
+    def visitReturn_type_specifier(self, ctx:MT22Parser.Return_type_specifierContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#parameter_type_specifier.
+    def visitParameter_type_specifier(self, ctx:MT22Parser.Parameter_type_specifierContext):
         return self.visitChildren(ctx)
 
 
