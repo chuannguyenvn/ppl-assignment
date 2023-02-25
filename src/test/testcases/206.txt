@@ -1,4 +1,5 @@
+
 main: function integer()
 {
-    a = ;
+    a = a = a;
 }

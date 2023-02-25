@@ -1,5 +1,7 @@
 
 main: function integer()
 {
-    call(me, maybe);
+    break; 
+    continue; 
+    return;
 }

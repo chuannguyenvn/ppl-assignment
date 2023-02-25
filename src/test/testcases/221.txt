@@ -1,5 +1,5 @@
 
-main: function integer()
+main: function integer() 
 {
-    a, b, c : array [0] of string = 1, 2, 3;
+    a, b, c : array [0, 1, 2, 3, 4] of string;
 }

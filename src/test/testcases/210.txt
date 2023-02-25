@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-    a = foo();
+    a = 1 + true * "false" - !((true) + 0.69);
 }

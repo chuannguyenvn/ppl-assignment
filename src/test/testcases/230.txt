@@ -1,5 +1,6 @@
 
 main: function integer()
 {
-    else foo();
+    if (1 > 2) foo();
+    else ;
 }

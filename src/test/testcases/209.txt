@@ -1,5 +1,2 @@
 
-main: function integer()
-{
-    a = 1 + true * "false" - !((true) + 0.69);
-}
+a: integer = true || false && true (!false);

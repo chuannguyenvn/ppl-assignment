@@ -1,7 +1,5 @@
 
 main: function integer()
 {
-    for (i = 1, i < 10, i + 1) 
-    for (j = 1, j > 10, j + foo()) 
-    foo();
+    for (1 = 1, i < 10, i + 1) foo();
 }

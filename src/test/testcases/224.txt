@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-    if (1 > 2) a = 1;
+    a, b, c : array [0] of string = 1, 2;
 }

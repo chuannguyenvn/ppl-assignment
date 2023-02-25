@@ -1,7 +1,5 @@
 
 main: function integer()
 {
-    break; 
-    continue; 
-    return;
+    do {break; continue; return;} while (1);
 }

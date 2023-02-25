@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-    a = 1.001 ---("two" / --3) + four(-5) % six + 7 % 8 * nine(-0.000);
+    a = ---------------"minus";
 }

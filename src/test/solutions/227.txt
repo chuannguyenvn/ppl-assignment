@@ -1,1 +1,1 @@
-Error on line 4 col 7: foo
+Error on line 4 col 8: )

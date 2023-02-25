@@ -1,3 +1,4 @@
+// 2052046
 grammar MT22;
 
 @lexer::header {
@@ -172,10 +173,10 @@ indexing_expression
     
 braced_expression
     : OPEN_PAREN expression CLOSE_PAREN
-    | operands
+    | operand
     ;
     
-operands
+operand
     : literal
     | function_call
     | IDENTIFIER
@@ -258,7 +259,7 @@ fragment ESCAPE_SEQUENCE
     | '\\v';
 
 STRING_LIT
-    : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )* '"' {self.text = self.text[1:-1]}
+    : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )*? '"' {self.text = self.text[1:-1]}
     ;
 
 //fragment ARRAY_ELEMENT
@@ -272,8 +273,6 @@ STRING_LIT
 //    : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
 //    ;
 
-
-// Keywords
 AUTO : 'auto';
 BREAK : 'break';
 BOOLEAN : 'boolean';
@@ -296,7 +295,6 @@ OF : 'of';
 INHERIT : 'inherit';
 ARRAY : 'array';
 
-// Operators
 ADD : '+';
 MINUS : '-';
 STAR : '*';
@@ -313,8 +311,6 @@ GREATER : '>';
 GREATER_EQUAL : '>=';
 DOUBLE_COLON : '::';
 
-
-// Separators
 OPEN_PAREN : '(';
 CLOSE_PAREN : ')';
 OPEN_BRACK : '[';
@@ -327,11 +323,6 @@ COMMA : ',';
 COLON : ':';
 SEMI_COLON : ';';
 
-// Literals
-
-// BUG: Move this mf somewhere else
-// https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
-// Identifiers
 fragment IDENTIFIER_START : [a-zA-Z_];
 fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
 IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;

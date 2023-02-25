@@ -1,2 +1,3 @@
 
-a: integer = true || false && true (!false);
+// this statement suggests that Tai is a meaningless person (void), and everything he said is of utmost untrustworthy (false)
+Tai /* there is just about a million people with the name "Tai", therefore I deny any personal attack accusation */ : void = false; // this statement is also a valid statement, which means it is factual

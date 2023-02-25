@@ -1,4 +1,4 @@
 
-main: integer = -69;
-main: function integer() { }
-main: function void() { main: void = -main(!69);}
+a: integer = "yo";
+b: void = main();
+c: float = true :: false; 

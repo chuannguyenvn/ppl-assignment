@@ -2,5 +2,5 @@
 main: function integer()
 {
     if (1 > 2) foo();
-    else ;
+    else bar();
 }

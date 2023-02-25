@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-    do {break; continue; return;} while (1);
+    do drug() while (withdrawing());
 }

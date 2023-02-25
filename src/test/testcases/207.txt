@@ -1,2 +1,4 @@
-
-a: void = false;
+main: function integer()
+{
+    a = ;
+}
