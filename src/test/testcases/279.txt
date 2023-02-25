@@ -1,0 +1,4 @@
+main: function integer()
+{
+    a = "1" :: two :: three(four :: ("five"));
+}

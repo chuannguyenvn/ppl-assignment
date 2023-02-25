@@ -1,0 +1,5 @@
+
+main: function integer()
+{
+    a = 123_456_789;
+}

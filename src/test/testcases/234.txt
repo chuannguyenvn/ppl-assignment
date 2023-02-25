@@ -1,0 +1,5 @@
+
+main: function integer()
+{
+    for (i = foo(), foo(), foo()) foo();
+}

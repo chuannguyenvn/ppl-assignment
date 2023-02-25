@@ -28,7 +28,7 @@ short_variable_declaration
     
 long_variable_declaration
     : IDENTIFIER COLON type_specifier ASSIGN expression 
-    | IDENTIFIER COMMA long_variable_declaration COMMA expression
+    | IDENTIFIER COMMA long_variable_declaration COMMA expression 
     ;
 
 parameter_declaration_list
@@ -43,14 +43,21 @@ identifier_list
     : IDENTIFIER (COMMA IDENTIFIER)*
     ;
 
-// BUG: This may cause variable of type void to exist.
 type_specifier
-    : INTEGER
+    : array_type_specifier
+    | INTEGER
     | FLOAT
     | BOOLEAN
     | STRING
-    | ARRAY
     | VOID
+    ;
+
+array_type_specifier
+    : ARRAY OPEN_BRACK dimension_list CLOSE_BRACK OF (INTEGER | FLOAT | BOOLEAN | STRING)
+    ;
+    
+dimension_list
+    : INTEGER_LIT (COMMA INTEGER_LIT)*
     ;
 
 function_declaration
@@ -92,7 +99,7 @@ while_statement
     ;
     
 do_while_statement
-    : DO block_statement WHILE OPEN_PAREN statement CLOSE_PAREN SEMI_COLON
+    : DO block_statement WHILE OPEN_PAREN expression CLOSE_PAREN SEMI_COLON
     ;
     
 break_statement
@@ -104,7 +111,7 @@ continue_statement
     ;
     
 return_statement
-    : RETURN expression SEMI_COLON
+    : RETURN expression? SEMI_COLON
     ;
     
 call_statement
@@ -120,9 +127,7 @@ expression_list
     ;
 
 expression
-    : IDENTIFIER
-    | literal
-    | string_expression
+    : string_expression
     ;
 
 string_expression
@@ -146,7 +151,7 @@ adding_expression
     ;
 
 multiplying_expression
-    : multiplying_expression (STAR | DIV) negate_expression
+    : multiplying_expression (STAR | DIV | MOD) negate_expression
     | negate_expression
     ;
     
@@ -157,6 +162,16 @@ negate_expression
     
 sign_expression
     : MINUS sign_expression
+    | indexing_expression
+    ;
+    
+indexing_expression
+    : IDENTIFIER OPEN_BRACK expression_list CLOSE_BRACK
+    | braced_expression
+    ;
+    
+braced_expression
+    : OPEN_PAREN expression CLOSE_PAREN
     | operands
     ;
     
@@ -171,84 +186,37 @@ literal
     | FLOAT_LIT
     | BOOLEAN_LIT
     | STRING_LIT
-    | ARRAY_LIT
+    | indexed_array_lit
     ;
+    
+indexed_array_lit
+    : OPEN_BRACE expression_list CLOSE_BRACE
+    ;    
     
 function_call
-    : IDENTIFIER OPEN_PAREN expression_list CLOSE_PAREN
+    : IDENTIFIER OPEN_PAREN expression_list? CLOSE_PAREN
     ;
 
-// Keywords
-AUTO : 'auto';
-BREAK : 'break';
-BOOLEAN : 'boolean';
-DO : 'do';
-ELSE : 'else';
-FALSE : 'false';
-FLOAT : 'float';
-FOR : 'for';
-FUNCTION : 'function';
-IF : 'if';
-INTEGER : 'integer';
-RETURN : 'return';
-STRING : 'string';
-TRUE : 'true';
-WHILE : 'while';
-VOID : 'void';
-OUT : 'out';
-CONTINUE : 'continue';
-OF : 'of';
-INHERIT : 'inherit';
-ARRAY : 'array';
+    
+fragment INTEGER_START
+    : [1-9]
+    ;  
 
-// Operators
-ADD : '+';
-MINUS : '-';
-STAR : '*';
-DIV : '/';
-MOD : '%';
-NOT : '!';
-AND_AND : '&&';
-OR_OR : '||';
-EQUAL : '==';
-NOT_EQUAL : '!=';
-LESS : '<';
-LESS_EQUAL : '<=';
-GREATER : '>';
-GREATER_EQUAL : '>=';
-DOUBLE_COLON : '::';
-ASSIGN : '=';
-COMMA : ',';
-COLON : ':';
-SEMI_COLON : ';';
-
-// Separators
-OPEN_PAREN : '(';
-CLOSE_PAREN : ')';
-OPEN_BRACK : '[';
-CLOSE_BRACK : ']';
-OPEN_BRACE : '{';
-CLOSE_BRACE : '}';
-
-// BUG: Move this mf somewhere else
-// https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
-// Identifiers
-fragment IDENTIFIER_START : [a-zA-Z_];
-fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
-IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
-
-// Literals
-fragment NON_ZERO_DIGIT 
-    : [1-9_]
+fragment DIGIT
+    : [0-9]
     ;
     
-fragment DIGIT 
-    : [0-9_]
+fragment UNDERSCORE
+    : '_'
+    ;
+    
+fragment INTEGER_CONTINUE
+    : UNDERSCORE? DIGIT
     ;
     
 fragment INTEGER_PART
     : '0' 
-    | NON_ZERO_DIGIT DIGIT*
+    | INTEGER_START INTEGER_CONTINUE*
     ;
     
 fragment DECIMAL_PART
@@ -293,19 +261,108 @@ STRING_LIT
     : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )* '"' {self.text = self.text[1:-1]}
     ;
 
-fragment ARRAY_ELEMENT
-    : INTEGER_LIT
-    | FLOAT_LIT
-    | BOOLEAN_LIT
-    | STRING_LIT
+//fragment ARRAY_ELEMENT
+//    : INTEGER_LIT
+//    | FLOAT_LIT
+//    | BOOLEAN_LIT
+//    | STRING_LIT
+//    ;
+    
+//ARRAY_LIT
+//    : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
+//    ;
+
+
+// Keywords
+AUTO : 'auto';
+BREAK : 'break';
+BOOLEAN : 'boolean';
+DO : 'do';
+ELSE : 'else';
+FALSE : 'false';
+FLOAT : 'float';
+FOR : 'for';
+FUNCTION : 'function';
+IF : 'if';
+INTEGER : 'integer';
+RETURN : 'return';
+STRING : 'string';
+TRUE : 'true';
+WHILE : 'while';
+VOID : 'void';
+OUT : 'out';
+CONTINUE : 'continue';
+OF : 'of';
+INHERIT : 'inherit';
+ARRAY : 'array';
+
+// Operators
+ADD : '+';
+MINUS : '-';
+STAR : '*';
+DIV : '/';
+MOD : '%';
+NOT : '!';
+AND_AND : '&&';
+OR_OR : '||';
+EQUAL : '==';
+NOT_EQUAL : '!=';
+LESS : '<';
+LESS_EQUAL : '<=';
+GREATER : '>';
+GREATER_EQUAL : '>=';
+DOUBLE_COLON : '::';
+
+
+// Separators
+OPEN_PAREN : '(';
+CLOSE_PAREN : ')';
+OPEN_BRACK : '[';
+CLOSE_BRACK : ']';
+OPEN_BRACE : '{';
+CLOSE_BRACE : '}';
+DOT : '.';
+ASSIGN : '=';
+COMMA : ',';
+COLON : ':';
+SEMI_COLON : ';';
+
+// Literals
+
+// BUG: Move this mf somewhere else
+// https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
+// Identifiers
+fragment IDENTIFIER_START : [a-zA-Z_];
+fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
+IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
+
+COMMENT_LINE
+    : '//' ~[\n\r\f]* -> skip
     ;
     
-ARRAY_LIT
-    : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
+COMMENT_BLOCK
+    : '/*' .*? '*/' -> skip
     ;
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+WS
+    : [ \t\r\n]+ -> skip 
+    ;
 
-ERROR_CHAR: .;
-UNCLOSE_STRING: .;
-ILLEGAL_ESCAPE: .;
+
+fragment CHARACTER: ~[\b\f\r\n\t"\\] | ESCAPE;
+fragment ESCAPE: '\\' [bfrnt"\\];
+fragment NOT_ESCAPE: '\\' ~[bfrnt"\\] ;
+
+ERROR_CHAR: .{raise ErrorToken(self.text)};
+UNCLOSE_STRING: '"' CHARACTER* ([\b\f\r\n\t\\] | EOF) {
+    esc = ['\b', '\t', '\n', '\f', '\r', '\\']
+    temp = str(self.text)
+    if temp[-1] in esc:
+        raise UncloseString(temp[1:-1])
+    else :
+        raise UncloseString(temp[1:])
+};
+ILLEGAL_ESCAPE:'"' CHARACTER* NOT_ESCAPE {
+    temp = str(self.text)
+    raise IllegalEscape(temp[1:])
+};
