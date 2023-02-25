@@ -132,12 +132,12 @@ expression
     ;
 
 string_expression
-    : string_expression DOUBLE_COLON relational_expression
+    : relational_expression DOUBLE_COLON relational_expression
     | relational_expression
     ;
     
 relational_expression
-    : relational_expression (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER | GREATER_EQUAL) logical_expression
+    : relational_expression (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER | GREATER_EQUAL) relational_expression
     | logical_expression
     ;
 

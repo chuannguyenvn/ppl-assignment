@@ -1,4 +1,4 @@
 main: function integer()
 {
-    a = ("i love" :: "eating babies") :: "' powdered milk";
+    a = 1 == 2 != 3 < 4 > 5 <= 6 >= 7;
 }

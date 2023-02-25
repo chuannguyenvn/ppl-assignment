@@ -1,4 +1,4 @@
 main: function integer()
 {
-    a = !true || false && "true" || !(foo && !!bar);
+    a = "my heart" :: "your heart";
 }

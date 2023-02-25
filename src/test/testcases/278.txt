@@ -1,4 +1,4 @@
 main: function integer()
 {
-    a = "my heart" :: "your heart";
+    a = ("i love" :: "eating babies") :: "' powdered milk";
 }

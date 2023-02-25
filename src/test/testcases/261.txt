@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-    a: float = true;
+    a, b: void = c, d;
 }

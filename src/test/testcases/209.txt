@@ -1,2 +1,2 @@
 
-a: integer = true || false && true (!false);
+a: integer = true || false && true || (!false);

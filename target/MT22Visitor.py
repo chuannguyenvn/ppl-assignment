@@ -184,8 +184,8 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#operands.
-    def visitOperands(self, ctx:MT22Parser.OperandsContext):
+    # Visit a parse tree produced by MT22Parser#operand.
+    def visitOperand(self, ctx:MT22Parser.OperandContext):
         return self.visitChildren(ctx)
 
 

@@ -1,4 +1,3 @@
-
 import unittest
 from TestUtils import TestParser
 
@@ -67,7 +66,7 @@ Tai /* there is just about a million people with the name "Tai", therefore I den
         self.assertTrue(TestParser.test(input, expect, 208))
     def test_209(self):
         input = """
-a: integer = true || false && true (!false);"""
+a: integer = true || false && true || (!false);"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 209))
     def test_210(self):
@@ -466,7 +465,7 @@ main: function integer()
         input = """
 main: function integer()
 {
-main: function integer() { main: function integer() {  }main: function integer() {  }main: function integer() {  }main: function integer() {  } }
+    a, b, c, d: void;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 258))
@@ -474,23 +473,23 @@ main: function integer() { main: function integer() {  }main: function integer()
         input = """
 main: function integer()
 {
-    a, b, c, d: void;
+    a, b, c, d: auto;
 }"""
-        expect = """successful"""
+        expect = """Error on line 4 col 16: auto"""
         self.assertTrue(TestParser.test(input, expect, 259))
     def test_260(self):
         input = """
 main: function integer()
 {
-    a, b, c, d: auto;
+    a: float = true;
 }"""
-        expect = """Error on line 4 col 16: auto"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 260))
     def test_261(self):
         input = """
 main: function integer()
 {
-    a: float = true;
+    a, b: void = c, d;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 261))
@@ -498,45 +497,45 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a, b: void = c, d;
-}"""
-        expect = """successful"""
-        self.assertTrue(TestParser.test(input, expect, 262))
-    def test_263(self):
-        input = """
-main: function integer()
-{
     a, b, c: integer = a, b, c, d;
 }"""
         expect = """Error on line 4 col 30: ,"""
-        self.assertTrue(TestParser.test(input, expect, 263))
-    def test_264(self):
+        self.assertTrue(TestParser.test(input, expect, 262))
+    def test_263(self):
         input = """
 main: function integer()
 {
     a, b, c, d: string = foo(), bar(), goo();
 }"""
         expect = """Error on line 4 col 44: ;"""
-        self.assertTrue(TestParser.test(input, expect, 264))
-    def test_265(self):
+        self.assertTrue(TestParser.test(input, expect, 263))
+    def test_264(self):
         input = """
 a: integer = "yo";
 b: void = main();
 c: float = true :: false; """
         expect = """successful"""
-        self.assertTrue(TestParser.test(input, expect, 265))
-    def test_266(self):
+        self.assertTrue(TestParser.test(input, expect, 264))
+    def test_265(self):
         input = """
 main: integer = -69;
 main: function integer() { }
 main: function void() { main: void = -main(!69);}"""
+        expect = """successful"""
+        self.assertTrue(TestParser.test(input, expect, 265))
+    def test_266(self):
+        input = """
+main: function integer()
+{
+    a = (1 + 2 * 3 - 4) / (5 % 6) + 7 - (8) % 9 / 0;
+}"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 266))
     def test_267(self):
         input = """
 main: function integer()
 {
-    a = (1 + 2 * 3 - 4) / (5 % 6) + 7 - (8) % 9 / 0;
+    a = ---------------"minus";
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 267))
@@ -544,7 +543,7 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a = ---------------"minus";
+    a = 1.001 ---("two" / --3) + four(-5) % six + 7 % 8 * nine(-0.000);
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 268))
@@ -552,31 +551,31 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a = 1.001 ---("two" / --3) + four(-5) % six + 7 % 8 * nine(-0.000);
-}"""
-        expect = """successful"""
-        self.assertTrue(TestParser.test(input, expect, 269))
-    def test_270(self):
-        input = """
-main: function integer()
-{
     a = 1 ++ 2;
 }"""
         expect = """Error on line 4 col 11: +"""
-        self.assertTrue(TestParser.test(input, expect, 270))
-    def test_271(self):
+        self.assertTrue(TestParser.test(input, expect, 269))
+    def test_270(self):
         input = """
 main: function integer()
 {
     -a = 1;
 }"""
         expect = """Error on line 4 col 4: -"""
+        self.assertTrue(TestParser.test(input, expect, 270))
+    def test_271(self):
+        input = """
+main: function integer()
+{
+    a = true + false * "yo" / yo % 1_2_3_4_5;
+}"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 271))
     def test_272(self):
         input = """
 main: function integer()
 {
-    a = true + false * "yo" / yo % 1_2_3_4_5;
+    a = !wtf;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 272))
@@ -584,7 +583,7 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a = !wtf;
+    a = !!!!!!!!wtf;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 273))
@@ -592,7 +591,7 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a = !!!!!!!!wtf;
+    a = !(!(!(!(!(wtf)))));
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 274))
@@ -600,114 +599,99 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a = !(!(!(!(!(wtf)))));
+    a = !hey && !hey || !hey;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 275))
     def test_276(self):
-        input = """
-main: function integer()
+        input = """main: function integer()
 {
-    a = !hey && !hey || !hey;
+    a = !true || false && "true" || !(foo && !!bar);
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 276))
     def test_277(self):
         input = """main: function integer()
 {
-    a = !true || false && "true" || !(foo && !!bar);
+    a = "my heart" :: "your heart";
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 277))
     def test_278(self):
         input = """main: function integer()
 {
-    a = "my heart" :: "your heart";
+    a = ("i love" :: "eating babies") :: "' powdered milk";
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 278))
     def test_279(self):
         input = """main: function integer()
 {
-    a = ("i love" :: "eating babies") :: "' powdered milk";
+    a = 1 == 2 != 3 < 4 > 5 <= 6 >= 7;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 279))
     def test_280(self):
         input = """main: function integer()
 {
-    a = "1" :: two :: three(four :: ("five"));
+    a = 1 < ("two" >= three == (four(5.6, 7 != true))); 
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 280))
     def test_281(self):
         input = """main: function integer()
 {
-    a = 1 == 2 != 3 < 4 > 5 <= 6 >= 7;
+    a = 1 ======= 2;
 }"""
-        expect = """successful"""
+        expect = """Error on line 3 col 12: =="""
         self.assertTrue(TestParser.test(input, expect, 281))
     def test_282(self):
         input = """main: function integer()
 {
-    a = 1 < ("two" >= three == (four(5.6, 7 != true))); 
+    a = a[0];
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 282))
     def test_283(self):
         input = """main: function integer()
 {
-    a = 1 ======= 2;
+    a = -a[-1];
 }"""
-        expect = """Error on line 3 col 12: =="""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 283))
     def test_284(self):
         input = """main: function integer()
 {
-    a = a[0];
+    a = a[one, a[2], a["3"], _1[4 > 5, 6 < 7], _8(nine[0])];
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 284))
     def test_285(self):
         input = """main: function integer()
 {
-    a = -a[-1];
+    a = a[1][2];
 }"""
-        expect = """successful"""
+        expect = """Error on line 3 col 12: ["""
         self.assertTrue(TestParser.test(input, expect, 285))
     def test_286(self):
         input = """main: function integer()
 {
-    a = a[one, a[2], a["3"], _1[4 > 5, 6 < 7], _8(nine[0])];
+    a = a[a(a[a(a[a()])])];
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 286))
     def test_287(self):
         input = """main: function integer()
 {
-    a = a[1][2];
-}"""
-        expect = """Error on line 3 col 12: ["""
-        self.assertTrue(TestParser.test(input, expect, 287))
-    def test_288(self):
-        input = """main: function integer()
-{
-    a = a[a(a[a(a[a()])])];
-}"""
-        expect = """successful"""
-        self.assertTrue(TestParser.test(input, expect, 288))
-    def test_289(self):
-        input = """main: function integer()
-{
     a = 1 < ("two" >= three == (four(5.6, 7 != true))); 
 }"""
         expect = """successful"""
-        self.assertTrue(TestParser.test(input, expect, 289))
-    def test_290(self):
+        self.assertTrue(TestParser.test(input, expect, 287))
+    def test_288(self):
         input = """
 main: function integer()
 {
     zero = 1 * 2 + 3 || 4 % five[6] + seven(8, nine[10, 11, twelve[13] && 14]) % 15 == 16 :: (true);
 }"""
         expect = """successful"""
-        self.assertTrue(TestParser.test(input, expect, 290))
+        self.assertTrue(TestParser.test(input, expect, 288))

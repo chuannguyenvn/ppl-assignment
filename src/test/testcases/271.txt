@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-    -a = 1;
+    a = true + false * "yo" / yo % 1_2_3_4_5;
 }

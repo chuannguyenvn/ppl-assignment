@@ -1,5 +1,4 @@
-
 main: function integer()
 {
-    a = !hey && !hey || !hey;
+    a = !true || false && "true" || !(foo && !!bar);
 }

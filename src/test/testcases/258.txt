@@ -1,5 +1,5 @@
 
 main: function integer()
 {
-main: function integer() { main: function integer() {  }main: function integer() {  }main: function integer() {  }main: function integer() {  } }
+    a, b, c, d: void;
 }

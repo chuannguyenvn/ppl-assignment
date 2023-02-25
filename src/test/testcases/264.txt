@@ -1,5 +1,4 @@
 
-main: function integer()
-{
-    a, b, c, d: string = foo(), bar(), goo();
-}
+a: integer = "yo";
+b: void = main();
+c: float = true :: false; 
