@@ -49,13 +49,18 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#return_type_specifier.
-    def visitReturn_type_specifier(self, ctx:MT22Parser.Return_type_specifierContext):
+    # Visit a parse tree produced by MT22Parser#type_specifier.
+    def visitType_specifier(self, ctx:MT22Parser.Type_specifierContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#parameter_type_specifier.
-    def visitParameter_type_specifier(self, ctx:MT22Parser.Parameter_type_specifierContext):
+    # Visit a parse tree produced by MT22Parser#array_type_specifier.
+    def visitArray_type_specifier(self, ctx:MT22Parser.Array_type_specifierContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#dimension_list.
+    def visitDimension_list(self, ctx:MT22Parser.Dimension_listContext):
         return self.visitChildren(ctx)
 
 
@@ -169,6 +174,11 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by MT22Parser#braced_expression.
+    def visitBraced_expression(self, ctx:MT22Parser.Braced_expressionContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by MT22Parser#operands.
     def visitOperands(self, ctx:MT22Parser.OperandsContext):
         return self.visitChildren(ctx)
@@ -176,6 +186,11 @@ class MT22Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by MT22Parser#literal.
     def visitLiteral(self, ctx:MT22Parser.LiteralContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#indexed_array_lit.
+    def visitIndexed_array_lit(self, ctx:MT22Parser.Indexed_array_litContext):
         return self.visitChildren(ctx)
 
 

@@ -1,0 +1,36 @@
+Error on line 4 col 1: <EOF>
+
+(program 
+    (declaration 
+        (function_declaration main : function 
+            (type_specifier integer) 
+            ( ) 
+            (function_body 
+                (block_statement { 
+                    (statement 
+                        (assignment_statement a = 
+                            (expression 
+                                (string_expression 
+                                    (relational_expression 
+                                        (logical_expression 
+                                            (adding_expression 
+                                                (multiplying_expression 
+                                                    (negate_expression 
+                                                        (sign_expression 
+                                                            (braced_expression 
+                                                                (operands 
+                                                                    (function_call foo 
+                                                                        ( 
+                                                                            (expression_list 
+                                                                                (expression 
+                                                                                    (string_expression 
+                                                                                        (relational_expression 
+                                                                                            (logical_expression 
+                                                                                                (adding_expression 
+                                                                                                    (multiplying_expression 
+                                                                                                        (negate_expression 
+                                                                                                            (sign_expression 
+                                                                                                                (braced_expression 
+                                                                                                                    (operands 
+                                                                                                                        (function_call foo 
+                                                                                                                            ( ))))))))))))) )))))))))))) ;)) })))) <EOF>)

@@ -1,32 +1,159 @@
-``` Test 1: main()
-main: function void () {}
+``` 
+main: function integer()
+{
+
+}
 ```
 successful
 ```
 
-``` Test 2: variable declaration
-main: function void () {
-a : float = "5\"";
+```
+main: function integer()
+{
+    a = 1;
 }
 ```
 successful
 ```
 
 
-``` sadf
-x: integer = 65;
-        fact: function integer (n: integer) {
-            if (n == 0) return 1;
-            else return n * fact(n - 1);
-        }
-        inc: function void(out n: integer, delta: integer) {
-            n = n + delta;
-        }
-        main: function void() {
-            delta: integer = fact(3);
-            inc(x, delta);
-            printInteger(x);
-        }
+``` 
+main: function integer()
+{
+    a = a;
+}
 ```
 successful
 ```
+
+``` 
+main: function integer()
+{
+    a = foo();
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = foo(1);
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = foo((1));
+}
+```
+successful
+```
+
+
+``` 
+main: function integer()
+{
+    a = foo(foo());
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = {1, 2, 3};
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = {(1), 2 + 3, foo(4)};
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = 123_456_789;
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    if (1 > 2) a = 1;
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    if (1 > 2) foo();
+    else bar();
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    if (1 > 2) if (2 > 3) if (3 > 4) if (4 > 5) foo();
+    else bar();
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    for (i = 1, i < 10, i + 1) foo();
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    for (i = foo(), foo(), foo()) foo();
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    for (1 = 1, i < 10, i + 1) foo();
+}
+```
+something else
+```
+
+``` 
+main: function integer()
+{
+    for (i = 1, i < 10, i + 1) 
+    for (j = 1, j > 10, j + foo()) 
+    foo();
+}
+```
+successful
+```
+

@@ -23,11 +23,11 @@ variable_declaration
     ;
     
 short_variable_declaration
-    : identifier_list COLON parameter_type_specifier 
+    : identifier_list COLON type_specifier 
     ;
     
 long_variable_declaration
-    : IDENTIFIER COLON parameter_type_specifier ASSIGN expression 
+    : IDENTIFIER COLON type_specifier ASSIGN expression 
     | IDENTIFIER COMMA long_variable_declaration COMMA expression 
     ;
 
@@ -36,28 +36,32 @@ parameter_declaration_list
     ;
 
 parameter_declaration
-    : INHERIT? OUT? IDENTIFIER COLON parameter_type_specifier
+    : INHERIT? OUT? IDENTIFIER COLON type_specifier
     ;
     
 identifier_list
     : IDENTIFIER (COMMA IDENTIFIER)*
     ;
 
-return_type_specifier
-    : parameter_type_specifier
-    | VOID
-    ;
-    
-parameter_type_specifier
+type_specifier
     : INTEGER
     | FLOAT
     | BOOLEAN
     | STRING
-    | ARRAY
+    | VOID
+    | array_type_specifier
+    ;
+
+array_type_specifier
+    : ARRAY dimension_list
+    ;
+    
+dimension_list
+    : INTEGER (COMMA INTEGER)*
     ;
 
 function_declaration
-    : IDENTIFIER COLON FUNCTION return_type_specifier OPEN_PAREN parameter_declaration_list? CLOSE_PAREN (INHERIT IDENTIFIER)? function_body
+    : IDENTIFIER COLON FUNCTION type_specifier OPEN_PAREN parameter_declaration_list? CLOSE_PAREN (INHERIT IDENTIFIER)? function_body
     ;
 
 function_body
@@ -123,9 +127,7 @@ expression_list
     ;
 
 expression
-    : IDENTIFIER
-    | literal
-    | string_expression
+    : string_expression
     ;
 
 string_expression
@@ -160,6 +162,11 @@ negate_expression
     
 sign_expression
     : MINUS sign_expression
+    | braced_expression
+    ;
+    
+braced_expression
+    : OPEN_PAREN expression CLOSE_PAREN
     | operands
     ;
     
@@ -174,11 +181,15 @@ literal
     | FLOAT_LIT
     | BOOLEAN_LIT
     | STRING_LIT
-    | ARRAY_LIT
+    | indexed_array_lit
     ;
     
+indexed_array_lit
+    : OPEN_BRACE expression_list CLOSE_BRACE
+    ;    
+    
 function_call
-    : IDENTIFIER OPEN_PAREN expression_list CLOSE_PAREN
+    : IDENTIFIER OPEN_PAREN expression_list? CLOSE_PAREN
     ;
 
 // Keywords
@@ -234,13 +245,6 @@ ASSIGN : '=';
 COMMA : ',';
 COLON : ':';
 SEMI_COLON : ';';
-
-// BUG: Move this mf somewhere else
-// https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
-// Identifiers
-fragment IDENTIFIER_START : [a-zA-Z_];
-fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
-IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
 
 // Literals
     
@@ -307,17 +311,23 @@ STRING_LIT
     : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )* '"' {self.text = self.text[1:-1]}
     ;
 
-fragment ARRAY_ELEMENT
-    : INTEGER_LIT
-    | FLOAT_LIT
-    | BOOLEAN_LIT
-    | STRING_LIT
-    ;
+//fragment ARRAY_ELEMENT
+//    : INTEGER_LIT
+//    | FLOAT_LIT
+//    | BOOLEAN_LIT
+//    | STRING_LIT
+//    ;
     
-ARRAY_LIT
-    : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
-    ;
+//ARRAY_LIT
+//    : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
+//    ;
 
+// BUG: Move this mf somewhere else
+// https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
+// Identifiers
+fragment IDENTIFIER_START : [a-zA-Z_];
+fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
+IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
 
 COMMENT_LINE
     : '//' ~[\n\r\f]* -> skip
