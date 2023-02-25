@@ -80,7 +80,6 @@ statement
     | return_statement
     | call_statement
     | block_statement
-    | declaration
     ;
  
 assignment_statement
@@ -120,7 +119,7 @@ call_statement
     ;
  
 block_statement
-    : OPEN_BRACE statement* CLOSE_BRACE
+    : OPEN_BRACE (statement | variable_declaration)* CLOSE_BRACE
     ;
        
 expression_list
@@ -152,23 +151,23 @@ adding_expression
     ;
 
 multiplying_expression
-    : multiplying_expression (STAR | DIV | MOD) negate_expression
-    | negate_expression
+    : multiplying_expression (STAR | DIV | MOD) unary_expression
+    | unary_expression
     ;
     
-negate_expression
-    : NOT negate_expression
-    | sign_expression
-    ;
-    
-sign_expression
-    : MINUS sign_expression
+unary_expression
+    : (MINUS | NOT) unary_expression
     | indexing_expression
     ;
     
 indexing_expression
-    : IDENTIFIER OPEN_BRACK expression_list CLOSE_BRACK
+    : IDENTIFIER indexing_expression_continue OPEN_BRACK expression_list CLOSE_BRACK
     | braced_expression
+    ;
+    
+indexing_expression_continue
+    : indexing_expression_continue OPEN_BRACK expression_list CLOSE_BRACK
+    | OPEN_BRACK expression_list CLOSE_BRACK
     ;
     
 braced_expression
@@ -198,7 +197,6 @@ function_call
     : IDENTIFIER OPEN_PAREN expression_list? CLOSE_PAREN
     ;
 
-    
 fragment INTEGER_START
     : [1-9]
     ;  
@@ -244,22 +242,10 @@ BOOLEAN_LIT
     | FALSE
     ;
     
-fragment ESCAPE_SEQUENCE
-    : '\\\''
-    | '\\"'
-    | '\\?'
-    | '\\\\'
-    | '\\a'
-    | '\\b'
-    | '\\f'
-    | '\\n'
-    | '\\r'
-    | ('\\' ('\r' '\n'? | '\n'))
-    | '\\t'
-    | '\\v';
+fragment ESCAPE: '\\' [bfrnt'"\\];
 
 STRING_LIT
-    : '"' ( ESCAPE_SEQUENCE | ~[\\\r\n\f] )*? '"' {self.text = self.text[1:-1]}
+    : '"' ( ESCAPE | ~[\\\r\n\f] )*? '"' {self.text = self.text[1:-1]}
     ;
 
 //fragment ARRAY_ELEMENT
@@ -339,10 +325,8 @@ WS
     : [ \t\r\n]+ -> skip 
     ;
 
-
-fragment CHARACTER: ~[\b\f\r\n\t"\\] | ESCAPE;
-fragment ESCAPE: '\\' [bfrnt"\\];
-fragment NOT_ESCAPE: '\\' ~[bfrnt"\\] ;
+fragment CHARACTER: ~[\b\f\r\n\t'"\\] | ESCAPE;
+fragment NOT_ESCAPE: '\\' ~[bfrnt'"\\] ;
 
 ERROR_CHAR: .{raise ErrorToken(self.text)};
 UNCLOSE_STRING: '"' CHARACTER* ([\b\f\r\n\t\\] | EOF) {
