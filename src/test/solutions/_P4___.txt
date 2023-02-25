@@ -19,5 +19,4 @@ Error on line 4 col 1: <EOF>
                                                         (sign_expression 
                                                             (braced_expression 
                                                                 (operands 
-                                                                    (function_call foo 
-                                                                        ( )))))))))))) ;)) })))) <EOF>)
+                                                                    (literal false))))))))))) ;)) })))) <EOF>)

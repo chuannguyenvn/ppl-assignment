@@ -29,6 +29,33 @@ successful
 ``` 
 main: function integer()
 {
+    a = false;
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = true || false;
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
+    a = 1 + true * "false";
+}
+```
+successful
+```
+
+``` 
+main: function integer()
+{
     a = foo();
 }
 ```

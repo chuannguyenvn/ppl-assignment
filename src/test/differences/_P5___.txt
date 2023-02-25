@@ -8,7 +8,7 @@
 ------------------------------------------------
 main: function integer()
 {
-    a = foo(1);
+    a = true || false;
 }
 ------------------------------------------------
 |              Expected output                 |
@@ -45,6 +45,22 @@ Error on line 4 col 1: <EOF>
 
                                         (logical_expression 
 
+                                            (logical_expression 
+
+                                                (adding_expression 
+
+                                                    (multiplying_expression 
+
+                                                        (negate_expression 
+
+                                                            (sign_expression 
+
+                                                                (braced_expression 
+
+                                                                    (operands 
+
+                                                                        (literal true)))))))) || 
+
                                             (adding_expression 
 
                                                 (multiplying_expression 
@@ -57,30 +73,4 @@ Error on line 4 col 1: <EOF>
 
                                                                 (operands 
 
-                                                                    (function_call foo 
-
-                                                                        ( 
-
-                                                                            (expression_list 
-
-                                                                                (expression 
-
-                                                                                    (string_expression 
-
-                                                                                        (relational_expression 
-
-                                                                                            (logical_expression 
-
-                                                                                                (adding_expression 
-
-                                                                                                    (multiplying_expression 
-
-                                                                                                        (negate_expression 
-
-                                                                                                            (sign_expression 
-
-                                                                                                                (braced_expression 
-
-                                                                                                                    (operands 
-
-                                                                                                                        (literal 1)))))))))))) )))))))))))) ;)) })))) <EOF>)
+                                                                    (literal false))))))))))) ;)) })))) <EOF>)

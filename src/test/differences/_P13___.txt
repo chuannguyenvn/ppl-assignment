@@ -8,8 +8,7 @@
 ------------------------------------------------
 main: function integer()
 {
-    if (1 > 2) if (2 > 3) if (3 > 4) if (4 > 5) foo();
-    else bar();
+    a = 123_456_789;
 }
 ------------------------------------------------
 |              Expected output                 |
@@ -18,7 +17,7 @@ successful
 ------------------------------------------------
 |                Your output                   |
 ------------------------------------------------
-Error on line 5 col 1: <EOF>
+Error on line 4 col 1: <EOF>
 
 (program 
 
@@ -36,196 +35,26 @@ Error on line 5 col 1: <EOF>
 
                     (statement 
 
-                        (if_statement if 
+                        (assignment_statement a = 
 
-                            ( 
+                            (expression 
 
-                                (expression 
+                                (string_expression 
 
-                                    (string_expression 
+                                    (relational_expression 
 
-                                        (relational_expression 
+                                        (logical_expression 
 
-                                            (relational_expression 
+                                            (adding_expression 
 
-                                                (logical_expression 
+                                                (multiplying_expression 
 
-                                                    (adding_expression 
+                                                    (negate_expression 
 
-                                                        (multiplying_expression 
+                                                        (sign_expression 
 
-                                                            (negate_expression 
+                                                            (braced_expression 
 
-                                                                (sign_expression 
+                                                                (operands 
 
-                                                                    (braced_expression 
-
-                                                                        (operands 
-
-                                                                            (literal 1))))))))) > 
-
-                                            (logical_expression 
-
-                                                (adding_expression 
-
-                                                    (multiplying_expression 
-
-                                                        (negate_expression 
-
-                                                            (sign_expression 
-
-                                                                (braced_expression 
-
-                                                                    (operands 
-
-                                                                        (literal 2))))))))))) ) 
-
-                            (statement 
-
-                                (if_statement if 
-
-                                    ( 
-
-                                        (expression 
-
-                                            (string_expression 
-
-                                                (relational_expression 
-
-                                                    (relational_expression 
-
-                                                        (logical_expression 
-
-                                                            (adding_expression 
-
-                                                                (multiplying_expression 
-
-                                                                    (negate_expression 
-
-                                                                        (sign_expression 
-
-                                                                            (braced_expression 
-
-                                                                                (operands 
-
-                                                                                    (literal 2))))))))) > 
-
-                                                    (logical_expression 
-
-                                                        (adding_expression 
-
-                                                            (multiplying_expression 
-
-                                                                (negate_expression 
-
-                                                                    (sign_expression 
-
-                                                                        (braced_expression 
-
-                                                                            (operands 
-
-                                                                                (literal 3))))))))))) ) 
-
-                                    (statement 
-
-                                        (if_statement if 
-
-                                            ( 
-
-                                                (expression 
-
-                                                    (string_expression 
-
-                                                        (relational_expression 
-
-                                                            (relational_expression 
-
-                                                                (logical_expression 
-
-                                                                    (adding_expression 
-
-                                                                        (multiplying_expression 
-
-                                                                            (negate_expression 
-
-                                                                                (sign_expression 
-
-                                                                                    (braced_expression 
-
-                                                                                        (operands 
-
-                                                                                            (literal 3))))))))) > 
-
-                                                            (logical_expression 
-
-                                                                (adding_expression 
-
-                                                                    (multiplying_expression 
-
-                                                                        (negate_expression 
-
-                                                                            (sign_expression 
-
-                                                                                (braced_expression 
-
-                                                                                    (operands 
-
-                                                                                        (literal 4))))))))))) ) 
-
-                                            (statement 
-
-                                                (if_statement if 
-
-                                                    ( 
-
-                                                        (expression 
-
-                                                            (string_expression 
-
-                                                                (relational_expression 
-
-                                                                    (relational_expression 
-
-                                                                        (logical_expression 
-
-                                                                            (adding_expression 
-
-                                                                                (multiplying_expression 
-
-                                                                                    (negate_expression 
-
-                                                                                        (sign_expression 
-
-                                                                                            (braced_expression 
-
-                                                                                                (operands 
-
-                                                                                                    (literal 4))))))))) > 
-
-                                                                    (logical_expression 
-
-                                                                        (adding_expression 
-
-                                                                            (multiplying_expression 
-
-                                                                                (negate_expression 
-
-                                                                                    (sign_expression 
-
-                                                                                        (braced_expression 
-
-                                                                                            (operands 
-
-                                                                                                (literal 5))))))))))) ) 
-
-                                                    (statement 
-
-                                                        (call_statement foo 
-
-                                                            ( ) ;)) else 
-
-                                                    (statement 
-
-                                                        (call_statement bar 
-
-                                                            ( ) ;)))))))))) })))) <EOF>)
+                                                                    (literal 123456789))))))))))) ;)) })))) <EOF>)

@@ -1,4 +1,4 @@
 main: function integer()
 {
-    a = foo();
+    a = false;
 }

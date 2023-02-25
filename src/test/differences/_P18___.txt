@@ -1,5 +1,5 @@
 ================================================================================================================================================================================================================================
-============== WRONG TESTCASE: _P17___ ==========================================================================================================================================================
+============== WRONG TESTCASE: _P18___ ==========================================================================================================================================================
 ================================================================================================================================================================================================================================
 
 
@@ -8,7 +8,7 @@
 ------------------------------------------------
 main: function integer()
 {
-    for (i = 1, i < 10, i + 1) foo();
+    for (i = foo(), foo(), foo()) foo();
 }
 ------------------------------------------------
 |              Expected output                 |
@@ -59,29 +59,15 @@ Error on line 4 col 1: <EOF>
 
                                                                     (operands 
 
-                                                                        (literal 1))))))))))) , 
+                                                                        (function_call foo 
+
+                                                                            ( )))))))))))) , 
 
                                 (expression 
 
                                     (string_expression 
 
                                         (relational_expression 
-
-                                            (relational_expression 
-
-                                                (logical_expression 
-
-                                                    (adding_expression 
-
-                                                        (multiplying_expression 
-
-                                                            (negate_expression 
-
-                                                                (sign_expression 
-
-                                                                    (braced_expression 
-
-                                                                        (operands i)))))))) < 
 
                                             (logical_expression 
 
@@ -97,7 +83,9 @@ Error on line 4 col 1: <EOF>
 
                                                                     (operands 
 
-                                                                        (literal 10))))))))))) , 
+                                                                        (function_call foo 
+
+                                                                            ( )))))))))))) , 
 
                                 (expression 
 
@@ -109,18 +97,6 @@ Error on line 4 col 1: <EOF>
 
                                                 (adding_expression 
 
-                                                    (adding_expression 
-
-                                                        (multiplying_expression 
-
-                                                            (negate_expression 
-
-                                                                (sign_expression 
-
-                                                                    (braced_expression 
-
-                                                                        (operands i)))))) + 
-
                                                     (multiplying_expression 
 
                                                         (negate_expression 
@@ -131,7 +107,9 @@ Error on line 4 col 1: <EOF>
 
                                                                     (operands 
 
-                                                                        (literal 1))))))))))) ) 
+                                                                        (function_call foo 
+
+                                                                            ( )))))))))))) ) 
 
                             (statement 
 

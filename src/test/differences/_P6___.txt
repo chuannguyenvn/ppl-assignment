@@ -8,7 +8,7 @@
 ------------------------------------------------
 main: function integer()
 {
-    a = foo((1));
+    a = 1 + true * "false";
 }
 ------------------------------------------------
 |              Expected output                 |
@@ -47,7 +47,33 @@ Error on line 4 col 1: <EOF>
 
                                             (adding_expression 
 
+                                                (adding_expression 
+
+                                                    (multiplying_expression 
+
+                                                        (negate_expression 
+
+                                                            (sign_expression 
+
+                                                                (braced_expression 
+
+                                                                    (operands 
+
+                                                                        (literal 1))))))) + 
+
                                                 (multiplying_expression 
+
+                                                    (multiplying_expression 
+
+                                                        (negate_expression 
+
+                                                            (sign_expression 
+
+                                                                (braced_expression 
+
+                                                                    (operands 
+
+                                                                        (literal true)))))) * 
 
                                                     (negate_expression 
 
@@ -57,50 +83,4 @@ Error on line 4 col 1: <EOF>
 
                                                                 (operands 
 
-                                                                    (function_call foo 
-
-                                                                        ( 
-
-                                                                            (expression_list 
-
-                                                                                (expression 
-
-                                                                                    (string_expression 
-
-                                                                                        (relational_expression 
-
-                                                                                            (logical_expression 
-
-                                                                                                (adding_expression 
-
-                                                                                                    (multiplying_expression 
-
-                                                                                                        (negate_expression 
-
-                                                                                                            (sign_expression 
-
-                                                                                                                (braced_expression 
-
-                                                                                                                    ( 
-
-                                                                                                                        (expression 
-
-                                                                                                                            (string_expression 
-
-                                                                                                                                (relational_expression 
-
-                                                                                                                                    (logical_expression 
-
-                                                                                                                                        (adding_expression 
-
-                                                                                                                                            (multiplying_expression 
-
-                                                                                                                                                (negate_expression 
-
-                                                                                                                                                    (sign_expression 
-
-                                                                                                                                                        (braced_expression 
-
-                                                                                                                                                            (operands 
-
-                                                                                                                                                                (literal 1))))))))))) ))))))))))) )))))))))))) ;)) })))) <EOF>)
+                                                                    (literal false))))))))))) ;)) })))) <EOF>)

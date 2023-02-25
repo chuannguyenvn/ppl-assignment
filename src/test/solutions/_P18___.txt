@@ -20,18 +20,11 @@ Error on line 4 col 1: <EOF>
                                                             (sign_expression 
                                                                 (braced_expression 
                                                                     (operands 
-                                                                        (literal 1))))))))))) , 
+                                                                        (function_call foo 
+                                                                            ( )))))))))))) , 
                                 (expression 
                                     (string_expression 
                                         (relational_expression 
-                                            (relational_expression 
-                                                (logical_expression 
-                                                    (adding_expression 
-                                                        (multiplying_expression 
-                                                            (negate_expression 
-                                                                (sign_expression 
-                                                                    (braced_expression 
-                                                                        (operands i)))))))) < 
                                             (logical_expression 
                                                 (adding_expression 
                                                     (multiplying_expression 
@@ -39,24 +32,20 @@ Error on line 4 col 1: <EOF>
                                                             (sign_expression 
                                                                 (braced_expression 
                                                                     (operands 
-                                                                        (literal 10))))))))))) , 
+                                                                        (function_call foo 
+                                                                            ( )))))))))))) , 
                                 (expression 
                                     (string_expression 
                                         (relational_expression 
                                             (logical_expression 
                                                 (adding_expression 
-                                                    (adding_expression 
-                                                        (multiplying_expression 
-                                                            (negate_expression 
-                                                                (sign_expression 
-                                                                    (braced_expression 
-                                                                        (operands i)))))) + 
                                                     (multiplying_expression 
                                                         (negate_expression 
                                                             (sign_expression 
                                                                 (braced_expression 
                                                                     (operands 
-                                                                        (literal 1))))))))))) ) 
+                                                                        (function_call foo 
+                                                                            ( )))))))))))) ) 
                             (statement 
                                 (call_statement foo 
                                     ( ) ;)))) })))) <EOF>)

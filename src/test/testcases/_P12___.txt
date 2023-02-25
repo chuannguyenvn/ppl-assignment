@@ -1,5 +1,4 @@
 main: function integer()
 {
-    if (1 > 2) foo();
-    else bar();
+    a = {(1), 2 + 3, foo(4)};
 }

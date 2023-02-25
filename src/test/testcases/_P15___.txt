@@ -1,4 +1,5 @@
 main: function integer()
 {
-    for (i = foo(), foo(), foo()) foo();
+    if (1 > 2) foo();
+    else bar();
 }

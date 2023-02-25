@@ -1,0 +1,113 @@
+Error on line 6 col 1: <EOF>
+
+(program 
+    (declaration 
+        (function_declaration main : function 
+            (type_specifier integer) 
+            ( ) 
+            (function_body 
+                (block_statement { 
+                    (statement 
+                        (for_statement for 
+                            ( i = 
+                                (expression 
+                                    (string_expression 
+                                        (relational_expression 
+                                            (logical_expression 
+                                                (adding_expression 
+                                                    (multiplying_expression 
+                                                        (negate_expression 
+                                                            (sign_expression 
+                                                                (braced_expression 
+                                                                    (operands 
+                                                                        (literal 1))))))))))) , 
+                                (expression 
+                                    (string_expression 
+                                        (relational_expression 
+                                            (relational_expression 
+                                                (logical_expression 
+                                                    (adding_expression 
+                                                        (multiplying_expression 
+                                                            (negate_expression 
+                                                                (sign_expression 
+                                                                    (braced_expression 
+                                                                        (operands i)))))))) < 
+                                            (logical_expression 
+                                                (adding_expression 
+                                                    (multiplying_expression 
+                                                        (negate_expression 
+                                                            (sign_expression 
+                                                                (braced_expression 
+                                                                    (operands 
+                                                                        (literal 10))))))))))) , 
+                                (expression 
+                                    (string_expression 
+                                        (relational_expression 
+                                            (logical_expression 
+                                                (adding_expression 
+                                                    (adding_expression 
+                                                        (multiplying_expression 
+                                                            (negate_expression 
+                                                                (sign_expression 
+                                                                    (braced_expression 
+                                                                        (operands i)))))) + 
+                                                    (multiplying_expression 
+                                                        (negate_expression 
+                                                            (sign_expression 
+                                                                (braced_expression 
+                                                                    (operands 
+                                                                        (literal 1))))))))))) ) 
+                            (statement 
+                                (for_statement for 
+                                    ( j = 
+                                        (expression 
+                                            (string_expression 
+                                                (relational_expression 
+                                                    (logical_expression 
+                                                        (adding_expression 
+                                                            (multiplying_expression 
+                                                                (negate_expression 
+                                                                    (sign_expression 
+                                                                        (braced_expression 
+                                                                            (operands 
+                                                                                (literal 1))))))))))) , 
+                                        (expression 
+                                            (string_expression 
+                                                (relational_expression 
+                                                    (relational_expression 
+                                                        (logical_expression 
+                                                            (adding_expression 
+                                                                (multiplying_expression 
+                                                                    (negate_expression 
+                                                                        (sign_expression 
+                                                                            (braced_expression 
+                                                                                (operands j)))))))) > 
+                                                    (logical_expression 
+                                                        (adding_expression 
+                                                            (multiplying_expression 
+                                                                (negate_expression 
+                                                                    (sign_expression 
+                                                                        (braced_expression 
+                                                                            (operands 
+                                                                                (literal 10))))))))))) , 
+                                        (expression 
+                                            (string_expression 
+                                                (relational_expression 
+                                                    (logical_expression 
+                                                        (adding_expression 
+                                                            (adding_expression 
+                                                                (multiplying_expression 
+                                                                    (negate_expression 
+                                                                        (sign_expression 
+                                                                            (braced_expression 
+                                                                                (operands j)))))) + 
+                                                            (multiplying_expression 
+                                                                (negate_expression 
+                                                                    (sign_expression 
+                                                                        (braced_expression 
+                                                                            (operands 
+                                                                                (function_call foo 
+                                                                                    ( )))))))))))) ) 
+                                    (statement 
+                                        (call_statement foo 
+                                            ( ) ;)))))) })))) <EOF>)

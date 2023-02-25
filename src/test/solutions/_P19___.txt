@@ -1,0 +1,17 @@
+Error on line 4 col 1: <EOF>
+
+(program 
+    (declaration 
+        (function_declaration main : function 
+            (type_specifier integer) 
+            ( ) 
+            (function_body 
+                (block_statement { 
+                    (statement 
+                        (for_statement for 
+                            ( 1 = 1 ,)) statement 
+                        (statement i < 10 ,) statement 
+                        (statement i + 1 )) 
+                    (statement 
+                        (call_statement foo 
+                            ( ) ;)) })))) <EOF>)

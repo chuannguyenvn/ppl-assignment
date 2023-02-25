@@ -22,7 +22,7 @@ class LexerSuite(unittest.TestCase):
 
 lexer_suite_test_method_template = """
     def test{0}(self):
-        self.assertTrue(TestLexer.test(r\'\'\'{1}\'\'\', r\'\'\'{2}\'\'\', {3}))
+        self.assertTrue(TestLexer.test(\'\'\'{1}\'\'\', \'\'\'{2}\'\'\', {3}))
 
 """
 
@@ -36,8 +36,8 @@ class ParserSuite(unittest.TestCase):
 
 parser_suite_test_method_template = """
     def test{0}(self):
-        input = r\'\'\'{1}\'\'\'
-        expect = r\'\'\'{2}\'\'\'
+        input = \'\'\'{1}\'\'\'
+        expect = \'\'\'{2}\'\'\'
         self.assertTrue(TestParser.test(input, expect, {3}))
 """
 
@@ -163,7 +163,6 @@ def generate_tests():
 
 
 def main(argv):
-    generate_tests()
     if len(argv) < 1:
         printUsage()
     elif argv[0] == 'gen':
@@ -178,6 +177,8 @@ def main(argv):
                             "-no-listener", "-visitor", "main/mt22/parser/MT22.g4"])
         if not (TARGET_DIR + "/" + GENERATE_DIR) in sys.path:
             sys.path.append(TARGET_DIR + "/" + GENERATE_DIR)
+        if len(argv) == 3 and argv[2] == 'spicy':
+            generate_tests()
         if len(argv) < 2:
             printUsage()
         elif argv[1] == 'LexerSuite':

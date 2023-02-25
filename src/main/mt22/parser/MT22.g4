@@ -192,61 +192,6 @@ function_call
     : IDENTIFIER OPEN_PAREN expression_list? CLOSE_PAREN
     ;
 
-// Keywords
-AUTO : 'auto';
-BREAK : 'break';
-BOOLEAN : 'boolean';
-DO : 'do';
-ELSE : 'else';
-FALSE : 'false';
-FLOAT : 'float';
-FOR : 'for';
-FUNCTION : 'function';
-IF : 'if';
-INTEGER : 'integer';
-RETURN : 'return';
-STRING : 'string';
-TRUE : 'true';
-WHILE : 'while';
-VOID : 'void';
-OUT : 'out';
-CONTINUE : 'continue';
-OF : 'of';
-INHERIT : 'inherit';
-ARRAY : 'array';
-
-// Operators
-ADD : '+';
-MINUS : '-';
-STAR : '*';
-DIV : '/';
-MOD : '%';
-NOT : '!';
-AND_AND : '&&';
-OR_OR : '||';
-EQUAL : '==';
-NOT_EQUAL : '!=';
-LESS : '<';
-LESS_EQUAL : '<=';
-GREATER : '>';
-GREATER_EQUAL : '>=';
-DOUBLE_COLON : '::';
-
-
-// Separators
-OPEN_PAREN : '(';
-CLOSE_PAREN : ')';
-OPEN_BRACK : '[';
-CLOSE_BRACK : ']';
-OPEN_BRACE : '{';
-CLOSE_BRACE : '}';
-DOT : '.';
-ASSIGN : '=';
-COMMA : ',';
-COLON : ':';
-SEMI_COLON : ';';
-
-// Literals
     
 fragment INTEGER_START
     : [1-9]
@@ -321,6 +266,63 @@ STRING_LIT
 //ARRAY_LIT
 //    : OPEN_BRACE ARRAY_ELEMENT (',' ARRAY_ELEMENT)* CLOSE_BRACE
 //    ;
+
+
+// Keywords
+AUTO : 'auto';
+BREAK : 'break';
+BOOLEAN : 'boolean';
+DO : 'do';
+ELSE : 'else';
+FALSE : 'false';
+FLOAT : 'float';
+FOR : 'for';
+FUNCTION : 'function';
+IF : 'if';
+INTEGER : 'integer';
+RETURN : 'return';
+STRING : 'string';
+TRUE : 'true';
+WHILE : 'while';
+VOID : 'void';
+OUT : 'out';
+CONTINUE : 'continue';
+OF : 'of';
+INHERIT : 'inherit';
+ARRAY : 'array';
+
+// Operators
+ADD : '+';
+MINUS : '-';
+STAR : '*';
+DIV : '/';
+MOD : '%';
+NOT : '!';
+AND_AND : '&&';
+OR_OR : '||';
+EQUAL : '==';
+NOT_EQUAL : '!=';
+LESS : '<';
+LESS_EQUAL : '<=';
+GREATER : '>';
+GREATER_EQUAL : '>=';
+DOUBLE_COLON : '::';
+
+
+// Separators
+OPEN_PAREN : '(';
+CLOSE_PAREN : ')';
+OPEN_BRACK : '[';
+CLOSE_BRACK : ']';
+OPEN_BRACE : '{';
+CLOSE_BRACE : '}';
+DOT : '.';
+ASSIGN : '=';
+COMMA : ',';
+COLON : ':';
+SEMI_COLON : ';';
+
+// Literals
 
 // BUG: Move this mf somewhere else
 // https://stackoverflow.com/questions/45840873/why-does-the-order-of-antlr4-tokens-matter
