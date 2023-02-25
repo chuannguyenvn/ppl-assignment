@@ -1,0 +1,1 @@
+n : function void  ( inherit D : integer     , out u : auto   , inherit out f : array [ 0 ] of string      , inherit I : auto   , IkR0 : array [ 2_7_2 ] of string      , MdtgSen : auto   , inherit out W : auto   , UTd : auto    ) { zUJ  : array [ 0 , 0 ] of boolean    ;  continue ;   h  : float   ;  }    r : function void  ( out DJ : auto    ) inherit c { }    d  : string   ;   

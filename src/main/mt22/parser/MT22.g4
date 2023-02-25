@@ -46,6 +46,7 @@ identifier_list
 
 type_specifier
     : array_type_specifier
+    | AUTO
     | INTEGER
     | FLOAT
     | BOOLEAN

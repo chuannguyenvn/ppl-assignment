@@ -164,18 +164,18 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#negate_expression.
-    def visitNegate_expression(self, ctx:MT22Parser.Negate_expressionContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MT22Parser#sign_expression.
-    def visitSign_expression(self, ctx:MT22Parser.Sign_expressionContext):
+    # Visit a parse tree produced by MT22Parser#unary_expression.
+    def visitUnary_expression(self, ctx:MT22Parser.Unary_expressionContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MT22Parser#indexing_expression.
     def visitIndexing_expression(self, ctx:MT22Parser.Indexing_expressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#indexing_expression_continue.
+    def visitIndexing_expression_continue(self, ctx:MT22Parser.Indexing_expression_continueContext):
         return self.visitChildren(ctx)
 
 

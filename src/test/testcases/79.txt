@@ -1,0 +1,1 @@
+ob : function string     ( out O : auto    ) { ACWno  : integer   ;  }    

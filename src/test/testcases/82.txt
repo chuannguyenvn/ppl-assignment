@@ -1,0 +1,1 @@
+T , G  : array [ 0 ] of boolean    ;   

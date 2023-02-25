@@ -1,0 +1,1 @@
+QpVoH : function void  ( ) inherit A { }    

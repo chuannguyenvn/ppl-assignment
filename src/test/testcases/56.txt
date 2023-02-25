@@ -1,0 +1,1 @@
+z : function void  ( ) inherit W9t { }    

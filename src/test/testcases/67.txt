@@ -1,0 +1,1 @@
+cR : function string     ( ) { H  : array [ 0 , 9 ] of integer    ;  }    NAuk , NS  : array [ 79 , 4 ] of integer    ;   

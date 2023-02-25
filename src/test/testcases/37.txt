@@ -1,0 +1,1 @@
+K : function void  ( inherit dX : array [ 0 , 6_6 ] of string       ) { }    

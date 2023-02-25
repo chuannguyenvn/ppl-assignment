@@ -1,0 +1,1 @@
+Q  : integer   ;   zCF : function auto   ( ) inherit L { }    
