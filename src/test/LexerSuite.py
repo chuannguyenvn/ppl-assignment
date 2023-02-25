@@ -3,7 +3,6 @@ from TestUtils import TestLexer
 
 
 class LexerSuite(unittest.TestCase):
-
     def test_101(self):
         self.assertTrue(TestLexer.test("   ", "<EOF>", 101))
 
@@ -316,3 +315,5 @@ main: function          void ()
     a         : auto =    1 + 2 :: 3 * 		4 == 	5;
 }
 """, "main,:,function,void,(,),{,a,:,auto,=,1,+,2,::,3,*,4,==,5,;,},<EOF>", 200))
+        
+

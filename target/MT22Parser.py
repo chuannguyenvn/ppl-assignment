@@ -12,7 +12,11 @@ else:
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3<")
+<<<<<<< HEAD
         buf.write("\u0183\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+=======
+        buf.write("\u0177\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
@@ -24,6 +28,7 @@ def serializedATN():
         buf.write("\6t\n\6\3\7\3\7\3\7\7\7y\n\7\f\7\16\7|\13\7\3\b\5\b\177")
         buf.write("\n\b\3\b\5\b\u0082\n\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\7\t")
         buf.write("\u008b\n\t\f\t\16\t\u008e\13\t\3\n\3\n\3\n\3\n\3\n\3\n")
+<<<<<<< HEAD
         buf.write("\3\n\5\n\u0097\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13")
         buf.write("\3\f\3\f\3\f\7\f\u00a3\n\f\f\f\16\f\u00a6\13\f\3\r\3\r")
         buf.write("\3\r\3\r\3\r\3\r\5\r\u00ae\n\r\3\r\3\r\3\r\5\r\u00b3\n")
@@ -100,6 +105,83 @@ def serializedATN():
         buf.write("\5\"\22\2\u00bb\u00c3\5$\23\2\u00bc\u00c3\5&\24\2\u00bd")
         buf.write("\u00c3\5(\25\2\u00be\u00c3\5*\26\2\u00bf\u00c3\5,\27\2")
         buf.write("\u00c0\u00c3\5.\30\2\u00c1\u00c3\5\60\31\2\u00c2\u00b8")
+=======
+        buf.write("\5\n\u0096\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\f")
+        buf.write("\3\f\3\f\7\f\u00a2\n\f\f\f\16\f\u00a5\13\f\3\r\3\r\3\r")
+        buf.write("\3\r\3\r\3\r\5\r\u00ad\n\r\3\r\3\r\3\r\5\r\u00b2\n\r\3")
+        buf.write("\r\3\r\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3")
+        buf.write("\17\3\17\3\17\3\17\5\17\u00c3\n\17\3\20\3\20\3\20\3\20")
+        buf.write("\3\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u00d1\n")
+        buf.write("\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22")
+        buf.write("\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\3\24\3\24\3\24")
+        buf.write("\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\26\3\26\3\26")
+        buf.write("\3\27\3\27\5\27\u00f5\n\27\3\27\3\27\3\30\3\30\3\30\5")
+        buf.write("\30\u00fc\n\30\3\30\3\30\3\30\3\31\3\31\7\31\u0103\n\31")
+        buf.write("\f\31\16\31\u0106\13\31\3\31\3\31\3\32\3\32\3\32\7\32")
+        buf.write("\u010d\n\32\f\32\16\32\u0110\13\32\3\33\3\33\3\34\3\34")
+        buf.write("\3\34\3\34\3\34\5\34\u0119\n\34\3\35\3\35\3\35\3\35\3")
+        buf.write("\35\3\35\7\35\u0121\n\35\f\35\16\35\u0124\13\35\3\36\3")
+        buf.write("\36\3\36\3\36\3\36\3\36\7\36\u012c\n\36\f\36\16\36\u012f")
+        buf.write("\13\36\3\37\3\37\3\37\3\37\3\37\3\37\7\37\u0137\n\37\f")
+        buf.write("\37\16\37\u013a\13\37\3 \3 \3 \3 \3 \3 \7 \u0142\n \f")
+        buf.write(" \16 \u0145\13 \3!\3!\3!\5!\u014a\n!\3\"\3\"\3\"\5\"\u014f")
+        buf.write("\n\"\3#\3#\3#\3#\3#\3#\5#\u0157\n#\3$\3$\3$\3$\3$\5$\u015e")
+        buf.write("\n$\3%\3%\3%\5%\u0163\n%\3&\3&\3&\3&\3&\5&\u016a\n&\3")
+        buf.write("\'\3\'\3\'\3\'\3(\3(\3(\5(\u0173\n(\3(\3(\3(\2\68:<>)")
+        buf.write("\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62")
+        buf.write("\64\668:<>@BDFHJLN\2\7\6\2\t\t\r\r\21\21\23\23\3\2$)\3")
+        buf.write("\2\"#\3\2\34\35\3\2\36 \2\u017e\2Q\3\2\2\2\4Y\3\2\2\2")
+        buf.write("\6a\3\2\2\2\bc\3\2\2\2\ns\3\2\2\2\fu\3\2\2\2\16~\3\2\2")
+        buf.write("\2\20\u0087\3\2\2\2\22\u0095\3\2\2\2\24\u0097\3\2\2\2")
+        buf.write("\26\u009e\3\2\2\2\30\u00a6\3\2\2\2\32\u00b5\3\2\2\2\34")
+        buf.write("\u00c2\3\2\2\2\36\u00c4\3\2\2\2 \u00c9\3\2\2\2\"\u00d2")
+        buf.write("\3\2\2\2$\u00de\3\2\2\2&\u00e4\3\2\2\2(\u00ec\3\2\2\2")
+        buf.write("*\u00ef\3\2\2\2,\u00f2\3\2\2\2.\u00f8\3\2\2\2\60\u0100")
+        buf.write("\3\2\2\2\62\u0109\3\2\2\2\64\u0111\3\2\2\2\66\u0118\3")
+        buf.write("\2\2\28\u011a\3\2\2\2:\u0125\3\2\2\2<\u0130\3\2\2\2>\u013b")
+        buf.write("\3\2\2\2@\u0149\3\2\2\2B\u014e\3\2\2\2D\u0156\3\2\2\2")
+        buf.write("F\u015d\3\2\2\2H\u0162\3\2\2\2J\u0169\3\2\2\2L\u016b\3")
+        buf.write("\2\2\2N\u016f\3\2\2\2PR\5\4\3\2QP\3\2\2\2RS\3\2\2\2SQ")
+        buf.write("\3\2\2\2ST\3\2\2\2TU\3\2\2\2UV\7\2\2\3V\3\3\2\2\2WZ\5")
+        buf.write("\6\4\2XZ\5\30\r\2YW\3\2\2\2YX\3\2\2\2Z\5\3\2\2\2[\\\5")
+        buf.write("\b\5\2\\]\7\65\2\2]b\3\2\2\2^_\5\n\6\2_`\7\65\2\2`b\3")
+        buf.write("\2\2\2a[\3\2\2\2a^\3\2\2\2b\7\3\2\2\2cd\5\20\t\2de\7\64")
+        buf.write("\2\2ef\5\22\n\2f\t\3\2\2\2gh\7\66\2\2hi\7\64\2\2ij\5\22")
+        buf.write("\n\2jk\7\62\2\2kl\5\64\33\2lt\3\2\2\2mn\7\66\2\2no\7\63")
+        buf.write("\2\2op\5\n\6\2pq\7\63\2\2qr\5\64\33\2rt\3\2\2\2sg\3\2")
+        buf.write("\2\2sm\3\2\2\2t\13\3\2\2\2uz\5\16\b\2vw\7\63\2\2wy\5\16")
+        buf.write("\b\2xv\3\2\2\2y|\3\2\2\2zx\3\2\2\2z{\3\2\2\2{\r\3\2\2")
+        buf.write("\2|z\3\2\2\2}\177\7\32\2\2~}\3\2\2\2~\177\3\2\2\2\177")
+        buf.write("\u0081\3\2\2\2\u0080\u0082\7\27\2\2\u0081\u0080\3\2\2")
+        buf.write("\2\u0081\u0082\3\2\2\2\u0082\u0083\3\2\2\2\u0083\u0084")
+        buf.write("\7\66\2\2\u0084\u0085\7\64\2\2\u0085\u0086\5\22\n\2\u0086")
+        buf.write("\17\3\2\2\2\u0087\u008c\7\66\2\2\u0088\u0089\7\63\2\2")
+        buf.write("\u0089\u008b\7\66\2\2\u008a\u0088\3\2\2\2\u008b\u008e")
+        buf.write("\3\2\2\2\u008c\u008a\3\2\2\2\u008c\u008d\3\2\2\2\u008d")
+        buf.write("\21\3\2\2\2\u008e\u008c\3\2\2\2\u008f\u0096\5\24\13\2")
+        buf.write("\u0090\u0096\7\21\2\2\u0091\u0096\7\r\2\2\u0092\u0096")
+        buf.write("\7\t\2\2\u0093\u0096\7\23\2\2\u0094\u0096\7\26\2\2\u0095")
+        buf.write("\u008f\3\2\2\2\u0095\u0090\3\2\2\2\u0095\u0091\3\2\2\2")
+        buf.write("\u0095\u0092\3\2\2\2\u0095\u0093\3\2\2\2\u0095\u0094\3")
+        buf.write("\2\2\2\u0096\23\3\2\2\2\u0097\u0098\7\33\2\2\u0098\u0099")
+        buf.write("\7-\2\2\u0099\u009a\5\26\f\2\u009a\u009b\7.\2\2\u009b")
+        buf.write("\u009c\7\31\2\2\u009c\u009d\t\2\2\2\u009d\25\3\2\2\2\u009e")
+        buf.write("\u00a3\7\3\2\2\u009f\u00a0\7\63\2\2\u00a0\u00a2\7\3\2")
+        buf.write("\2\u00a1\u009f\3\2\2\2\u00a2\u00a5\3\2\2\2\u00a3\u00a1")
+        buf.write("\3\2\2\2\u00a3\u00a4\3\2\2\2\u00a4\27\3\2\2\2\u00a5\u00a3")
+        buf.write("\3\2\2\2\u00a6\u00a7\7\66\2\2\u00a7\u00a8\7\64\2\2\u00a8")
+        buf.write("\u00a9\7\17\2\2\u00a9\u00aa\5\22\n\2\u00aa\u00ac\7+\2")
+        buf.write("\2\u00ab\u00ad\5\f\7\2\u00ac\u00ab\3\2\2\2\u00ac\u00ad")
+        buf.write("\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00b1\7,\2\2\u00af")
+        buf.write("\u00b0\7\32\2\2\u00b0\u00b2\7\66\2\2\u00b1\u00af\3\2\2")
+        buf.write("\2\u00b1\u00b2\3\2\2\2\u00b2\u00b3\3\2\2\2\u00b3\u00b4")
+        buf.write("\5\32\16\2\u00b4\31\3\2\2\2\u00b5\u00b6\5\60\31\2\u00b6")
+        buf.write("\33\3\2\2\2\u00b7\u00c3\5\36\20\2\u00b8\u00c3\5 \21\2")
+        buf.write("\u00b9\u00c3\5\"\22\2\u00ba\u00c3\5$\23\2\u00bb\u00c3")
+        buf.write("\5&\24\2\u00bc\u00c3\5(\25\2\u00bd\u00c3\5*\26\2\u00be")
+        buf.write("\u00c3\5,\27\2\u00bf\u00c3\5.\30\2\u00c0\u00c3\5\60\31")
+        buf.write("\2\u00c1\u00c3\5\4\3\2\u00c2\u00b7\3\2\2\2\u00c2\u00b8")
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
         buf.write("\3\2\2\2\u00c2\u00b9\3\2\2\2\u00c2\u00ba\3\2\2\2\u00c2")
         buf.write("\u00bb\3\2\2\2\u00c2\u00bc\3\2\2\2\u00c2\u00bd\3\2\2\2")
         buf.write("\u00c2\u00be\3\2\2\2\u00c2\u00bf\3\2\2\2\u00c2\u00c0\3")
@@ -126,6 +208,7 @@ def serializedATN():
         buf.write("\2\u00f7-\3\2\2\2\u00f8\u00f9\7\66\2\2\u00f9\u00fb\7+")
         buf.write("\2\2\u00fa\u00fc\5\62\32\2\u00fb\u00fa\3\2\2\2\u00fb\u00fc")
         buf.write("\3\2\2\2\u00fc\u00fd\3\2\2\2\u00fd\u00fe\7,\2\2\u00fe")
+<<<<<<< HEAD
         buf.write("\u00ff\7\65\2\2\u00ff/\3\2\2\2\u0100\u0105\7/\2\2\u0101")
         buf.write("\u0104\5\34\17\2\u0102\u0104\5\6\4\2\u0103\u0101\3\2\2")
         buf.write("\2\u0103\u0102\3\2\2\2\u0104\u0107\3\2\2\2\u0105\u0103")
@@ -183,6 +266,60 @@ def serializedATN():
         buf.write("\u00a4\u00ad\u00b2\u00c2\u00d0\u00f4\u00fb\u0103\u0105")
         buf.write("\u010f\u0119\u0123\u012e\u0139\u0144\u014a\u0153\u0161")
         buf.write("\u0169\u016e\u0175\u017e")
+=======
+        buf.write("\u00ff\7\65\2\2\u00ff/\3\2\2\2\u0100\u0104\7/\2\2\u0101")
+        buf.write("\u0103\5\34\17\2\u0102\u0101\3\2\2\2\u0103\u0106\3\2\2")
+        buf.write("\2\u0104\u0102\3\2\2\2\u0104\u0105\3\2\2\2\u0105\u0107")
+        buf.write("\3\2\2\2\u0106\u0104\3\2\2\2\u0107\u0108\7\60\2\2\u0108")
+        buf.write("\61\3\2\2\2\u0109\u010e\5\64\33\2\u010a\u010b\7\63\2\2")
+        buf.write("\u010b\u010d\5\64\33\2\u010c\u010a\3\2\2\2\u010d\u0110")
+        buf.write("\3\2\2\2\u010e\u010c\3\2\2\2\u010e\u010f\3\2\2\2\u010f")
+        buf.write("\63\3\2\2\2\u0110\u010e\3\2\2\2\u0111\u0112\5\66\34\2")
+        buf.write("\u0112\65\3\2\2\2\u0113\u0114\58\35\2\u0114\u0115\7*\2")
+        buf.write("\2\u0115\u0116\58\35\2\u0116\u0119\3\2\2\2\u0117\u0119")
+        buf.write("\58\35\2\u0118\u0113\3\2\2\2\u0118\u0117\3\2\2\2\u0119")
+        buf.write("\67\3\2\2\2\u011a\u011b\b\35\1\2\u011b\u011c\5:\36\2\u011c")
+        buf.write("\u0122\3\2\2\2\u011d\u011e\f\4\2\2\u011e\u011f\t\3\2\2")
+        buf.write("\u011f\u0121\58\35\5\u0120\u011d\3\2\2\2\u0121\u0124\3")
+        buf.write("\2\2\2\u0122\u0120\3\2\2\2\u0122\u0123\3\2\2\2\u01239")
+        buf.write("\3\2\2\2\u0124\u0122\3\2\2\2\u0125\u0126\b\36\1\2\u0126")
+        buf.write("\u0127\5<\37\2\u0127\u012d\3\2\2\2\u0128\u0129\f\4\2\2")
+        buf.write("\u0129\u012a\t\4\2\2\u012a\u012c\5<\37\2\u012b\u0128\3")
+        buf.write("\2\2\2\u012c\u012f\3\2\2\2\u012d\u012b\3\2\2\2\u012d\u012e")
+        buf.write("\3\2\2\2\u012e;\3\2\2\2\u012f\u012d\3\2\2\2\u0130\u0131")
+        buf.write("\b\37\1\2\u0131\u0132\5> \2\u0132\u0138\3\2\2\2\u0133")
+        buf.write("\u0134\f\4\2\2\u0134\u0135\t\5\2\2\u0135\u0137\5> \2\u0136")
+        buf.write("\u0133\3\2\2\2\u0137\u013a\3\2\2\2\u0138\u0136\3\2\2\2")
+        buf.write("\u0138\u0139\3\2\2\2\u0139=\3\2\2\2\u013a\u0138\3\2\2")
+        buf.write("\2\u013b\u013c\b \1\2\u013c\u013d\5@!\2\u013d\u0143\3")
+        buf.write("\2\2\2\u013e\u013f\f\4\2\2\u013f\u0140\t\6\2\2\u0140\u0142")
+        buf.write("\5@!\2\u0141\u013e\3\2\2\2\u0142\u0145\3\2\2\2\u0143\u0141")
+        buf.write("\3\2\2\2\u0143\u0144\3\2\2\2\u0144?\3\2\2\2\u0145\u0143")
+        buf.write("\3\2\2\2\u0146\u0147\7!\2\2\u0147\u014a\5@!\2\u0148\u014a")
+        buf.write("\5B\"\2\u0149\u0146\3\2\2\2\u0149\u0148\3\2\2\2\u014a")
+        buf.write("A\3\2\2\2\u014b\u014c\7\35\2\2\u014c\u014f\5B\"\2\u014d")
+        buf.write("\u014f\5D#\2\u014e\u014b\3\2\2\2\u014e\u014d\3\2\2\2\u014f")
+        buf.write("C\3\2\2\2\u0150\u0151\7\66\2\2\u0151\u0152\7-\2\2\u0152")
+        buf.write("\u0153\5\62\32\2\u0153\u0154\7.\2\2\u0154\u0157\3\2\2")
+        buf.write("\2\u0155\u0157\5F$\2\u0156\u0150\3\2\2\2\u0156\u0155\3")
+        buf.write("\2\2\2\u0157E\3\2\2\2\u0158\u0159\7+\2\2\u0159\u015a\5")
+        buf.write("\64\33\2\u015a\u015b\7,\2\2\u015b\u015e\3\2\2\2\u015c")
+        buf.write("\u015e\5H%\2\u015d\u0158\3\2\2\2\u015d\u015c\3\2\2\2\u015e")
+        buf.write("G\3\2\2\2\u015f\u0163\5J&\2\u0160\u0163\5N(\2\u0161\u0163")
+        buf.write("\7\66\2\2\u0162\u015f\3\2\2\2\u0162\u0160\3\2\2\2\u0162")
+        buf.write("\u0161\3\2\2\2\u0163I\3\2\2\2\u0164\u016a\7\3\2\2\u0165")
+        buf.write("\u016a\7\4\2\2\u0166\u016a\7\5\2\2\u0167\u016a\7\6\2\2")
+        buf.write("\u0168\u016a\5L\'\2\u0169\u0164\3\2\2\2\u0169\u0165\3")
+        buf.write("\2\2\2\u0169\u0166\3\2\2\2\u0169\u0167\3\2\2\2\u0169\u0168")
+        buf.write("\3\2\2\2\u016aK\3\2\2\2\u016b\u016c\7/\2\2\u016c\u016d")
+        buf.write("\5\62\32\2\u016d\u016e\7\60\2\2\u016eM\3\2\2\2\u016f\u0170")
+        buf.write("\7\66\2\2\u0170\u0172\7+\2\2\u0171\u0173\5\62\32\2\u0172")
+        buf.write("\u0171\3\2\2\2\u0172\u0173\3\2\2\2\u0173\u0174\3\2\2\2")
+        buf.write("\u0174\u0175\7,\2\2\u0175O\3\2\2\2 SYasz~\u0081\u008c")
+        buf.write("\u0095\u00a3\u00ac\u00b1\u00c2\u00d0\u00f4\u00fb\u0104")
+        buf.write("\u010e\u0118\u0122\u012d\u0138\u0143\u0149\u014e\u0156")
+        buf.write("\u015d\u0162\u0169\u0172")
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
         return buf.getvalue()
 
 
@@ -269,7 +406,11 @@ class MT22Parser ( Parser ):
                    "call_statement", "block_statement", "expression_list", 
                    "expression", "string_expression", "relational_expression", 
                    "logical_expression", "adding_expression", "multiplying_expression", 
+<<<<<<< HEAD
                    "unary_expression", "indexing_expression", "indexing_expression_continue", 
+=======
+                   "negate_expression", "sign_expression", "indexing_expression", 
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                    "braced_expression", "operand", "literal", "indexed_array_lit", 
                    "function_call" ]
 
@@ -2111,7 +2252,11 @@ class MT22Parser ( Parser ):
         self.enterRule(localctx, 50, self.RULE_expression)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 272
+=======
+            self.state = 271
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self.string_expression()
         except RecognitionException as re:
             localctx.exception = re
@@ -2156,6 +2301,7 @@ class MT22Parser ( Parser ):
         localctx = MT22Parser.String_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 52, self.RULE_string_expression)
         try:
+<<<<<<< HEAD
             self.state = 279
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
@@ -2166,12 +2312,28 @@ class MT22Parser ( Parser ):
                 self.state = 275
                 self.match(MT22Parser.DOUBLE_COLON)
                 self.state = 276
+=======
+            self.state = 278
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 273
+                self.relational_expression(0)
+                self.state = 274
+                self.match(MT22Parser.DOUBLE_COLON)
+                self.state = 275
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.relational_expression(0)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 278
+=======
+                self.state = 277
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.relational_expression(0)
                 pass
 
@@ -2242,10 +2404,17 @@ class MT22Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 282
             self.logical_expression(0)
             self._ctx.stop = self._input.LT(-1)
             self.state = 289
+=======
+            self.state = 281
+            self.logical_expression(0)
+            self._ctx.stop = self._input.LT(-1)
+            self.state = 288
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,20,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -2255,20 +2424,34 @@ class MT22Parser ( Parser ):
                     _prevctx = localctx
                     localctx = MT22Parser.Relational_expressionContext(self, _parentctx, _parentState)
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_relational_expression)
+<<<<<<< HEAD
                     self.state = 284
                     if not self.precpred(self._ctx, 2):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 285
+=======
+                    self.state = 283
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 284
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                     _la = self._input.LA(1)
                     if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << MT22Parser.EQUAL) | (1 << MT22Parser.NOT_EQUAL) | (1 << MT22Parser.LESS) | (1 << MT22Parser.LESS_EQUAL) | (1 << MT22Parser.GREATER) | (1 << MT22Parser.GREATER_EQUAL))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
                         self.consume()
+<<<<<<< HEAD
                     self.state = 286
                     self.relational_expression(3) 
                 self.state = 291
+=======
+                    self.state = 285
+                    self.relational_expression(3) 
+                self.state = 290
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,20,self._ctx)
 
@@ -2323,10 +2506,17 @@ class MT22Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 293
             self.adding_expression(0)
             self._ctx.stop = self._input.LT(-1)
             self.state = 300
+=======
+            self.state = 292
+            self.adding_expression(0)
+            self._ctx.stop = self._input.LT(-1)
+            self.state = 299
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,21,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -2336,20 +2526,34 @@ class MT22Parser ( Parser ):
                     _prevctx = localctx
                     localctx = MT22Parser.Logical_expressionContext(self, _parentctx, _parentState)
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_logical_expression)
+<<<<<<< HEAD
                     self.state = 295
                     if not self.precpred(self._ctx, 2):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 296
+=======
+                    self.state = 294
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 295
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                     _la = self._input.LA(1)
                     if not(_la==MT22Parser.AND_AND or _la==MT22Parser.OR_OR):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
                         self.consume()
+<<<<<<< HEAD
                     self.state = 297
                     self.adding_expression(0) 
                 self.state = 302
+=======
+                    self.state = 296
+                    self.adding_expression(0) 
+                self.state = 301
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,21,self._ctx)
 
@@ -2404,10 +2608,17 @@ class MT22Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 304
             self.multiplying_expression(0)
             self._ctx.stop = self._input.LT(-1)
             self.state = 311
+=======
+            self.state = 303
+            self.multiplying_expression(0)
+            self._ctx.stop = self._input.LT(-1)
+            self.state = 310
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,22,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -2417,20 +2628,34 @@ class MT22Parser ( Parser ):
                     _prevctx = localctx
                     localctx = MT22Parser.Adding_expressionContext(self, _parentctx, _parentState)
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_adding_expression)
+<<<<<<< HEAD
                     self.state = 306
                     if not self.precpred(self._ctx, 2):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 307
+=======
+                    self.state = 305
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 306
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                     _la = self._input.LA(1)
                     if not(_la==MT22Parser.ADD or _la==MT22Parser.MINUS):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
                         self.consume()
+<<<<<<< HEAD
                     self.state = 308
                     self.multiplying_expression(0) 
                 self.state = 313
+=======
+                    self.state = 307
+                    self.multiplying_expression(0) 
+                self.state = 312
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,22,self._ctx)
 
@@ -2488,10 +2713,17 @@ class MT22Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 315
             self.unary_expression()
             self._ctx.stop = self._input.LT(-1)
             self.state = 322
+=======
+            self.state = 314
+            self.negate_expression()
+            self._ctx.stop = self._input.LT(-1)
+            self.state = 321
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,23,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
@@ -2501,20 +2733,34 @@ class MT22Parser ( Parser ):
                     _prevctx = localctx
                     localctx = MT22Parser.Multiplying_expressionContext(self, _parentctx, _parentState)
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_multiplying_expression)
+<<<<<<< HEAD
                     self.state = 317
                     if not self.precpred(self._ctx, 2):
                         from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 318
+=======
+                    self.state = 316
+                    if not self.precpred(self._ctx, 2):
+                        from antlr4.error.Errors import FailedPredicateException
+                        raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                    self.state = 317
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                     _la = self._input.LA(1)
                     if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << MT22Parser.STAR) | (1 << MT22Parser.DIV) | (1 << MT22Parser.MOD))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
                         self.consume()
+<<<<<<< HEAD
                     self.state = 319
                     self.unary_expression() 
                 self.state = 324
+=======
+                    self.state = 318
+                    self.negate_expression() 
+                self.state = 323
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,23,self._ctx)
 
@@ -2566,11 +2812,16 @@ class MT22Parser ( Parser ):
         self.enterRule(localctx, 62, self.RULE_unary_expression)
         self._la = 0 # Token type
         try:
+<<<<<<< HEAD
             self.state = 328
+=======
+            self.state = 327
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [MT22Parser.MINUS, MT22Parser.NOT]:
                 self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
                 self.state = 325
                 _la = self._input.LA(1)
                 if not(_la==MT22Parser.MINUS or _la==MT22Parser.NOT):
@@ -2580,11 +2831,22 @@ class MT22Parser ( Parser ):
                     self.consume()
                 self.state = 326
                 self.unary_expression()
+=======
+                self.state = 324
+                self.match(MT22Parser.NOT)
+                self.state = 325
+                self.negate_expression()
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 pass
             elif token in [MT22Parser.INTEGER_LIT, MT22Parser.FLOAT_LIT, MT22Parser.BOOLEAN_LIT, MT22Parser.STRING_LIT, MT22Parser.OPEN_PAREN, MT22Parser.OPEN_BRACE, MT22Parser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 327
                 self.indexing_expression()
+=======
+                self.state = 326
+                self.sign_expression()
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2643,11 +2905,16 @@ class MT22Parser ( Parser ):
         localctx = MT22Parser.Indexing_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 64, self.RULE_indexing_expression)
         try:
+<<<<<<< HEAD
             self.state = 337
+=======
+            self.state = 332
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
                 self.state = 330
                 self.match(MT22Parser.IDENTIFIER)
                 self.state = 331
@@ -2658,12 +2925,23 @@ class MT22Parser ( Parser ):
                 self.expression_list()
                 self.state = 334
                 self.match(MT22Parser.CLOSE_BRACK)
+=======
+                self.state = 329
+                self.match(MT22Parser.MINUS)
+                self.state = 330
+                self.sign_expression()
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 336
                 self.braced_expression()
+=======
+                self.state = 331
+                self.indexing_expression()
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 pass
 
 
@@ -2716,6 +2994,7 @@ class MT22Parser ( Parser ):
         _startState = 66
         self.enterRecursionRule(localctx, 66, self.RULE_indexing_expression_continue, _p)
         try:
+<<<<<<< HEAD
             self.enterOuterAlt(localctx, 1)
             self.state = 340
             self.match(MT22Parser.OPEN_BRACK)
@@ -2747,6 +3026,29 @@ class MT22Parser ( Parser ):
                 self.state = 353
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,26,self._ctx)
+=======
+            self.state = 340
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,25,self._ctx)
+            if la_ == 1:
+                self.enterOuterAlt(localctx, 1)
+                self.state = 334
+                self.match(MT22Parser.IDENTIFIER)
+                self.state = 335
+                self.match(MT22Parser.OPEN_BRACK)
+                self.state = 336
+                self.expression_list()
+                self.state = 337
+                self.match(MT22Parser.CLOSE_BRACK)
+                pass
+
+            elif la_ == 2:
+                self.enterOuterAlt(localctx, 2)
+                self.state = 339
+                self.braced_expression()
+                pass
+
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -2795,21 +3097,37 @@ class MT22Parser ( Parser ):
         localctx = MT22Parser.Braced_expressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 68, self.RULE_braced_expression)
         try:
+<<<<<<< HEAD
             self.state = 359
+=======
+            self.state = 347
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [MT22Parser.OPEN_PAREN]:
                 self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
                 self.state = 354
                 self.match(MT22Parser.OPEN_PAREN)
                 self.state = 355
                 self.expression()
                 self.state = 356
+=======
+                self.state = 342
+                self.match(MT22Parser.OPEN_PAREN)
+                self.state = 343
+                self.expression()
+                self.state = 344
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.match(MT22Parser.CLOSE_PAREN)
                 pass
             elif token in [MT22Parser.INTEGER_LIT, MT22Parser.FLOAT_LIT, MT22Parser.BOOLEAN_LIT, MT22Parser.STRING_LIT, MT22Parser.OPEN_BRACE, MT22Parser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 358
+=======
+                self.state = 346
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.operand()
                 pass
             else:
@@ -2859,24 +3177,40 @@ class MT22Parser ( Parser ):
         localctx = MT22Parser.OperandContext(self, self._ctx, self.state)
         self.enterRule(localctx, 70, self.RULE_operand)
         try:
+<<<<<<< HEAD
             self.state = 364
+=======
+            self.state = 352
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,28,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
                 self.state = 361
+=======
+                self.state = 349
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.literal()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 362
+=======
+                self.state = 350
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.function_call()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
+<<<<<<< HEAD
                 self.state = 363
+=======
+                self.state = 351
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.match(MT22Parser.IDENTIFIER)
                 pass
 
@@ -2930,32 +3264,56 @@ class MT22Parser ( Parser ):
         localctx = MT22Parser.LiteralContext(self, self._ctx, self.state)
         self.enterRule(localctx, 72, self.RULE_literal)
         try:
+<<<<<<< HEAD
             self.state = 371
+=======
+            self.state = 359
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [MT22Parser.INTEGER_LIT]:
                 self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
                 self.state = 366
+=======
+                self.state = 354
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.match(MT22Parser.INTEGER_LIT)
                 pass
             elif token in [MT22Parser.FLOAT_LIT]:
                 self.enterOuterAlt(localctx, 2)
+<<<<<<< HEAD
                 self.state = 367
+=======
+                self.state = 355
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.match(MT22Parser.FLOAT_LIT)
                 pass
             elif token in [MT22Parser.BOOLEAN_LIT]:
                 self.enterOuterAlt(localctx, 3)
+<<<<<<< HEAD
                 self.state = 368
+=======
+                self.state = 356
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.match(MT22Parser.BOOLEAN_LIT)
                 pass
             elif token in [MT22Parser.STRING_LIT]:
                 self.enterOuterAlt(localctx, 4)
+<<<<<<< HEAD
                 self.state = 369
+=======
+                self.state = 357
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.match(MT22Parser.STRING_LIT)
                 pass
             elif token in [MT22Parser.OPEN_BRACE]:
                 self.enterOuterAlt(localctx, 5)
+<<<<<<< HEAD
                 self.state = 370
+=======
+                self.state = 358
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 self.indexed_array_lit()
                 pass
             else:
@@ -3005,11 +3363,19 @@ class MT22Parser ( Parser ):
         self.enterRule(localctx, 74, self.RULE_indexed_array_lit)
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 373
             self.match(MT22Parser.OPEN_BRACE)
             self.state = 374
             self.expression_list()
             self.state = 375
+=======
+            self.state = 361
+            self.match(MT22Parser.OPEN_BRACE)
+            self.state = 362
+            self.expression_list()
+            self.state = 363
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self.match(MT22Parser.CLOSE_BRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -3059,6 +3425,7 @@ class MT22Parser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
+<<<<<<< HEAD
             self.state = 377
             self.match(MT22Parser.IDENTIFIER)
             self.state = 378
@@ -3072,6 +3439,21 @@ class MT22Parser ( Parser ):
 
 
             self.state = 382
+=======
+            self.state = 365
+            self.match(MT22Parser.IDENTIFIER)
+            self.state = 366
+            self.match(MT22Parser.OPEN_PAREN)
+            self.state = 368
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << MT22Parser.INTEGER_LIT) | (1 << MT22Parser.FLOAT_LIT) | (1 << MT22Parser.BOOLEAN_LIT) | (1 << MT22Parser.STRING_LIT) | (1 << MT22Parser.MINUS) | (1 << MT22Parser.NOT) | (1 << MT22Parser.OPEN_PAREN) | (1 << MT22Parser.OPEN_BRACE) | (1 << MT22Parser.IDENTIFIER))) != 0):
+                self.state = 367
+                self.expression_list()
+
+
+            self.state = 370
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
             self.match(MT22Parser.CLOSE_PAREN)
         except RecognitionException as re:
             localctx.exception = re
@@ -3099,6 +3481,7 @@ class MT22Parser ( Parser ):
 
     def relational_expression_sempred(self, localctx:Relational_expressionContext, predIndex:int):
             if predIndex == 0:
+<<<<<<< HEAD
                 return self.precpred(self._ctx, 2)
          
 
@@ -3119,6 +3502,23 @@ class MT22Parser ( Parser ):
 
     def indexing_expression_continue_sempred(self, localctx:Indexing_expression_continueContext, predIndex:int):
             if predIndex == 4:
+=======
+                return self.precpred(self._ctx, 2)
+         
+
+    def logical_expression_sempred(self, localctx:Logical_expressionContext, predIndex:int):
+            if predIndex == 1:
+                return self.precpred(self._ctx, 2)
+         
+
+    def adding_expression_sempred(self, localctx:Adding_expressionContext, predIndex:int):
+            if predIndex == 2:
+                return self.precpred(self._ctx, 2)
+         
+
+    def multiplying_expression_sempred(self, localctx:Multiplying_expressionContext, predIndex:int):
+            if predIndex == 3:
+>>>>>>> 9fd6921 (fix: string concat and relational statement assoc)
                 return self.precpred(self._ctx, 2)
          
 
