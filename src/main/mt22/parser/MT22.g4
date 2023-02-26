@@ -9,35 +9,43 @@ options{
 	language=Python3;
 }
 
-program: declaration+ EOF;
+program: declaration_list EOF;
+declaration_list: declaration declaration_list_tail | declaration;
+declaration_list_tail: declaration declaration_list_tail | ;
 declaration: variable_declaration | function_declaration;
 variable_declaration: short_variable_declaration SEMI_COLON | long_variable_declaration SEMI_COLON;
 short_variable_declaration: identifier_list COLON type_specifier;
-long_variable_declaration: IDENTIFIER COLON type_specifier ASSIGN expr | IDENTIFIER COMMA long_variable_declaration COMMA expr ;
-parameter_declaration_list: parameter_declaration (COMMA parameter_declaration)*;
-parameter_declaration: INHERIT? OUT? IDENTIFIER COLON type_specifier;
-identifier_list: IDENTIFIER (COMMA IDENTIFIER)*;
-type_specifier: array_type_specifier | AUTO | INTEGER | FLOAT | BOOLEAN | STRING | VOID;
+long_variable_declaration: IDENTIFIER COLON type_specifier ASSIGN expr | IDENTIFIER COMMA long_variable_declaration COMMA expr;
+parameter_declaration_list: parameter_declaration parameter_declaration_list_tail | parameter_declaration;
+parameter_declaration_list_tail: COMMA parameter_declaration parameter_declaration_list_tail | ;
+parameter_declaration: (INHERIT | ) (OUT | ) IDENTIFIER COLON type_specifier;
+identifier_list: IDENTIFIER identifier_list_tail | IDENTIFIER;
+identifier_list_tail: COMMA IDENTIFIER identifier_list_tail | ;
+type_specifier: array_type_specifier | AUTO | INTEGER | FLOAT | BOOLEAN | STRING;
 array_type_specifier: ARRAY OPEN_BRACK dimension_list CLOSE_BRACK OF (INTEGER | FLOAT | BOOLEAN | STRING);
-dimension_list: INTEGER_LIT (COMMA INTEGER_LIT)*;
-function_declaration: IDENTIFIER COLON FUNCTION type_specifier OPEN_PAREN parameter_declaration_list? CLOSE_PAREN (INHERIT IDENTIFIER)? function_body;
+dimension_list: INTEGER_LIT dimension_list_tail | INTEGER_LIT;
+dimension_list_tail: COMMA INTEGER_LIT dimension_list_tail | ;
+function_declaration: IDENTIFIER COLON FUNCTION (type_specifier | VOID) OPEN_PAREN (parameter_declaration_list | ) CLOSE_PAREN (INHERIT IDENTIFIER | ) function_body;
 function_body: block_statement;
 
 
-statement: assignment_statement | if_statement | for_statement | while_statement | do_while_statement | break_statement | continue_statement | return_statement | call_statement | block_statement ;
+statement: assignment_statement | if_statement | for_statement | while_statement | do_while_statement | break_statement | continue_statement | return_statement | call_statement | block_statement;
 assignment_statement: (IDENTIFIER | indexing_expr) ASSIGN expr SEMI_COLON;
-if_statement: IF OPEN_PAREN expr CLOSE_PAREN statement (ELSE statement)?;
+if_statement: IF OPEN_PAREN expr CLOSE_PAREN statement (ELSE statement | );
 for_statement: FOR OPEN_PAREN (IDENTIFIER | indexing_expr) ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
 while_statement: WHILE OPEN_PAREN expr CLOSE_PAREN statement;
 do_while_statement: DO statement WHILE OPEN_PAREN expr CLOSE_PAREN SEMI_COLON;
 break_statement: BREAK SEMI_COLON;
 continue_statement: CONTINUE SEMI_COLON;
-return_statement: RETURN expr? SEMI_COLON;
+return_statement: RETURN (expr | ) SEMI_COLON;
 call_statement: function_call SEMI_COLON;
-block_statement: OPEN_BRACE (statement | variable_declaration)* CLOSE_BRACE;
+block_statement: OPEN_BRACE block_statement_element_list CLOSE_BRACE;
+block_statement_element_list: (statement | variable_declaration) block_statement_element_list_tail | ;
+block_statement_element_list_tail: (statement | variable_declaration) block_statement_element_list_tail | ;
 
 
-expr_list: expr (COMMA expr)*;
+expr_list: expr expr_list_tail | expr;
+expr_list_tail: COMMA expr expr_list_tail | ;
 expr: string_expr;
 string_expr: relational_expr DOUBLE_COLON relational_expr | relational_expr;
 relational_expr: logical_expr (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER | GREATER_EQUAL) logical_expr | logical_expr;
@@ -51,15 +59,15 @@ indexing_expr_fall_through: indexing_expr | braced_expr;
 braced_expr: OPEN_PAREN expr CLOSE_PAREN | operand;
 operand: literal | function_call | IDENTIFIER;
 literal: INTEGER_LIT | FLOAT_LIT | BOOLEAN_LIT | STRING_LIT | indexed_array_lit;
-indexed_array_lit: OPEN_BRACE expr_list? CLOSE_BRACE;    
-function_call: IDENTIFIER OPEN_PAREN expr_list? CLOSE_PAREN;
+indexed_array_lit: OPEN_BRACE (expr_list | ) CLOSE_BRACE;    
+function_call: IDENTIFIER OPEN_PAREN (expr_list | ) CLOSE_PAREN;
 
 
 fragment INTEGER_START: [1-9];  
 fragment DIGIT: [0-9];
 fragment UNDERSCORE: '_';
-fragment INTEGER_CONTINUE: UNDERSCORE? DIGIT;
-fragment INTEGER_PART: '0' | INTEGER_START INTEGER_CONTINUE*;
+fragment INTEGER_TAIL: UNDERSCORE? DIGIT;
+fragment INTEGER_PART: '0' | INTEGER_START INTEGER_TAIL*;
 fragment DECIMAL_PART: '.' DIGIT*;
 fragment EXPONENT_PART: [eE] [+-]? DIGIT+;
 INTEGER_LIT: INTEGER_PART {self.text = self.text.replace('_','')};
@@ -129,10 +137,10 @@ fragment IDENTIFIER_START : [a-zA-Z_];
 fragment IDENTIFIER_CONTINUE : [a-zA-Z0-9_];
 IDENTIFIER : IDENTIFIER_START IDENTIFIER_CONTINUE*;
 
+WS: [ \t\r\n]+ -> skip;
+
 COMMENT_LINE: '//' ~[\n\r\f]* -> skip;
 COMMENT_BLOCK: '/*' .*? '*/' -> skip;
-
-WS: [ \t\r\n]+ -> skip;
 
 fragment CHARACTER: ~[\b\f\r\n\t'"\\] | ESCAPE;
 fragment NOT_ESCAPE: '\\' ~[bfrnt'"\\] ;

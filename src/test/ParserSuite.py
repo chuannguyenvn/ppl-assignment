@@ -68,7 +68,7 @@ main: function integer()
     def test_208(self):
         input = """
 // this statement suggests that Tai is a meaningless person (void), and everything he said is of utmost untrustworthy (false)
-Tai /* there is just about a million people with the name "Tai", therefore I deny any personal attack accusation */ : void = false; // this statement is also a valid statement, which means it is factual"""
+Tai /* there is just about a million people with the name "Tai", therefore I deny any personal attack accusation */ : boolean = false; // this statement is also a valid statement, which means it is factual"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 208))
 
@@ -522,7 +522,7 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a, b, c, d: void;
+    a, b, c, d: string;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 258))
@@ -549,7 +549,7 @@ main: function integer()
         input = """
 main: function integer()
 {
-    a, b: void = c, d;
+    a, b: float = c, d;
 }"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 261))
@@ -575,7 +575,7 @@ main: function integer()
     def test_264(self):
         input = """
 a: integer = "yo";
-b: void = main();
+b: string = main();
 c: float = true :: false; """
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 264))
@@ -584,7 +584,7 @@ c: float = true :: false; """
         input = """
 main: integer = -69;
 main: function integer() { }
-main: function void() { main: void = -main(!69);}"""
+main: function void() { main: integer = -main(!69);}"""
         expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 265))
 

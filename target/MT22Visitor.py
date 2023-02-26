@@ -39,6 +39,11 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by MT22Parser#parameter_declaration_list_tail.
+    def visitParameter_declaration_list_tail(self, ctx:MT22Parser.Parameter_declaration_list_tailContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by MT22Parser#parameter_declaration.
     def visitParameter_declaration(self, ctx:MT22Parser.Parameter_declarationContext):
         return self.visitChildren(ctx)
@@ -46,6 +51,11 @@ class MT22Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by MT22Parser#identifier_list.
     def visitIdentifier_list(self, ctx:MT22Parser.Identifier_listContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#identifier_list_tail.
+    def visitIdentifier_list_tail(self, ctx:MT22Parser.Identifier_list_tailContext):
         return self.visitChildren(ctx)
 
 
@@ -61,6 +71,11 @@ class MT22Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by MT22Parser#dimension_list.
     def visitDimension_list(self, ctx:MT22Parser.Dimension_listContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#dimension_list_tail.
+    def visitDimension_list_tail(self, ctx:MT22Parser.Dimension_list_tailContext):
         return self.visitChildren(ctx)
 
 
@@ -131,6 +146,11 @@ class MT22Visitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by MT22Parser#expr_list.
     def visitExpr_list(self, ctx:MT22Parser.Expr_listContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#expr_list_tail.
+    def visitExpr_list_tail(self, ctx:MT22Parser.Expr_list_tailContext):
         return self.visitChildren(ctx)
 
 
