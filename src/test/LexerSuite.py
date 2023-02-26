@@ -145,7 +145,7 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(""" "\\n" """, "\\n,<EOF>", 147))
 
     def test_148(self):
-        self.assertTrue(TestLexer.test(""" "\n" """, "Unclosed String: ", 148))
+        self.assertTrue(TestLexer.test(""" "\n" """, '''Error Token "''', 148))
 
     def test_149(self):
         self.assertTrue(TestLexer.test("+", "+,<EOF>", 149))

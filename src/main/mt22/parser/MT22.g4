@@ -147,13 +147,12 @@ fragment NOT_ESCAPE: '\\' ~[bfrnt'"\\] ;
 
 ERROR_CHAR: .{raise ErrorToken(self.text)};
 
-UNCLOSE_STRING: '"' CHARACTER* ([\b\f\r\n\t\\] | EOF) {
-    esc = ['\b', '\t', '\n', '\f', '\r', '\\']
-    temp = str(self.text)
-    if temp[-1] in esc:
-        raise UncloseString(temp[1:-1])
+UNCLOSE_STRING: '"' CHARACTER* ('\n' | EOF) {
+    text_string = str(self.text)
+    if text_string[-1] == '\n':
+        raise UncloseString(text_string[1:-1])
     else :
-        raise UncloseString(temp[1:])
+        raise UncloseString(text_string[1:])
 };
 
 ILLEGAL_ESCAPE:'"' CHARACTER* NOT_ESCAPE {
