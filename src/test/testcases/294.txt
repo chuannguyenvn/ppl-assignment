@@ -1,5 +1,5 @@
 
-        main : function void () {
-            x = (a == b) == c;
-        }
-        
+main: function void ()
+{
+    return 1;
+}
