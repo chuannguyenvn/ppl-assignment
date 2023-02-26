@@ -27,7 +27,7 @@ function_body: block_statement;
 statement: assignment_statement | if_statement | for_statement | while_statement | do_while_statement | break_statement | continue_statement | return_statement | call_statement | block_statement ;
 assignment_statement: (IDENTIFIER | indexing_expr) ASSIGN expr SEMI_COLON;
 if_statement: IF OPEN_PAREN expr CLOSE_PAREN statement (ELSE statement)?;
-for_statement: FOR OPEN_PAREN IDENTIFIER ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
+for_statement: FOR OPEN_PAREN (IDENTIFIER | indexing_expr) ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
 while_statement: WHILE OPEN_PAREN expr CLOSE_PAREN statement;
 do_while_statement: DO statement WHILE OPEN_PAREN expr CLOSE_PAREN SEMI_COLON;
 break_statement: BREAK SEMI_COLON;
