@@ -1,1 +1,1 @@
-integer,<EOF>
+;,<EOF>

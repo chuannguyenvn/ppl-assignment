@@ -1,1 +1,1 @@
-while,<EOF>
+do,<EOF>

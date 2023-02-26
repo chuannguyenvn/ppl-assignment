@@ -1,1 +1,1 @@
-return,<EOF>
+auto,<EOF>

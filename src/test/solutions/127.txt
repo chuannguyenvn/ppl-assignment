@@ -1,1 +1,1 @@
-a,b,c,<EOF>
+abc0,<EOF>

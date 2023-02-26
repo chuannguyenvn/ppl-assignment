@@ -1,1 +1,1 @@
-continue,<EOF>
+float,<EOF>
