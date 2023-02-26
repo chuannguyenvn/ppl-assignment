@@ -1,1 +1,1 @@
-IDENTIFIER,<EOF>
+1.23,<EOF>

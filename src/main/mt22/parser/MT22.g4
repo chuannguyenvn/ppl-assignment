@@ -233,9 +233,10 @@ INTEGER_LIT
     ;
 
 FLOAT_LIT
-    : INTEGER_PART DECIMAL_PART EXPONENT_PART? {self.text = self.text.replace('_','')}
+    : INTEGER_PART DECIMAL_PART EXPONENT_PART {self.text = self.text.replace('_','')}
     | INTEGER_PART DECIMAL_PART {self.text = self.text.replace('_','')}
     | INTEGER_PART EXPONENT_PART {self.text = self.text.replace('_','')}
+    | DECIMAL_PART EXPONENT_PART {self.text = self.text.replace('_','')}
     ;
 
 BOOLEAN_LIT
