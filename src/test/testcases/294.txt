@@ -1,1 +1,5 @@
 
+        main : function void () {
+            x = (a == b) == c;
+        }
+        

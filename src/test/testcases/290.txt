@@ -1,1 +1,5 @@
 
+main: function integer()
+{
+    for (arr[0] = 1, arr[arr[0]] != 1, arr[arr[arr[0]]] + 1) { }
+}

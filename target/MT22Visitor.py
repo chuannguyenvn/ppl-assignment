@@ -174,6 +174,11 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by MT22Parser#indexing_expr_fall_through.
+    def visitIndexing_expr_fall_through(self, ctx:MT22Parser.Indexing_expr_fall_throughContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by MT22Parser#braced_expr.
     def visitBraced_expr(self, ctx:MT22Parser.Braced_exprContext):
         return self.visitChildren(ctx)

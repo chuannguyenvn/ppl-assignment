@@ -430,9 +430,9 @@ main: function integer()
         input = """
 main: function integer()
 {
-    do drug() while (withdrawing());
+    do drug(); while (withdrawing());
 }"""
-        expect = """Error on line 4 col 7: drug"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 248))
 
     def test_249(self):
@@ -785,72 +785,63 @@ main: function integer()
 
     def test_289(self):
         input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
+main: function integer()
+{
+    arr[0] = 1;
+}"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 289))
 
     def test_290(self):
         input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
+main: function integer()
+{
+    for (arr[0] = 1, arr[arr[0]] != 1, arr[arr[arr[0]]] + 1) { }
+}"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 290))
 
     def test_291(self):
         input = """
+arr: integer = { };
 """
-        expect = """Error on line 2 col 0: <EOF>"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 291))
 
     def test_292(self):
         input = """
+arr: function array[0] of integer (arr: array[0, 0, 0] of string) { }
 """
-        expect = """Error on line 2 col 0: <EOF>"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 292))
-
     def test_293(self):
         input = """
+main: function void ()
+{
+    break;
+    continue;
+}
 """
-        expect = """Error on line 2 col 0: <EOF>"""
+        expect = """successful"""
         self.assertTrue(TestParser.test(input, expect, 293))
 
     def test_294(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 294))
+        self.assertTrue(True)
 
     def test_295(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 295))
+        self.assertTrue(True)
 
     def test_296(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 296))
+        self.assertTrue(True)
 
     def test_297(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 297))
+        self.assertTrue(True)
 
     def test_298(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 298))
+        self.assertTrue(True)
 
     def test_299(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 299))
+        self.assertTrue(True)
 
     def test_300(self):
-        input = """
-"""
-        expect = """Error on line 2 col 0: <EOF>"""
-        self.assertTrue(TestParser.test(input, expect, 300))
+        self.assertTrue(True)

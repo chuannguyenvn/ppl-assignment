@@ -25,9 +25,9 @@ function_body: block_statement;
 
 
 statement: assignment_statement | if_statement | for_statement | while_statement | do_while_statement | break_statement | continue_statement | return_statement | call_statement | block_statement ;
-assignment_statement: IDENTIFIER ASSIGN expr SEMI_COLON;
+assignment_statement: (IDENTIFIER | indexing_expr) ASSIGN expr SEMI_COLON;
 if_statement: IF OPEN_PAREN expr CLOSE_PAREN statement (ELSE statement)?;
-for_statement: FOR OPEN_PAREN IDENTIFIER ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
+for_statement: FOR OPEN_PAREN (IDENTIFIER | indexing_expr) ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
 while_statement: WHILE OPEN_PAREN expr CLOSE_PAREN statement;
 do_while_statement: DO statement WHILE OPEN_PAREN expr CLOSE_PAREN SEMI_COLON;
 break_statement: BREAK SEMI_COLON;
@@ -44,12 +44,13 @@ relational_expr: logical_expr (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER |
 logical_expr: logical_expr (AND_AND | OR_OR) adding_expr | adding_expr;
 adding_expr: adding_expr (ADD | MINUS) multiplying_expr | multiplying_expr;
 multiplying_expr: multiplying_expr (STAR | DIV | MOD) unary_expr | unary_expr;
-unary_expr: (MINUS | NOT) unary_expr | indexing_expr;
-indexing_expr: braced_expr OPEN_BRACK expr_list CLOSE_BRACK | braced_expr;
+unary_expr: (MINUS | NOT) unary_expr | indexing_expr_fall_through;
+indexing_expr: IDENTIFIER OPEN_BRACK expr_list CLOSE_BRACK;
+indexing_expr_fall_through: indexing_expr | braced_expr;
 braced_expr: OPEN_PAREN expr CLOSE_PAREN | operand;
 operand: literal | function_call | IDENTIFIER;
 literal: INTEGER_LIT | FLOAT_LIT | BOOLEAN_LIT | STRING_LIT | indexed_array_lit;
-indexed_array_lit: OPEN_BRACE expr_list CLOSE_BRACE;    
+indexed_array_lit: OPEN_BRACE expr_list? CLOSE_BRACE;    
 function_call: IDENTIFIER OPEN_PAREN expr_list? CLOSE_PAREN;
 
 
@@ -136,6 +137,7 @@ fragment CHARACTER: ~[\b\f\r\n\t'"\\] | ESCAPE;
 fragment NOT_ESCAPE: '\\' ~[bfrnt'"\\] ;
 
 ERROR_CHAR: .{raise ErrorToken(self.text)};
+
 UNCLOSE_STRING: '"' CHARACTER* ([\b\f\r\n\t\\] | EOF) {
     esc = ['\b', '\t', '\n', '\f', '\r', '\\']
     temp = str(self.text)
@@ -144,6 +146,7 @@ UNCLOSE_STRING: '"' CHARACTER* ([\b\f\r\n\t\\] | EOF) {
     else :
         raise UncloseString(temp[1:])
 };
+
 ILLEGAL_ESCAPE:'"' CHARACTER* NOT_ESCAPE {
     temp = str(self.text)
     raise IllegalEscape(temp[1:])

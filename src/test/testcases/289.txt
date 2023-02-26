@@ -1,1 +1,5 @@
 
+main: function integer()
+{
+    arr[0] = 1;
+}
