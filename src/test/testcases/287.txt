@@ -1,4 +1,4 @@
 main: function integer()
 {
-    a = 1 < ("two" >= three == (four(5.6, 7 != true))); 
+    a = 1 < ("two" >= three + (four(5.6, 7 != true))); 
 }

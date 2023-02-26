@@ -129,58 +129,53 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#expression_list.
-    def visitExpression_list(self, ctx:MT22Parser.Expression_listContext):
+    # Visit a parse tree produced by MT22Parser#expr_list.
+    def visitExpr_list(self, ctx:MT22Parser.Expr_listContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#expression.
-    def visitExpression(self, ctx:MT22Parser.ExpressionContext):
+    # Visit a parse tree produced by MT22Parser#expr.
+    def visitExpr(self, ctx:MT22Parser.ExprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#string_expression.
-    def visitString_expression(self, ctx:MT22Parser.String_expressionContext):
+    # Visit a parse tree produced by MT22Parser#string_expr.
+    def visitString_expr(self, ctx:MT22Parser.String_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#relational_expression.
-    def visitRelational_expression(self, ctx:MT22Parser.Relational_expressionContext):
+    # Visit a parse tree produced by MT22Parser#relational_expr.
+    def visitRelational_expr(self, ctx:MT22Parser.Relational_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#logical_expression.
-    def visitLogical_expression(self, ctx:MT22Parser.Logical_expressionContext):
+    # Visit a parse tree produced by MT22Parser#logical_expr.
+    def visitLogical_expr(self, ctx:MT22Parser.Logical_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#adding_expression.
-    def visitAdding_expression(self, ctx:MT22Parser.Adding_expressionContext):
+    # Visit a parse tree produced by MT22Parser#adding_expr.
+    def visitAdding_expr(self, ctx:MT22Parser.Adding_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#multiplying_expression.
-    def visitMultiplying_expression(self, ctx:MT22Parser.Multiplying_expressionContext):
+    # Visit a parse tree produced by MT22Parser#multiplying_expr.
+    def visitMultiplying_expr(self, ctx:MT22Parser.Multiplying_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#unary_expression.
-    def visitUnary_expression(self, ctx:MT22Parser.Unary_expressionContext):
+    # Visit a parse tree produced by MT22Parser#unary_expr.
+    def visitUnary_expr(self, ctx:MT22Parser.Unary_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#indexing_expression.
-    def visitIndexing_expression(self, ctx:MT22Parser.Indexing_expressionContext):
+    # Visit a parse tree produced by MT22Parser#indexing_expr.
+    def visitIndexing_expr(self, ctx:MT22Parser.Indexing_exprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#indexing_expression_continue.
-    def visitIndexing_expression_continue(self, ctx:MT22Parser.Indexing_expression_continueContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MT22Parser#braced_expression.
-    def visitBraced_expression(self, ctx:MT22Parser.Braced_expressionContext):
+    # Visit a parse tree produced by MT22Parser#braced_expr.
+    def visitBraced_expr(self, ctx:MT22Parser.Braced_exprContext):
         return self.visitChildren(ctx)
 
 
