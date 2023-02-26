@@ -164,8 +164,13 @@ class MT22Visitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MT22Parser#unary_expr.
-    def visitUnary_expr(self, ctx:MT22Parser.Unary_exprContext):
+    # Visit a parse tree produced by MT22Parser#negate_expr.
+    def visitNegate_expr(self, ctx:MT22Parser.Negate_exprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MT22Parser#sign_expr.
+    def visitSign_expr(self, ctx:MT22Parser.Sign_exprContext):
         return self.visitChildren(ctx)
 
 

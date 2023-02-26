@@ -27,13 +27,13 @@ function_body: block_statement;
 statement: assignment_statement | if_statement | for_statement | while_statement | do_while_statement | break_statement | continue_statement | return_statement | call_statement | block_statement ;
 assignment_statement: (IDENTIFIER | indexing_expr) ASSIGN expr SEMI_COLON;
 if_statement: IF OPEN_PAREN expr CLOSE_PAREN statement (ELSE statement)?;
-for_statement: FOR OPEN_PAREN (IDENTIFIER | indexing_expr) ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
+for_statement: FOR OPEN_PAREN IDENTIFIER ASSIGN expr COMMA expr COMMA expr CLOSE_PAREN statement;
 while_statement: WHILE OPEN_PAREN expr CLOSE_PAREN statement;
 do_while_statement: DO statement WHILE OPEN_PAREN expr CLOSE_PAREN SEMI_COLON;
 break_statement: BREAK SEMI_COLON;
 continue_statement: CONTINUE SEMI_COLON;
 return_statement: RETURN expr? SEMI_COLON;
-call_statement: IDENTIFIER OPEN_PAREN expr_list? CLOSE_PAREN SEMI_COLON;
+call_statement: function_call SEMI_COLON;
 block_statement: OPEN_BRACE (statement | variable_declaration)* CLOSE_BRACE;
 
 
@@ -73,7 +73,7 @@ FLOAT_LIT
 BOOLEAN_LIT: TRUE | FALSE;
 
 fragment ESCAPE: '\\' [bfrnt'"\\];
-STRING_LIT: '"' ( ESCAPE | ~[\\\r\n\f] )*? '"' {self.text = self.text[1:-1]};
+STRING_LIT: '"' (ESCAPE | ~[\\\r\n\f])*? '"' {self.text = self.text[1:-1]};
 
 AUTO : 'auto';
 BREAK : 'break';
