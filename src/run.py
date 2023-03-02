@@ -4,7 +4,7 @@ import subprocess
 import unittest
 from antlr4 import *
 
-for path in ['./test/', './main/mt22/parser/']:
+for path in ['./test/', './main/mt22/parser/', './main/mt22/utils/', './main/mt22/astgen/', './main/mt22/checker/', './main/mt22/codegen/']:
     sys.path.append(path)
 ANTLR_JAR = os.environ.get('ANTLR_JAR')
 TARGET_DIR = '../target'
@@ -34,6 +34,15 @@ def main(argv):
         elif argv[1] == 'ParserSuite':
             from ParserSuite import ParserSuite
             getAndTest(ParserSuite)
+        elif argv[1] == 'ASTGenSuite':
+            from ASTGenSuite import ASTGenSuite
+            getAndTest(ASTGenSuite)
+        # elif argv[1] == 'CheckerSuite':
+        #     from CheckerSuite import CheckerSuite
+        #     getAndTest(CheckerSuite)
+        # elif argv[1] == 'CodeGenSuite':
+        #     from CodeGenSuite import CheckCodeGenSuite
+        #     getAndTest(CheckCodeGenSuite)
         else:
             printUsage()
     else:
@@ -62,6 +71,9 @@ def printUsage():
     print("python3 run.py gen")
     print("python3 run.py test LexerSuite")
     print("python3 run.py test ParserSuite")
+    print("python3 run.py test ASTGenSuite")
+    # print("python3 run.py test CheckerSuite")
+    # print("python3 run.py test CodeGenSuite")
 
 
 if __name__ == "__main__":
