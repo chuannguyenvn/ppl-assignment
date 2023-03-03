@@ -1,5 +1,1 @@
-Program([
-	VarDecl(x, IntegerType, IntegerLit(1))
-	VarDecl(y, IntegerType, IntegerLit(2))
-	VarDecl(z, IntegerType, IntegerLit(3))
-])
+Binary(+=,Id(a),Binary(-=,Id(b),Binary(and,Id(a),Binary(>,Id(b),IntLiteral(3)))))
