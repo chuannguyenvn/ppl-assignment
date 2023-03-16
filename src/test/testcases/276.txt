@@ -1,0 +1,2 @@
+t: integer = -7 + 0 * 91;
+            example: function integer(out test: integer) {}

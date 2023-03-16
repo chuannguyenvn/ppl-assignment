@@ -5,12 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f51661a-8217-4442-8527-876938aa7e26" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/ASTGenSuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/ASTGenSuite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/201.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/201.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/202.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/202.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/203.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/203.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/204.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/204.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/205.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/205.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/300.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/300.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/301.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/301.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/302.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/302.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/303.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/303.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/304.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/304.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/201.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/201.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/202.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/202.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/203.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/203.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/204.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/204.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/205.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/205.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/300.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/300.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +78,7 @@
       <workItem from="1677319169745" duration="15655000" />
       <workItem from="1677344138218" duration="6629000" />
       <workItem from="1677379004022" duration="31836000" />
-      <workItem from="1678977412780" duration="7959000" />
+      <workItem from="1678977412780" duration="9722000" />
     </task>
     <servers />
   </component>

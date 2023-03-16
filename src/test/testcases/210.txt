@@ -1,0 +1,1 @@
+x: array[7, 8] of integer;

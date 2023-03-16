@@ -1,1 +1,1 @@
-a, b, c, d: integer = 3, 4, 6;
+_x6_yz, a69, XYZ: auto = !5, 7-69, "Hello String \b" :: "I am another string \t";

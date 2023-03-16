@@ -1,0 +1,5 @@
+main: function void() {
+            /*
+                This is a block comment
+            */
+        }

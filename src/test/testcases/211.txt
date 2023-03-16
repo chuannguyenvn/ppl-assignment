@@ -1,0 +1,6 @@
+taki: function void() {
+            i : integer = 7 + 5;
+            for(i = 1 :: 2, i < 5 + 1, i + 1) {
+                continue;
+            }
+            }

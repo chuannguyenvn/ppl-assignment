@@ -1,3 +1,3 @@
 Program([
-	FuncDecl(main, void, [], None, BlockStmt([]))
+	FuncDecl(main, VoidType, [], None, BlockStmt([]))
 ])

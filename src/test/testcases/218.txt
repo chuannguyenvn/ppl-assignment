@@ -1,0 +1,4 @@
+demo: function void() {
+            if(btl_ppl == 10) dedung();
+            else shout("desaitumlum");
+            }

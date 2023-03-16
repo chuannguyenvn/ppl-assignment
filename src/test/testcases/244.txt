@@ -1,0 +1,1 @@
+Xyz, bct, _caA: integer = 20, 13, 74;

@@ -1,0 +1,1 @@
+g: array[5] of boolean;

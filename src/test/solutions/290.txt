@@ -1,0 +1,3 @@
+Program([
+	VarDecl(g, ArrayType([IntegerLit(5)], BooleanType))
+])

@@ -1,1 +1,3 @@
-successful
+Program([
+	VarDecl(Tai, ArrayType([IntegerLit(2)], StringType), BinExpr(==, StringLit(I love watching films?), StringLit(Hmmmm)))
+])

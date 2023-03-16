@@ -1,0 +1,8 @@
+main: function void() {
+            if(false) {
+                x = b + 29.99;
+                b = x && true;
+            } else {
+                _xyz();
+            }
+        }

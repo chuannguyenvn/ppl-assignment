@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(alvis, BooleanType, [], None, BlockStmt([]))
+])

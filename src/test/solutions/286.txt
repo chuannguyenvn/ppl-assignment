@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(mouse, VoidType, [InheritParam(n, BooleanType)], None, BlockStmt([]))
+])

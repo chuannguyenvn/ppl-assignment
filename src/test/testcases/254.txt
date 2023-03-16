@@ -1,0 +1,2 @@
+// This is a comment X:: void; 
+                    x : integer = 3;

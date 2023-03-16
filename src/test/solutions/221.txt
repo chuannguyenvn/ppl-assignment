@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(main, AutoType, [], None, BlockStmt([[<AST.VarDecl object at 0x000001F7BCF8AE20>]]))
+])

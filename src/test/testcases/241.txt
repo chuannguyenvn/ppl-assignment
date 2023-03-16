@@ -1,0 +1,4 @@
+main: function void() {
+            do functio();
+            while(i < 2);
+            }

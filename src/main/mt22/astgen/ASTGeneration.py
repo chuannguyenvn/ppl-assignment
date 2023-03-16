@@ -5,7 +5,7 @@ from AST import *
 
 class ASTGeneration(MT22Visitor):
     def visitProgram(self, ctx: MT22Parser.ProgramContext):
-        return Program(self.visit(ctx.declaration_list()))
+        return Program([d for decl in self.visit(ctx.declaration_list()) for d in decl])
 
     def visitDeclaration_list(self, ctx: MT22Parser.ProgramContext):
         if ctx.declaration_list_tail():
@@ -30,25 +30,28 @@ class ASTGeneration(MT22Visitor):
             return self.visit(ctx.short_variable_declaration())
         else:
             decl_list = self.visit(ctx.long_variable_declaration())
-            return [VarDecl(decl[0], decl_list[-1], decl[1]) for decl in decl_list[:-1]]
+            type = decl_list[len(decl_list) // 2]
+            variables = decl_list[:len(decl_list) // 2]
+            exprs = decl_list[len(decl_list) // 2 + 1:]
+            return [VarDecl(pair[0], type, pair[1]) for pair in list(zip(variables, exprs))]
 
     def visitShort_variable_declaration(self, ctx: MT22Parser.ProgramContext):
-        return [VarDecl(identifier, self.visit(ctx.type_specifier())) for identifier in self.visit(ctx.identifier_list())]
+        return [VarDecl(identifier.name, self.visit(ctx.type_specifier())) for identifier in self.visit(ctx.identifier_list())]
 
     def visitLong_variable_declaration(self, ctx: MT22Parser.ProgramContext):
         if ctx.type_specifier():
-            return [self.visit(ctx.type_specifier())]
+            return [ctx.IDENTIFIER().getText(), self.visit(ctx.type_specifier()), self.visit(ctx.expr())]
         else:
-            return [[ctx.IDENTIFIER().getText(), self.visit(ctx.expr())]] + self.visit(ctx.long_variable_declaration())
+            return [ctx.IDENTIFIER().getText()] + self.visit(ctx.long_variable_declaration()) + [self.visit(ctx.expr())]
 
     def visitParameter_declaration_list(self, ctx: MT22Parser.ProgramContext):
-        if ctx.declaration_list_tail():
+        if ctx.parameter_declaration_list_tail():
             return [self.visit(ctx.parameter_declaration())] + self.visit(ctx.parameter_declaration_list_tail())
         else:
             return [self.visit(ctx.parameter_declaration())]
 
     def visitParameter_declaration_list_tail(self, ctx: MT22Parser.ProgramContext):
-        if ctx.declaration_list_tail():
+        if ctx.parameter_declaration_list_tail():
             return [self.visit(ctx.parameter_declaration())] + self.visit(ctx.parameter_declaration_list_tail())
         else:
             return []
@@ -98,18 +101,24 @@ class ASTGeneration(MT22Visitor):
         return ArrayType(self.visit(ctx.dimension_list()), array_type)
 
     def visitDimension_list(self, ctx: MT22Parser.ProgramContext):
-        pass
+        if ctx.dimension_list_tail():
+            return [IntegerLit(ctx.INTEGER_LIT().getText())] + self.visit(ctx.dimension_list_tail())
+        else:
+            return [IntegerLit(ctx.INTEGER_LIT().getText())]
 
     def visitDimension_list_tail(self, ctx: MT22Parser.ProgramContext):
-        pass
+        if ctx.dimension_list_tail():
+            return [IntegerLit(ctx.INTEGER_LIT().getText())] + self.visit(ctx.dimension_list_tail())
+        else:
+            return []
 
     def visitFunction_declaration(self, ctx: MT22Parser.ProgramContext):
         name = ctx.IDENTIFIER(0).getText()
-        return_type = self.visit(ctx.type_specifier()) if ctx.type_specifier() else ctx.VOID().getText()
+        return_type = self.visit(ctx.type_specifier()) if ctx.type_specifier() else VoidType()
         params = self.visit(ctx.parameter_declaration_list()) if ctx.parameter_declaration_list() else []
         inherit = ctx.IDENTIFIER(1).getText() if ctx.INHERIT() else None
         body = self.visit(ctx.function_body())
-        return FuncDecl(name, return_type, params, inherit, body)
+        return [FuncDecl(name, return_type, params, inherit, body)]
 
     def visitFunction_body(self, ctx: MT22Parser.ProgramContext):
         return self.visit(ctx.block_statement())
@@ -143,10 +152,10 @@ class ASTGeneration(MT22Visitor):
             return AssignStmt(self.visit(ctx.indexing_expr()), self.visit(ctx.expr()))
 
     def visitIf_statement(self, ctx: MT22Parser.ProgramContext):
-        if ctx.IDENTIFIER():
-            return IfStmt(self.visit(ctx.expr()), self.visit(ctx.statement(0)))
-        else:
+        if ctx.ELSE():
             return IfStmt(self.visit(ctx.expr()), self.visit(ctx.statement(0)), self.visit(ctx.statement(1)))
+        else:
+            return IfStmt(self.visit(ctx.expr()), self.visit(ctx.statement(0)), None)
 
     def visitFor_statement(self, ctx: MT22Parser.ProgramContext):
         if ctx.IDENTIFIER():
@@ -252,7 +261,7 @@ class ASTGeneration(MT22Visitor):
 
     def visitMultiplying_expr(self, ctx: MT22Parser.ProgramContext):
         if ctx.STAR():
-            return BinExpr(ctx.NOT().getText(), self.visit(ctx.multiplying_expr()), self.visit(ctx.negate_expr()))
+            return BinExpr(ctx.STAR().getText(), self.visit(ctx.multiplying_expr()), self.visit(ctx.negate_expr()))
         elif ctx.DIV():
             return BinExpr(ctx.DIV().getText(), self.visit(ctx.multiplying_expr()), self.visit(ctx.negate_expr()))
         elif ctx.MOD():
