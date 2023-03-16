@@ -1,5 +1,3 @@
 Program([
-	VarDecl(x, IntegerType, IntegerLit(1))
-	VarDecl(y, IntegerType, IntegerLit(2))
-	VarDecl(z, IntegerType, IntegerLit(3))
+	[<AST.VarDecl object at 0x0000020B4A97F0D0>, <AST.VarDecl object at 0x0000020B4A97F460>]
 ])

@@ -30,7 +30,7 @@ class ASTGeneration(MT22Visitor):
             return self.visit(ctx.short_variable_declaration())
         else:
             decl_list = self.visit(ctx.long_variable_declaration())
-            return [VarDecl(decl[0], decl_list[-1], decl[1]) for decl in decl_list]
+            return [VarDecl(decl[0], decl_list[-1], decl[1]) for decl in decl_list[:-1]]
 
     def visitShort_variable_declaration(self, ctx: MT22Parser.ProgramContext):
         return [VarDecl(identifier, self.visit(ctx.type_specifier())) for identifier in self.visit(ctx.identifier_list())]
@@ -62,13 +62,13 @@ class ASTGeneration(MT22Visitor):
 
     def visitIdentifier_list(self, ctx: MT22Parser.ProgramContext):
         if ctx.identifier_list_tail():
-            return [Id(ctx.ID().getText())] + self.visit(ctx.identifier_list_tail())
+            return [Id(ctx.IDENTIFIER().getText())] + self.visit(ctx.identifier_list_tail())
         else:
-            return [Id(ctx.ID().getText())]
+            return [Id(ctx.IDENTIFIER().getText())]
 
     def visitIdentifier_list_tail(self, ctx: MT22Parser.ProgramContext):
         if ctx.identifier_list_tail():
-            return [Id(ctx.ID().getText())] + self.visit(ctx.identifier_list_tail())
+            return [Id(ctx.IDENTIFIER().getText())] + self.visit(ctx.identifier_list_tail())
         else:
             return []
 
