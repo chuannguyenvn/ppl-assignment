@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3f51661a-8217-4442-8527-876938aa7e26" name="Changes" comment="" />
+    <list default="true" id="3f51661a-8217-4442-8527-876938aa7e26" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22.g4" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +62,7 @@
       <workItem from="1677319169745" duration="15655000" />
       <workItem from="1677344138218" duration="6629000" />
       <workItem from="1677379004022" duration="31836000" />
+      <workItem from="1678977412780" duration="5824000" />
     </task>
     <servers />
   </component>

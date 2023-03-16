@@ -27,8 +27,6 @@ dimension_list: INTEGER_LIT dimension_list_tail | INTEGER_LIT;
 dimension_list_tail: COMMA INTEGER_LIT dimension_list_tail | ;
 function_declaration: IDENTIFIER COLON FUNCTION (type_specifier | VOID) OPEN_PAREN (parameter_declaration_list | ) CLOSE_PAREN (INHERIT IDENTIFIER | ) function_body;
 function_body: block_statement;
-
-
 statement: assignment_statement | if_statement | for_statement | while_statement | do_while_statement | break_statement | continue_statement | return_statement | call_statement | block_statement;
 assignment_statement: (IDENTIFIER | indexing_expr) ASSIGN expr SEMI_COLON;
 if_statement: IF OPEN_PAREN expr CLOSE_PAREN statement (ELSE statement | );
@@ -42,8 +40,6 @@ call_statement: function_call SEMI_COLON;
 block_statement: OPEN_BRACE block_statement_element_list CLOSE_BRACE;
 block_statement_element_list: (statement | variable_declaration) block_statement_element_list_tail | ;
 block_statement_element_list_tail: (statement | variable_declaration) block_statement_element_list_tail | ;
-
-
 expr_list: expr expr_list_tail | expr;
 expr_list_tail: COMMA expr expr_list_tail | ;
 expr: string_expr;
