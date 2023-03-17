@@ -1,3 +1,3 @@
 Program([
-	VarDecl(Tai, ArrayType([IntegerLit(20)], FloatType), BinExpr(::, StringLit(Float number), StringLit(Float number)))
+	VarDecl(Tai, ArrayType([20], FloatType), BinExpr(::, StringLit(Float number), StringLit(is fun)))
 ])

@@ -1,5 +1,5 @@
 Program([
 	VarDecl(_x6_yz, AutoType, UnExpr(!, IntegerLit(5)))
 	VarDecl(a69, AutoType, BinExpr(-, IntegerLit(7), IntegerLit(69)))
-	VarDecl(XYZ, AutoType, BinExpr(::, StringLit(Hello String \b), StringLit(Hello String \b)))
+	VarDecl(XYZ, AutoType, BinExpr(::, StringLit(Hello String \b), StringLit(I am another string \t)))
 ])

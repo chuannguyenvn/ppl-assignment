@@ -4,18 +4,21 @@ from AST import *
 
 
 class ASTGeneration(MT22Visitor):
+    def to_bool(self, b):
+        return b == 'true'
+
     def visitProgram(self, ctx: MT22Parser.ProgramContext):
-        return Program([d for decl in self.visit(ctx.declaration_list()) for d in decl])
+        return Program(self.visit(ctx.declaration_list()))
 
     def visitDeclaration_list(self, ctx: MT22Parser.ProgramContext):
         if ctx.declaration_list_tail():
-            return [self.visit(ctx.declaration())] + self.visit(ctx.declaration_list_tail())
+            return self.visit(ctx.declaration()) + self.visit(ctx.declaration_list_tail())
         else:
-            return [self.visit(ctx.declaration())]
+            return self.visit(ctx.declaration())
 
     def visitDeclaration_list_tail(self, ctx: MT22Parser.ProgramContext):
         if ctx.declaration_list_tail():
-            return [self.visit(ctx.declaration())] + self.visit(ctx.declaration_list_tail())
+            return self.visit(ctx.declaration()) + self.visit(ctx.declaration_list_tail())
         else:
             return []
 
@@ -102,13 +105,13 @@ class ASTGeneration(MT22Visitor):
 
     def visitDimension_list(self, ctx: MT22Parser.ProgramContext):
         if ctx.dimension_list_tail():
-            return [IntegerLit(ctx.INTEGER_LIT().getText())] + self.visit(ctx.dimension_list_tail())
+            return [int(ctx.INTEGER_LIT().getText())] + self.visit(ctx.dimension_list_tail())
         else:
-            return [IntegerLit(ctx.INTEGER_LIT().getText())]
+            return [int(ctx.INTEGER_LIT().getText())]
 
     def visitDimension_list_tail(self, ctx: MT22Parser.ProgramContext):
         if ctx.dimension_list_tail():
-            return [IntegerLit(ctx.INTEGER_LIT().getText())] + self.visit(ctx.dimension_list_tail())
+            return [int(ctx.INTEGER_LIT().getText())] + self.visit(ctx.dimension_list_tail())
         else:
             return []
 
@@ -223,7 +226,7 @@ class ASTGeneration(MT22Visitor):
     def visitString_expr(self, ctx: MT22Parser.ProgramContext):
         if ctx.DOUBLE_COLON():
             return BinExpr(ctx.DOUBLE_COLON().getText(), self.visit(ctx.relational_expr(0)),
-                           self.visit(ctx.relational_expr(0)))
+                           self.visit(ctx.relational_expr(1)))
         else:
             return self.visit(ctx.relational_expr(0))
 
@@ -310,7 +313,7 @@ class ASTGeneration(MT22Visitor):
         elif ctx.FLOAT_LIT():
             return FloatLit(ctx.FLOAT_LIT().getText())
         elif ctx.BOOLEAN_LIT():
-            return BooleanLit(ctx.BOOLEAN_LIT().getText())
+            return BooleanLit(self.to_bool(ctx.BOOLEAN_LIT().getText()))
         elif ctx.STRING_LIT():
             return StringLit(ctx.STRING_LIT().getText())
         else:
