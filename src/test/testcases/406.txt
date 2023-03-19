@@ -1,0 +1,1 @@
+l0 : function void  ( s : array [ 0 , 0 ] of integer      ) inherit F { t  : array [ 0 ] of integer    = g   * D     :: V   % x       ;  }    

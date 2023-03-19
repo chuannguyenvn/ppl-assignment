@@ -1,0 +1,1 @@
+CI : function void  ( ) inherit Wo { }    a2 , Ie  : void  ;   

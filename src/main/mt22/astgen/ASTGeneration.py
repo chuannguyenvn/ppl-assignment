@@ -7,6 +7,12 @@ class ASTGeneration(MT22Visitor):
     def to_bool(self, b):
         return b == 'true'
 
+    def to_float(self, x):
+        if x[0] == '.' and (x[1] == 'e' or x[1] == 'E'):
+            return 0.0
+        else:
+            return float(x)
+
     def visitProgram(self, ctx: MT22Parser.ProgramContext):
         return Program(self.visit(ctx.declaration_list()))
 
@@ -311,7 +317,7 @@ class ASTGeneration(MT22Visitor):
         if ctx.INTEGER_LIT():
             return IntegerLit(int(ctx.INTEGER_LIT().getText()))
         elif ctx.FLOAT_LIT():
-            return FloatLit(float(ctx.FLOAT_LIT().getText()))
+            return FloatLit(self.to_float(ctx.FLOAT_LIT().getText()))
         elif ctx.BOOLEAN_LIT():
             return BooleanLit(self.to_bool(ctx.BOOLEAN_LIT().getText()))
         elif ctx.STRING_LIT():

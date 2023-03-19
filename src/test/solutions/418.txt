@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(M, AutoType, [InheritOutParam(xP, FloatType)], None, BlockStmt([]))
+	VarDecl(CY, FloatType, BinExpr(::, BooleanLit(False), BinExpr(||, UnExpr(!, Id(Orx)), BinExpr(-, BinExpr(/, Id(GTb), Id(D)), UnExpr(!, UnExpr(!, Id(Ck)))))))
+])

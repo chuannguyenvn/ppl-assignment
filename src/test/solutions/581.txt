@@ -1,0 +1,4 @@
+Program([
+	VarDecl(y, ArrayType([0, 0, 0], BooleanType))
+	VarDecl(Jf, ArrayType([0, 0, 0], BooleanType))
+])

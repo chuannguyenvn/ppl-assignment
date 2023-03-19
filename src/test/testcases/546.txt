@@ -1,0 +1,1 @@
+ug  : array [ 25 , 0 ] of boolean    ;   x : function array [ 0 ] of boolean    ( ) inherit T { }    

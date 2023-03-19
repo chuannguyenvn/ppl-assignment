@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(W, ArrayType([686369, 0, 0], BooleanType), [InheritOutParam(s, AutoType)], None, BlockStmt([]))
+	VarDecl(ZX, ArrayType([0, 0, 405], BooleanType))
+])

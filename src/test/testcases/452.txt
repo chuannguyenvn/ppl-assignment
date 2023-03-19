@@ -1,0 +1,1 @@
+ft  : boolean   = ! c3 ( )     - ! D   && cIo      > wrn      ;   

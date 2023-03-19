@@ -1,0 +1,1 @@
+y_ : function void  ( inherit out h : boolean     ) inherit HlCyz { }    

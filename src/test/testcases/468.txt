@@ -1,0 +1,1 @@
+vl : function array [ 0 , 78 ] of boolean    ( out V : array [ 0 ] of integer      ) inherit w { PN , q , V , f8Dx , L  : string   = UKA     , d   + R    > ! xd     :: Vj   && aZ      , f8d   != KOj   * K     :: Qm   * H    >= N   % NJcRImR8p      , B   / vL    == a   + DQDe     :: ! e      , Gj   && o    < s3   || bF       ;  }    

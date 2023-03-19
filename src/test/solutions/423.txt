@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(YRqQZdWQW, FloatType, [], None, BlockStmt([VarDecl(_, ArrayType([7, 0], BooleanType)), VarDecl(D, ArrayType([7, 0], BooleanType)), VarDecl(R, ArrayType([7, 0], BooleanType)), WhileStmt(BinExpr(::, BinExpr(==, UnExpr(!, Id(x)), BinExpr(+, Id(e), Id(Xj))), BinExpr(||, Id(r), Id(n7))), ReturnStmt())]))
+])

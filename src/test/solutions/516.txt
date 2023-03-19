@@ -1,0 +1,4 @@
+Program([
+	VarDecl(FD, AutoType, BinExpr(<, FuncCall(hA, []), UnExpr(-, BooleanLit(True))))
+	FuncDecl(zDlGj, ArrayType([0], IntegerType), [Param(v, AutoType), OutParam(n, IntegerType), InheritParam(D, AutoType)], None, BlockStmt([ContinueStmt()]))
+])

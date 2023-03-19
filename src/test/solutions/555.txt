@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(YiEzbe, FloatType, [InheritOutParam(p, ArrayType([0], StringType))], None, BlockStmt([VarDecl(t, ArrayType([8549028], StringType), BinExpr(::, Id(u), BinExpr(-, Id(qy4h2), Id(Qi)))), VarDecl(W, ArrayType([8549028], StringType), BinExpr(-, Id(O), Id(oPP))), VarDecl(gJp, ArrayType([8549028], StringType), BinExpr(>, BinExpr(-, Id(xz0), Id(W)), UnExpr(-, Id(o)))), VarDecl(u, ArrayType([8549028], StringType), BinExpr(::, BinExpr(>=, FuncCall(B, []), BinExpr(%, Id(bU), Id(vhk))), UnExpr(-, Id(GRiM)))), VarDecl(Z, ArrayType([8549028], StringType), BinExpr(>=, BinExpr(*, Id(Z), Id(BIn)), BinExpr(%, Id(a), Id(Hm2))))]))
+	FuncDecl(z, VoidType, [Param(JJX, ArrayType([0], StringType))], None, BlockStmt([]))
+])

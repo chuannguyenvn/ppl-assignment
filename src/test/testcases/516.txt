@@ -1,0 +1,1 @@
+FD  : auto  = hA ( )    < - true        ;   zDlGj : function array [ 0 ] of integer    ( v : auto   , out n : integer    , inherit D : auto    ) { continue ;   }    

@@ -5,25 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f51661a-8217-4442-8527-876938aa7e26" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Visitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Visitor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/ASTGenSuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/ASTGenSuite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/358.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/358.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/testcases/358.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/358.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22.interp" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22Lexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22Lexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22Lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22Lexer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22Lexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22Lexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22Parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/MT22Visitor.py" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22Visitor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

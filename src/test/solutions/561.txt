@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(i, BooleanType, [OutParam(nSt, ArrayType([483], IntegerType))], K, BlockStmt([]))
+])

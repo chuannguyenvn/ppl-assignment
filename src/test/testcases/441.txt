@@ -1,0 +1,1 @@
+wd : function array [ 18934 , 0 ] of float    ( inherit lk : boolean     ) inherit yj { K  : void  ;  }    i : function integer   ( ) inherit D { trctP  : auto  ;  mo , _ , ZN  : void  ;  }    

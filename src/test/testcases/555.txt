@@ -1,0 +1,1 @@
+YiEzbe : function float   ( inherit out p : array [ 0 ] of string      ) { t , W , gJp , u , Z  : array [ 8_5_4_90_28 ] of string    = u    :: qy4h2   - Qi      , O   - oPP      , xz0   - W    > - o      , B ( )    >= bU   % vhk     :: - GRiM      , Z   * BIn    >= a   % Hm2       ;  }    z : function void  ( JJX : array [ 0 ] of string      ) { }    

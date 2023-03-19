@@ -1,0 +1,3 @@
+Program([
+	VarDecl(M, AutoType, BinExpr(&&, BinExpr(||, UnExpr(-, Id(F)), StringLit()), FuncCall(B, [])))
+])

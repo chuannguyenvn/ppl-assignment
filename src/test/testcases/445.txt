@@ -1,0 +1,1 @@
+Ao : function array [ 6 ] of integer    ( ) inherit Db { }    s , bt , EwW  : auto  ;   

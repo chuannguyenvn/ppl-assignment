@@ -1,0 +1,1 @@
+uM : function float   ( inherit out WX : float    , inherit g : auto   , out j : auto   , out UYk : auto   , inherit AB : void   , g : void    ) inherit UQ { while ( d ( )    >= n ( )      ) return ;     }    

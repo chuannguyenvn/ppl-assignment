@@ -1,0 +1,1 @@
+N : function array [ 3_9_47 , 0 ] of integer    ( out _ : float     ) { t  : void  ;  }    

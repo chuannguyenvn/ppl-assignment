@@ -1,0 +1,1 @@
+W : function array [ 686369 , 0 , 0 ] of boolean    ( inherit out s : auto    ) { }    ZX  : array [ 0 , 0 , 405 ] of boolean    ;   

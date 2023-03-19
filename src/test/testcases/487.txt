@@ -1,0 +1,1 @@
+s , hoC  : array [ 0 ] of float    ;   

@@ -1,0 +1,6 @@
+Program([
+	VarDecl(a, FloatType)
+	VarDecl(dB, FloatType)
+	VarDecl(D, FloatType)
+	VarDecl(ms, FloatType)
+])

@@ -1,0 +1,1 @@
+hx : function void  ( inherit out WI : string    , inherit H : auto    ) inherit ly { }    

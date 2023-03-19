@@ -1,0 +1,3 @@
+Program([
+	VarDecl(VKe4, AutoType, BinExpr(::, BinExpr(>=, FuncCall(Z, []), BinExpr(||, BinExpr(+, BinExpr(-, FuncCall(n, []), StringLit()), Id(F)), Id(I))), BinExpr(||, BinExpr(||, BinExpr(&&, BinExpr(+, UnExpr(!, Id(P)), Id(j)), Id(C)), UnExpr(-, Id(t))), Id(V))))
+])

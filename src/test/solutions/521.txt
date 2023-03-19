@@ -1,0 +1,7 @@
+Program([
+	VarDecl(B, BooleanType, BinExpr(::, BinExpr(&&, BinExpr(||, BinExpr(||, Id(P), Id(eI)), BinExpr(%, BinExpr(/, Id(H9), Id(v)), UnExpr(-, Id(bu_v)))), Id(K)), BinExpr(<, Id(C), BinExpr(||, BinExpr(+, BinExpr(+, Id(c_), BinExpr(%, Id(o), Id(G))), BinExpr(*, Id(Vf), UnExpr(-, Id(bQm)))), Id(GUU)))))
+	VarDecl(a, BooleanType, BinExpr(&&, BinExpr(+, Id(__), UnExpr(-, Id(XU2w))), Id(ae)))
+	VarDecl(o, BooleanType, BinExpr(==, BinExpr(||, BinExpr(-, Id(GGRR), UnExpr(!, Id(D))), BinExpr(-, FuncCall(m, []), FuncCall(f, []))), BinExpr(||, UnExpr(!, Id(J)), BinExpr(+, BinExpr(*, Id(wG), UnExpr(-, Id(K))), BinExpr(%, Id(Q), Id(Pp))))))
+	VarDecl(j, BooleanType, BinExpr(::, BinExpr(||, BinExpr(&&, BinExpr(-, UnExpr(!, Id(S)), Id(u3w)), UnExpr(!, Id(SE))), FuncCall(Ce, [])), BinExpr(||, BinExpr(&&, Id(hWCh), Id(dm)), BinExpr(+, UnExpr(-, Id(L)), Id(t)))))
+	VarDecl(VQ, BooleanType, BinExpr(==, BinExpr(||, BinExpr(||, BinExpr(-, Id(M), Id(Qr0)), Id(S1)), BinExpr(+, Id(A4), FuncCall(J, []))), BinExpr(&&, BinExpr(||, BinExpr(%, Id(k), Id(w)), Id(z)), BinExpr(%, Id(j), Id(M)))))
+])

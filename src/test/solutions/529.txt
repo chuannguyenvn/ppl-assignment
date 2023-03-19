@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(y, FloatType, [InheritParam(y, ArrayType([43, 988], StringType))], None, BlockStmt([VarDecl(r, AutoType), VarDecl(G, AutoType)]))
+	FuncDecl(wGAG, VoidType, [], Q, BlockStmt([]))
+])

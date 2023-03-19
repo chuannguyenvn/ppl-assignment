@@ -1,0 +1,3 @@
+Program([
+	VarDecl(SY12Yf, AutoType)
+])

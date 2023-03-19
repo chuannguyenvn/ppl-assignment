@@ -1,0 +1,6 @@
+Program([
+	FuncDecl(wiEfio, AutoType, [Param(OEu, AutoType)], None, BlockStmt([]))
+	FuncDecl(NqX5F, AutoType, [OutParam(nJ, AutoType)], EgDZ, BlockStmt([]))
+	VarDecl(aa, AutoType, BinExpr(::, BinExpr(-, BinExpr(-, BinExpr(+, BinExpr(-, Id(k), Id(b)), Id(a_)), Id(E)), BinExpr(%, BinExpr(/, FuncCall(s, []), Id(rC)), Id(KW))), FuncCall(w, [])))
+	VarDecl(N, AutoType, BinExpr(::, FloatLit(0.0), BinExpr(<, BooleanLit(False), BinExpr(&&, BinExpr(-, UnExpr(!, Id(tDh)), Id(LwwS)), BinExpr(-, Id(M), Id(eLYpn))))))
+])

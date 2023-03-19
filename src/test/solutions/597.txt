@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(yzb6, IntegerType, [], None, BlockStmt([ContinueStmt(), DoWhileStmt(BinExpr(::, UnExpr(!, Id(g)), BinExpr(>, FuncCall(M, []), BinExpr(%, Id(I), Id(_uS)))), BlockStmt([CallStmt(J_, ), BreakStmt()])), AssignStmt(Id(Z6), BinExpr(::, BinExpr(*, Id(V), Id(ItR)), BinExpr(<=, BinExpr(*, Id(d), Id(j)), BinExpr(+, Id(Qt), Id(cGU)))))]))
+])

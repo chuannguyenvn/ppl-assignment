@@ -1,0 +1,6 @@
+Program([
+	FuncDecl(HJ, AutoType, [], Oj, BlockStmt([]))
+	FuncDecl(H, AutoType, [], None, BlockStmt([]))
+	VarDecl(jzyh, AutoType)
+	VarDecl(mq9O, AutoType)
+])

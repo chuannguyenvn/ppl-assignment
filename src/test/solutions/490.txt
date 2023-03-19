@@ -1,0 +1,10 @@
+Program([
+	VarDecl(i, BooleanType)
+	VarDecl(j, BooleanType)
+	VarDecl(Rtqh, AutoType)
+	VarDecl(a3, AutoType)
+	VarDecl(ClhyU, AutoType)
+	VarDecl(i, AutoType)
+	VarDecl(uTbS, AutoType)
+	FuncDecl(vOH, VoidType, [], None, BlockStmt([BlockStmt([VarDecl(hrs6, ArrayType([0], IntegerType)), ContinueStmt()])]))
+])

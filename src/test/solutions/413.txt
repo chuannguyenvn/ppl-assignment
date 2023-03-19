@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(y_, VoidType, [InheritOutParam(h, BooleanType)], HlCyz, BlockStmt([]))
+])

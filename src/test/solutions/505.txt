@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(v, AutoType, [], None, BlockStmt([VarDecl(h, AutoType), VarDecl(Y, AutoType), VarDecl(J, AutoType), VarDecl(B, AutoType), VarDecl(_, AutoType), VarDecl(H, AutoType), VarDecl(B, AutoType), VarDecl(Gl7, AutoType), VarDecl(umu, AutoType)]))
+	VarDecl(sANWt1, AutoType)
+])

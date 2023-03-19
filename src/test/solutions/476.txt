@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(k, IntegerType, [], d, BlockStmt([VarDecl(vlU, ArrayType([20844642], FloatType)), VarDecl(Bx, ArrayType([20844642], FloatType)), VarDecl(p, ArrayType([20844642], FloatType)), ReturnStmt(BinExpr(::, BinExpr(!=, BinExpr(%, Id(BK), Id(g)), BinExpr(-, Id(y), Id(dI))), BinExpr(*, Id(H), Id(Qg))))]))
+])

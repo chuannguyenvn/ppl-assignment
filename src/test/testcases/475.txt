@@ -1,0 +1,1 @@
+ceg8S : function integer   ( ) inherit I { EM  = ! a    == Nsk   || lS      ;   }    

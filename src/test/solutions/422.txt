@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(a, IntegerType, [], Ol, BlockStmt([ReturnStmt(BinExpr(==, BinExpr(%, Id(v), Id(P)), UnExpr(!, Id(J8o))))]))
+])

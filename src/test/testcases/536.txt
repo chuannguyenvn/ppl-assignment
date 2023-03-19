@@ -1,0 +1,1 @@
+V : function auto  ( inherit out u : void   , pJ : void    ) inherit f { }    

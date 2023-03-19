@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(wyy, BooleanType, [], None, BlockStmt([ForStmt(AssignStmt(Id(i), BinExpr(-, Id(N), Id(y))), BinExpr(::, BinExpr(!=, BinExpr(+, Id(u), Id(_)), UnExpr(-, Id(z6))), UnExpr(!, Id(_))), BinExpr(::, BinExpr(>=, UnExpr(-, Id(h)), UnExpr(!, Id(l_a))), BinExpr(&&, Id(G), Id(j))), ContinueStmt())]))
+])

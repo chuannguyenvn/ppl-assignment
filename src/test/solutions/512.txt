@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(J, AutoType, [InheritOutParam(LU, AutoType)], v, BlockStmt([CallStmt(Z, ), WhileStmt(BinExpr(-, Id(zrh), Id(kA33E)), ReturnStmt()), CallStmt(vu, ), ForStmt(AssignStmt(Id(G), BinExpr(::, BinExpr(!=, BinExpr(-, Id(vM), Id(Qo)), BinExpr(*, Id(DeLb), Id(U))), BinExpr(==, IntegerLit(1), UnExpr(-, Id(UI))))), UnExpr(-, Id(k)), BinExpr(::, BinExpr(!=, BinExpr(%, Id(vB), Id(sBd)), BinExpr(*, Id(Z), Id(s))), BinExpr(==, BinExpr(&&, Id(go), Id(z)), Id(PR))), CallStmt(J, ))]))
+	FuncDecl(iVF, IntegerType, [], Sx, BlockStmt([]))
+])

@@ -1,0 +1,1 @@
+N , u , q , ioDhvvq  : array [ 0 ] of integer    = ! ! Hx     && ! P    - Zq ( )      <= 6.4     :: 28    / ! ! zo      <= - n   - l    || - r8j        , - C    - - Kr8   && c        , I    :: zg ( )    || fr_   / u    || ""        , - x3D   / CE6uE    - X   || Q       :: Z   && lO    + c   * Cj     + - ""         ;   TsQU : function integer   ( ) inherit saI { }    

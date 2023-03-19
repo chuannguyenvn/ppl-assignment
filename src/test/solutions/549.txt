@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(DpW, VoidType, [], H, BlockStmt([CallStmt(W, ), ContinueStmt()]))
+	FuncDecl(SUern, VoidType, [Param(J, BooleanType), OutParam(L, AutoType)], pwUhM_, BlockStmt([]))
+])

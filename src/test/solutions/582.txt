@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(Z, VoidType, [Param(U9L0, ArrayType([95, 719877, 448], BooleanType))], None, BlockStmt([ForStmt(AssignStmt(Id(t), BinExpr(||, Id(oEn5), Id(O4))), BinExpr(==, BinExpr(||, Id(S), Id(IZ)), UnExpr(-, Id(J))), BinExpr(::, BinExpr(-, Id(_), Id(BT)), BinExpr(>=, UnExpr(-, Id(aq)), UnExpr(-, Id(wM)))), BreakStmt()), VarDecl(x, AutoType), VarDecl(eEb, AutoType), VarDecl(g, AutoType), VarDecl(coKN, AutoType), VarDecl(UN, AutoType), VarDecl(A, AutoType), VarDecl(v, AutoType)]))
+])

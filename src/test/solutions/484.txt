@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(g, VoidType, [OutParam(Krp, AutoType)], None, BlockStmt([VarDecl(ZG3MO, StringType)]))
+])

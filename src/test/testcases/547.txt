@@ -1,0 +1,1 @@
+u : function boolean   ( inherit W : void   , out f : boolean    , inherit u : string    , inherit out hT4 : auto    ) { vhG  : integer   ;  }    

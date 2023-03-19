@@ -1,0 +1,1 @@
+KMQ , WZ , u  : void  ;   o : function array [ 0 ] of string    ( eVG : float     ) inherit S { }    

@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(a, VoidType, [], Qo, BlockStmt([ReturnStmt(BinExpr(<=, BinExpr(*, Id(Y), Id(Q)), BinExpr(*, Id(Dei), Id(oW))))]))
+])

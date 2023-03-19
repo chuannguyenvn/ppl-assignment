@@ -1,0 +1,4 @@
+Program([
+	FuncDecl(k, AutoType, [InheritOutParam(Ki, ArrayType([1, 90385527129578], BooleanType))], JcG8, BlockStmt([]))
+	FuncDecl(w, BooleanType, [OutParam(d, AutoType), InheritOutParam(n13eo, IntegerType)], V, BlockStmt([]))
+])

@@ -1,0 +1,1 @@
+k : function auto  ( inherit out Ki : array [ 1 , 90_38_55_2712957_8 ] of boolean      ) inherit JcG8 { }    w : function boolean   ( out d : auto   , inherit out n13eo : integer     ) inherit V { }    
