@@ -8,4 +8,6 @@ main: function void(out a: string) inherit a
             g: integer = {a, b(), "c", d - 1, e :: f, g || h(i, j())};
         }
         h: auto = {main()};
+        i: integer = {{1}, {}, {""}, a, call({1}, {}), a[{}]};
+        j: float = {};
         

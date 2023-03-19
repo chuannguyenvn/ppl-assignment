@@ -657,10 +657,14 @@ class ASTGenSuite(unittest.TestCase):
             g: integer = {a, b(), "c", d - 1, e :: f, g || h(i, j())};
         }
         h: auto = {main()};
+        i: integer = {{1}, {}, {""}, a, call({1}, {}), a[{}]};
+        j: float = {};
         """
         expect="""Program([
 	FuncDecl(main, VoidType, [OutParam(a, StringType)], a, BlockStmt([AssignStmt(Id(a), IntegerLit(1)), AssignStmt(Id(b), Id(a)), VarDecl(c, IntegerType, Id(b)), VarDecl(d, StringType, ArrayCell(a, [UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(1)))))])), VarDecl(e, ArrayType([1], FloatType), IntegerLit(1)), VarDecl(f, ArrayType([1], FloatType), ArrayLit([IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5)])), VarDecl(g, IntegerType, ArrayLit([Id(a), FuncCall(b, []), StringLit(c), BinExpr(-, Id(d), IntegerLit(1)), BinExpr(::, Id(e), Id(f)), BinExpr(||, Id(g), FuncCall(h, [Id(i), FuncCall(j, [])]))]))]))
 	VarDecl(h, AutoType, ArrayLit([FuncCall(main, [])]))
+	VarDecl(i, IntegerType, ArrayLit([ArrayLit([IntegerLit(1)]), ArrayLit([]), ArrayLit([StringLit()]), Id(a), FuncCall(call, [ArrayLit([IntegerLit(1)]), ArrayLit([])]), ArrayCell(a, [ArrayLit([])])]))
+	VarDecl(j, FloatType, ArrayLit([]))
 ])"""
         self.assertTrue(TestAST.test(input, expect, 399))
 
