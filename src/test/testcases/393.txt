@@ -1,1 +1,12 @@
- mark: float = 10.0;
+main: function void()
+        {
+            for (a[1,2,3,4,5] = 1, call(), call())
+                for (a = "asdf", a, "a")
+                {
+                    if (a)
+                    {
+                        while ("c") d = "d";
+                    }
+                    else b();
+                }
+        }

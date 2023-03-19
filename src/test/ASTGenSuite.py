@@ -460,7 +460,7 @@ class ASTGenSuite(unittest.TestCase):
     def test_387(self):
         input="""a: integer = a / b :: c - d / e && f - g + !(h - k) % - j[--q, ((a >= b) / - c), 1 + "\\n2"]; """
         expect="""Program([
-	VarDecl(a, IntegerType, BinExpr(::, BinExpr(/, Id(a), Id(b)), BinExpr(&&, BinExpr(-, Id(c), BinExpr(/, Id(d), Id(e))), BinExpr(+, BinExpr(-, Id(f), Id(g)), BinExpr(%, UnExpr(!, BinExpr(-, Id(h), Id(k))), UnExpr(-, ArrayCell(j, [UnExpr(-, UnExpr(-, Id(q))), BinExpr(/, BinExpr(>=, Id(a), Id(b)), UnExpr(-, Id(c))), BinExpr(+, IntegerLit(1), StringLit(\n2))])))))))
+	VarDecl(a, IntegerType, BinExpr(::, BinExpr(/, Id(a), Id(b)), BinExpr(&&, BinExpr(-, Id(c), BinExpr(/, Id(d), Id(e))), BinExpr(+, BinExpr(-, Id(f), Id(g)), BinExpr(%, UnExpr(!, BinExpr(-, Id(h), Id(k))), UnExpr(-, ArrayCell(j, [UnExpr(-, UnExpr(-, Id(q))), BinExpr(/, BinExpr(>=, Id(a), Id(b)), UnExpr(-, Id(c))), BinExpr(+, IntegerLit(1), StringLit(\\n2))])))))))
 ])"""
         self.assertTrue(TestAST.test(input, expect, 387))
 
@@ -540,28 +540,102 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input, expect, 392))
 
     def test_393(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""main: function void()
+        {
+            for (a[1,2,3,4,5] = 1, call(), call())
+                for (a = "asdf", a, "a")
+                {
+                    if (a)
+                    {
+                        while ("c") d = "d";
+                    }
+                    else b();
+                }
+        }"""
+        expect="""Program([
+	FuncDecl(main, VoidType, [], None, BlockStmt([ForStmt(AssignStmt(ArrayCell(a, [IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5)]), IntegerLit(1)), FuncCall(call, []), FuncCall(call, []), ForStmt(AssignStmt(Id(a), StringLit(asdf)), Id(a), StringLit(a), BlockStmt([IfStmt(Id(a), BlockStmt([WhileStmt(StringLit(c), AssignStmt(Id(d), StringLit(d)))]), CallStmt(b, ))])))]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 393))
 
     def test_394(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""a: string = "\\n";"""
+        expect="""Program([
+	VarDecl(a, StringType, StringLit(\\n))
+])"""
         self.assertTrue(TestAST.test(input, expect, 394))
 
     def test_395(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""main: function void()
+        {
+            break;
+            continue;
+            return;
+            return 1;
+            return a[1];
+            return "a";
+            return "for";
+        }"""
+        expect="""Program([
+	FuncDecl(main, VoidType, [], None, BlockStmt([BreakStmt(), ContinueStmt(), ReturnStmt(), ReturnStmt(IntegerLit(1)), ReturnStmt(ArrayCell(a, [IntegerLit(1)])), ReturnStmt(StringLit(a)), ReturnStmt(StringLit(for))]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 395))
 
     def test_396(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""
+        main: function void() {} 
+        main2: function integer() {} 
+        main3: integer; 
+        main4: function auto() {}
+        main5: auto = 1;
+        main6, main7: auto;
+        main8: function auto(a: auto) {}"""
+        expect="""Program([
+	FuncDecl(main, VoidType, [], None, BlockStmt([]))
+	FuncDecl(main2, IntegerType, [], None, BlockStmt([]))
+	VarDecl(main3, IntegerType)
+	FuncDecl(main4, AutoType, [], None, BlockStmt([]))
+	VarDecl(main5, AutoType, IntegerLit(1))
+	VarDecl(main6, AutoType)
+	VarDecl(main7, AutoType)
+	FuncDecl(main8, AutoType, [Param(a, AutoType)], None, BlockStmt([]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 396))
 
     def test_397(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""global1, global2: integer = 1, 2;
+        main: function void(out a: integer)
+        {
+            for (i = i + 1 / 2 * "3" - 4 || 5, a[foo(), bar(a[0, 0]), foo], rec(rec(rec))))
+                if (1 == (2 || (3 + 4) / 5 + ((6 - 7) >= -8)) :: 9)
+                    break;
+                else continue;
+                while (a() :: "b")
+                    return c;
+                return;
+                do return;
+                while (a[-1]);
+                while (a) {}
+                do {} while (a);
+                call();
+                call(1,2,3,4,5,6,7,8,9,0);
+                
+            for (a = b, c, d)
+            {
+            
+            }
+            
+            if (true)
+                for (a = b, c, d)
+                {
+                
+                }
+        }
+        """
+        expect="""Program([
+	VarDecl(global1, IntegerType, IntegerLit(1))
+	VarDecl(global2, IntegerType, IntegerLit(2))
+	FuncDecl(main, VoidType, [OutParam(a, IntegerType)], None, BlockStmt([ForStmt(AssignStmt(Id(i), BinExpr(||, BinExpr(-, BinExpr(+, Id(i), BinExpr(*, BinExpr(/, IntegerLit(1), IntegerLit(2)), StringLit(3))), IntegerLit(4)), IntegerLit(5))), ArrayCell(a, [FuncCall(foo, []), FuncCall(bar, [ArrayCell(a, [IntegerLit(0), IntegerLit(0)])]), Id(foo)]), FuncCall(rec, [FuncCall(rec, [Id(rec)])]), IfStmt(BinExpr(::, BinExpr(==, IntegerLit(1), BinExpr(||, IntegerLit(2), BinExpr(+, BinExpr(/, BinExpr(+, IntegerLit(3), IntegerLit(4)), IntegerLit(5)), BinExpr(>=, BinExpr(-, IntegerLit(6), IntegerLit(7)), UnExpr(-, IntegerLit(8)))))), IntegerLit(9)), BreakStmt(), ContinueStmt())), WhileStmt(BinExpr(::, FuncCall(a, []), StringLit(b)), ReturnStmt(Id(c))), ReturnStmt(), DoWhileStmt(ArrayCell(a, [UnExpr(-, IntegerLit(1))]), ReturnStmt()), WhileStmt(Id(a), BlockStmt([])), DoWhileStmt(Id(a), BlockStmt([])), CallStmt(call, ), CallStmt(call, IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5), IntegerLit(6), IntegerLit(7), IntegerLit(8), IntegerLit(9), IntegerLit(0)), ForStmt(AssignStmt(Id(a), Id(b)), Id(c), Id(d), BlockStmt([])), IfStmt(BooleanLit(True), ForStmt(AssignStmt(Id(a), Id(b)), Id(c), Id(d), BlockStmt([])))]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 397))
 
     def test_398(self):
