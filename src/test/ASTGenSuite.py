@@ -292,8 +292,8 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input, expect, 357))
 
     def test_358(self):
-        input="""main: function integer()\n    {\n\ta = ("i love" :: "eating babies") :: "' powdered milk";\n    }"""
-        expect="""Program([\n\tFuncDecl(main, IntegerType, [], None, BlockStmt([AssignStmt(Id(a), BinExpr(::, BinExpr(::, StringLit(i love), StringLit(eating babies)), StringLit(' powdered milk)))]))\n])"""
+        input="""main: function integer()\n    {\n\ta = ("i love" :: "eating babies") :: " powdered milk";\n    }"""
+        expect="""Program([\n\tFuncDecl(main, IntegerType, [], None, BlockStmt([AssignStmt(Id(a), BinExpr(::, BinExpr(::, StringLit(i love), StringLit(eating babies)), StringLit( powdered milk)))]))\n])"""
         self.assertTrue(TestAST.test(input, expect, 358))
 
     def test_359(self):
