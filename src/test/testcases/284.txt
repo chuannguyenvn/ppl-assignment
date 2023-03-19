@@ -1,0 +1,2 @@
+x: boolean = -5 * 9 + 6;
+            example: function integer(out test: auto) {}

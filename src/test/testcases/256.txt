@@ -1,0 +1,1 @@
+main: function void() { accuracy = "This string contains a tab symbol: \t"; }

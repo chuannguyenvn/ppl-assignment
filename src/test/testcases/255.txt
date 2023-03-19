@@ -1,0 +1,8 @@
+main: function array [6,9,6,9] of integer() {
+            i: integer;
+            for(i = i::i, i != i, i / i) {
+                i("i");
+                i = i + 3;
+                if(i < i) break;
+            }
+        }

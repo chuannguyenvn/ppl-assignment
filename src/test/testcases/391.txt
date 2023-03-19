@@ -2,7 +2,7 @@ main: function array [0] of boolean()
         {
             while (true) 
                 if (false == False) 
-                    do something(); 
+                    do {something();} 
                     while (false); 
                 else False();
         }

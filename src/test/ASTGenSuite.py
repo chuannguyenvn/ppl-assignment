@@ -165,8 +165,10 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input, expect, 332))
 
     def test_333(self):
-        input="""\n    main: function integer()\n    {\n\tdo drug(); while (withdrawing());\n    }"""
-        expect="""Program([\n\tFuncDecl(main, IntegerType, [], None, BlockStmt([DoWhileStmt(FuncCall(withdrawing, []), CallStmt(drug, ))]))\n])"""
+        input="""\n    main: function integer()\n    {\n\tdo {drug();} while (withdrawing());\n    }"""
+        expect="""Program([
+	FuncDecl(main, IntegerType, [], None, BlockStmt([DoWhileStmt(FuncCall(withdrawing, []), BlockStmt([CallStmt(drug, )]))]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 333))
 
     def test_334(self):
@@ -390,8 +392,18 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input, expect, 377))
 
     def test_378(self):
-        input="""mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""main: function void()
+        {
+            f = 12_34.567+e89;
+            if (expr1) 
+                if (expr2) 
+                    stmt1();
+                else 
+                    stmt2();
+        }"""
+        expect="""Program([
+	FuncDecl(main, VoidType, [], None, BlockStmt([AssignStmt(Id(f), BinExpr(+, FloatLit(1234.567), Id(e89))), IfStmt(Id(expr1), IfStmt(Id(expr2), CallStmt(stmt1, ), CallStmt(stmt2, )))]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 378))
 
     def test_379(self):
@@ -490,11 +502,14 @@ class ASTGenSuite(unittest.TestCase):
             while(true) 
                 while(True) 
                     do 
-                        something(); 
+                    {
+                        something();
+                        a, b, c, d, e: auto;
+                    }
                     while (false);
         }"""
         expect="""Program([
-	FuncDecl(main, ArrayType([0], IntegerType), [], None, BlockStmt([WhileStmt(BooleanLit(True), WhileStmt(Id(True), DoWhileStmt(BooleanLit(False), CallStmt(something, ))))]))
+	FuncDecl(main, ArrayType([0], IntegerType), [], None, BlockStmt([WhileStmt(BooleanLit(True), WhileStmt(Id(True), DoWhileStmt(BooleanLit(False), BlockStmt([CallStmt(something, ), VarDecl(a, AutoType), VarDecl(b, AutoType), VarDecl(c, AutoType), VarDecl(d, AutoType), VarDecl(e, AutoType)]))))]))
 ])"""
         self.assertTrue(TestAST.test(input, expect, 389))
 
@@ -520,12 +535,12 @@ class ASTGenSuite(unittest.TestCase):
         {
             while (true) 
                 if (false == False) 
-                    do something(); 
+                    do {something();} 
                     while (false); 
                 else False();
         }"""
         expect="""Program([
-	FuncDecl(main, ArrayType([0], BooleanType), [], None, BlockStmt([WhileStmt(BooleanLit(True), IfStmt(BinExpr(==, BooleanLit(False), Id(False)), DoWhileStmt(BooleanLit(False), CallStmt(something, )), CallStmt(False, )))]))
+	FuncDecl(main, ArrayType([0], BooleanType), [], None, BlockStmt([WhileStmt(BooleanLit(True), IfStmt(BinExpr(==, BooleanLit(False), Id(False)), DoWhileStmt(BooleanLit(False), BlockStmt([CallStmt(something, )])), CallStmt(False, )))]))
 ])"""
         self.assertTrue(TestAST.test(input, expect, 391))
 
@@ -612,7 +627,7 @@ class ASTGenSuite(unittest.TestCase):
                 while (a() :: "b")
                     return c;
                 return;
-                do return;
+                do {return;}
                 while (a[-1]);
                 while (a) {}
                 do {} while (a);
@@ -634,7 +649,7 @@ class ASTGenSuite(unittest.TestCase):
         expect="""Program([
 	VarDecl(global1, IntegerType, IntegerLit(1))
 	VarDecl(global2, IntegerType, IntegerLit(2))
-	FuncDecl(main, VoidType, [OutParam(a, IntegerType)], None, BlockStmt([ForStmt(AssignStmt(Id(i), BinExpr(||, BinExpr(-, BinExpr(+, Id(i), BinExpr(*, BinExpr(/, IntegerLit(1), IntegerLit(2)), StringLit(3))), IntegerLit(4)), IntegerLit(5))), ArrayCell(a, [FuncCall(foo, []), FuncCall(bar, [ArrayCell(a, [IntegerLit(0), IntegerLit(0)])]), Id(foo)]), FuncCall(rec, [FuncCall(rec, [Id(rec)])]), IfStmt(BinExpr(::, BinExpr(==, IntegerLit(1), BinExpr(||, IntegerLit(2), BinExpr(+, BinExpr(/, BinExpr(+, IntegerLit(3), IntegerLit(4)), IntegerLit(5)), BinExpr(>=, BinExpr(-, IntegerLit(6), IntegerLit(7)), UnExpr(-, IntegerLit(8)))))), IntegerLit(9)), BreakStmt(), ContinueStmt())), WhileStmt(BinExpr(::, FuncCall(a, []), StringLit(b)), ReturnStmt(Id(c))), ReturnStmt(), DoWhileStmt(ArrayCell(a, [UnExpr(-, IntegerLit(1))]), ReturnStmt()), WhileStmt(Id(a), BlockStmt([])), DoWhileStmt(Id(a), BlockStmt([])), CallStmt(call, ), CallStmt(call, IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5), IntegerLit(6), IntegerLit(7), IntegerLit(8), IntegerLit(9), IntegerLit(0)), ForStmt(AssignStmt(Id(a), Id(b)), Id(c), Id(d), BlockStmt([])), IfStmt(BooleanLit(True), ForStmt(AssignStmt(Id(a), Id(b)), Id(c), Id(d), BlockStmt([])))]))
+	FuncDecl(main, VoidType, [OutParam(a, IntegerType)], None, BlockStmt([ForStmt(AssignStmt(Id(i), BinExpr(||, BinExpr(-, BinExpr(+, Id(i), BinExpr(*, BinExpr(/, IntegerLit(1), IntegerLit(2)), StringLit(3))), IntegerLit(4)), IntegerLit(5))), ArrayCell(a, [FuncCall(foo, []), FuncCall(bar, [ArrayCell(a, [IntegerLit(0), IntegerLit(0)])]), Id(foo)]), FuncCall(rec, [FuncCall(rec, [Id(rec)])]), IfStmt(BinExpr(::, BinExpr(==, IntegerLit(1), BinExpr(||, IntegerLit(2), BinExpr(+, BinExpr(/, BinExpr(+, IntegerLit(3), IntegerLit(4)), IntegerLit(5)), BinExpr(>=, BinExpr(-, IntegerLit(6), IntegerLit(7)), UnExpr(-, IntegerLit(8)))))), IntegerLit(9)), BreakStmt(), ContinueStmt())), WhileStmt(BinExpr(::, FuncCall(a, []), StringLit(b)), ReturnStmt(Id(c))), ReturnStmt(), DoWhileStmt(ArrayCell(a, [UnExpr(-, IntegerLit(1))]), BlockStmt([ReturnStmt()])), WhileStmt(Id(a), BlockStmt([])), DoWhileStmt(Id(a), BlockStmt([])), CallStmt(call, ), CallStmt(call, IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5), IntegerLit(6), IntegerLit(7), IntegerLit(8), IntegerLit(9), IntegerLit(0)), ForStmt(AssignStmt(Id(a), Id(b)), Id(c), Id(d), BlockStmt([])), IfStmt(BooleanLit(True), ForStmt(AssignStmt(Id(a), Id(b)), Id(c), Id(d), BlockStmt([])))]))
 ])"""
         self.assertTrue(TestAST.test(input, expect, 397))
 
@@ -647,24 +662,55 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input, expect, 398))
 
     def test_399(self):
-        input="""main: function void(out a: string) inherit a
+        input="""main: function void(out a: string) inherit E1
+{
+    a = false;
+    b = a + false;
+    c: integer = b + {} + {{true} :: ({})} + {"true"};
+    d: string = a[----1];
+    e, f: array [1_11_111, 0] of float = !!!!!------11_11_1_1 - 1, {1,.2e1,-0.E+3,.0E-4,1_0_0.500e0};
+    g: integer = {a, b(), "c", d - 1, e :: f, g || h(i, !!--j({},{{},{}, a[1]}))};
+}
+h: auto = {main()};
+i: integer = {{1}, {}, {""}, a, call({1}, {}), a[{}]};
+j: float = {};
+k: auto = .23e12 / .12E1 + true;
+l: array [1] of integer = a[{}];
+m: auto = a(b[{({})}]);
+n: string = {{}, {{}, {} - {{}}}} - {} + ({}) :: {} || !-{} + foo({bar[{}]});
+o: function auto(inherit out _1: auto, _2: auto)
+{
+    p, q, r: auto;
+    break;
+    break;
+    return;
+    break;
+    continue;
+    return true;
+    continue;
+    break;
+    return a[1,{}];
+    return a({{{{}}},{}},{},{}) + {} + foo[{}, foo[1, {}]];
+    for (i = {}, {}, {})
+        do 
         {
-            a = 1;
-            b = a;
-            c: integer = b;
-            d: string = a[----1];
-            e, f: array [1] of float = 1, {1,2,3,4,5};
-            g: integer = {a, b(), "c", d - 1, e :: f, g || h(i, j())};
+            if ({}) foo = ({});
         }
-        h: auto = {main()};
-        i: integer = {{1}, {}, {""}, a, call({1}, {}), a[{}]};
-        j: float = {};
+        while ({});
+    break;
+    for (a[{}] = true, false, {true, false}) while (a[{true}]) a[true] = {foo()};
+}
         """
         expect="""Program([
-	FuncDecl(main, VoidType, [OutParam(a, StringType)], a, BlockStmt([AssignStmt(Id(a), IntegerLit(1)), AssignStmt(Id(b), Id(a)), VarDecl(c, IntegerType, Id(b)), VarDecl(d, StringType, ArrayCell(a, [UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(1)))))])), VarDecl(e, ArrayType([1], FloatType), IntegerLit(1)), VarDecl(f, ArrayType([1], FloatType), ArrayLit([IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5)])), VarDecl(g, IntegerType, ArrayLit([Id(a), FuncCall(b, []), StringLit(c), BinExpr(-, Id(d), IntegerLit(1)), BinExpr(::, Id(e), Id(f)), BinExpr(||, Id(g), FuncCall(h, [Id(i), FuncCall(j, [])]))]))]))
+	FuncDecl(main, VoidType, [OutParam(a, StringType)], E1, BlockStmt([AssignStmt(Id(a), BooleanLit(False)), AssignStmt(Id(b), BinExpr(+, Id(a), BooleanLit(False))), VarDecl(c, IntegerType, BinExpr(+, BinExpr(+, BinExpr(+, Id(b), ArrayLit([])), ArrayLit([BinExpr(::, ArrayLit([BooleanLit(True)]), ArrayLit([]))])), ArrayLit([StringLit(true)]))), VarDecl(d, StringType, ArrayCell(a, [UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(1)))))])), VarDecl(e, ArrayType([111111, 0], FloatType), BinExpr(-, UnExpr(!, UnExpr(!, UnExpr(!, UnExpr(!, UnExpr(!, UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(111111)))))))))))), IntegerLit(1))), VarDecl(f, ArrayType([111111, 0], FloatType), ArrayLit([IntegerLit(1), FloatLit(2.0), UnExpr(-, FloatLit(0.0)), FloatLit(0.0), FloatLit(100.5)])), VarDecl(g, IntegerType, ArrayLit([Id(a), FuncCall(b, []), StringLit(c), BinExpr(-, Id(d), IntegerLit(1)), BinExpr(::, Id(e), Id(f)), BinExpr(||, Id(g), FuncCall(h, [Id(i), UnExpr(!, UnExpr(!, UnExpr(-, UnExpr(-, FuncCall(j, [ArrayLit([]), ArrayLit([ArrayLit([]), ArrayLit([]), ArrayCell(a, [IntegerLit(1)])])])))))]))]))]))
 	VarDecl(h, AutoType, ArrayLit([FuncCall(main, [])]))
 	VarDecl(i, IntegerType, ArrayLit([ArrayLit([IntegerLit(1)]), ArrayLit([]), ArrayLit([StringLit()]), Id(a), FuncCall(call, [ArrayLit([IntegerLit(1)]), ArrayLit([])]), ArrayCell(a, [ArrayLit([])])]))
 	VarDecl(j, FloatType, ArrayLit([]))
+	VarDecl(k, AutoType, BinExpr(+, BinExpr(/, FloatLit(230000000000.0), FloatLit(1.2)), BooleanLit(True)))
+	VarDecl(l, ArrayType([1], IntegerType), ArrayCell(a, [ArrayLit([])]))
+	VarDecl(m, AutoType, FuncCall(a, [ArrayCell(b, [ArrayLit([ArrayLit([])])])]))
+	VarDecl(n, StringType, BinExpr(::, BinExpr(+, BinExpr(-, ArrayLit([ArrayLit([]), ArrayLit([ArrayLit([]), BinExpr(-, ArrayLit([]), ArrayLit([ArrayLit([])]))])]), ArrayLit([])), ArrayLit([])), BinExpr(||, ArrayLit([]), BinExpr(+, UnExpr(!, UnExpr(-, ArrayLit([]))), FuncCall(foo, [ArrayLit([ArrayCell(bar, [ArrayLit([])])])])))))
+	FuncDecl(o, AutoType, [InheritOutParam(_1, AutoType), Param(_2, AutoType)], None, BlockStmt([VarDecl(p, AutoType), VarDecl(q, AutoType), VarDecl(r, AutoType), BreakStmt(), BreakStmt(), ReturnStmt(), BreakStmt(), ContinueStmt(), ReturnStmt(BooleanLit(True)), ContinueStmt(), BreakStmt(), ReturnStmt(ArrayCell(a, [IntegerLit(1), ArrayLit([])])), ReturnStmt(BinExpr(+, BinExpr(+, FuncCall(a, [ArrayLit([ArrayLit([ArrayLit([ArrayLit([])])]), ArrayLit([])]), ArrayLit([]), ArrayLit([])]), ArrayLit([])), ArrayCell(foo, [ArrayLit([]), ArrayCell(foo, [IntegerLit(1), ArrayLit([])])]))), ForStmt(AssignStmt(Id(i), ArrayLit([])), ArrayLit([]), ArrayLit([]), DoWhileStmt(ArrayLit([]), BlockStmt([IfStmt(ArrayLit([]), AssignStmt(Id(foo), ArrayLit([])))]))), BreakStmt(), ForStmt(AssignStmt(ArrayCell(a, [ArrayLit([])]), BooleanLit(True)), BooleanLit(False), ArrayLit([BooleanLit(True), BooleanLit(False)]), WhileStmt(ArrayCell(a, [ArrayLit([BooleanLit(True)])]), AssignStmt(ArrayCell(a, [BooleanLit(True)]), ArrayLit([FuncCall(foo, [])]))))]))
 ])"""
         self.assertTrue(TestAST.test(input, expect, 399))
 

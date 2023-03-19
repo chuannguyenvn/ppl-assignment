@@ -1,0 +1,1 @@
+main: function auto() { x: boolean = 57; }

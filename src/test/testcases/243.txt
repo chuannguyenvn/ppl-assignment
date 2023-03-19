@@ -1,0 +1,8 @@
+jowd: function void() {
+            i: integer;
+            for(t = 12 && 75, x + y != 7, i / 0) {
+                Call("\t\t\t");
+                a[75.5] = 7.8 + 0.9;
+                break;
+            }
+        }

@@ -1,0 +1,7 @@
+main: function void() {
+            // Line comment
+            /*
+                Block comment between line comments
+            */
+            // Line comment
+        }

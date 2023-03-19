@@ -1,3 +1,3 @@
 Program([
-	FuncDecl(main, ArrayType([0], IntegerType), [], None, BlockStmt([WhileStmt(BooleanLit(True), WhileStmt(Id(True), DoWhileStmt(BooleanLit(False), CallStmt(something, ))))]))
+	FuncDecl(main, ArrayType([0], IntegerType), [], None, BlockStmt([WhileStmt(BooleanLit(True), WhileStmt(Id(True), DoWhileStmt(BooleanLit(False), BlockStmt([CallStmt(something, ), VarDecl(a, AutoType), VarDecl(b, AutoType), VarDecl(c, AutoType), VarDecl(d, AutoType), VarDecl(e, AutoType)]))))]))
 ])

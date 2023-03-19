@@ -8,7 +8,7 @@ global1, global2: integer = 1, 2;
                 while (a() :: "b")
                     return c;
                 return;
-                do return;
+                do {return;}
                 while (a[-1]);
                 while (a) {}
                 do {} while (a);

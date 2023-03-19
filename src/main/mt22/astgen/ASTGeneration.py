@@ -171,7 +171,7 @@ class ASTGeneration(MT22Visitor):
         return WhileStmt(self.visit(ctx.expr()), self.visit(ctx.statement()))
 
     def visitDo_while_statement(self, ctx: MT22Parser.ProgramContext):
-        return DoWhileStmt(self.visit(ctx.expr()), self.visit(ctx.statement()))
+        return DoWhileStmt(self.visit(ctx.expr()), self.visit(ctx.block_statement()))
 
     def visitBreak_statement(self, ctx: MT22Parser.ProgramContext):
         return BreakStmt()

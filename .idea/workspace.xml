@@ -6,11 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="3f51661a-8217-4442-8527-876938aa7e26" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/astgen/ASTGeneration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Lexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/mt22/parser/MT22Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/mt22/parser/MT22Parser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/ASTGenSuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/ASTGenSuite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/333.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/333.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/378.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/378.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/389.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/389.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/391.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/391.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/397.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/397.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/399.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/399.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/333.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/333.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/378.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/378.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/389.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/389.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/391.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/391.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/397.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/397.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/testcases/399.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/399.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/MT22.interp" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/MT22Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/target/MT22Parser.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +60,28 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\chuan\PycharmProjects\ppl-assignment\src" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Python tests for ASTGenSuite.ASTGenSuite.test_378" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="ppl-assignment" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;ASTGenSuite.ASTGenSuite.test_378&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Python tests for ASTGenSuite.ASTGenSuite.test_378" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -113,7 +149,7 @@
     <SUITE FILE_PATH="coverage/ppl_assignment$do_test.coverage" NAME="do_test Coverage Results" MODIFIED="1676895554030" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/ppl_assignment$test.coverage" NAME="test Coverage Results" MODIFIED="1676870413648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/test" />
     <SUITE FILE_PATH="coverage/ppl_assignment$TestExecutor.coverage" NAME="TestExecutor Coverage Results" MODIFIED="1676872425693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/test" />
-    <SUITE FILE_PATH="coverage/ppl_assignment$.coverage" NAME=" Coverage Results" MODIFIED="1679203144585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/test" />
+    <SUITE FILE_PATH="coverage/ppl_assignment$.coverage" NAME=" Coverage Results" MODIFIED="1679212234447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/test" />
     <SUITE FILE_PATH="coverage/ppl_assignment$TestGenerator.coverage" NAME="TestGenerator Coverage Results" MODIFIED="1676894571623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/test" />
     <SUITE FILE_PATH="coverage/ppl_assignment$TestUtils.coverage" NAME="TestUtils Coverage Results" MODIFIED="1679192626214" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/test" />
   </component>

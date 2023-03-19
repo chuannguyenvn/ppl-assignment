@@ -1,0 +1,3 @@
+Program([
+	VarDecl(test, BooleanType, FuncCall(call, [IntegerLit(2), IntegerLit(3), IntegerLit(4)]))
+])

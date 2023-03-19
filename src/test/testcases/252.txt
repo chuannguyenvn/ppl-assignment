@@ -1,0 +1,1 @@
+kuro: function array[2] of boolean() inherit demo {}

@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(kuro, ArrayType([2], BooleanType), [], demo, BlockStmt([]))
+])

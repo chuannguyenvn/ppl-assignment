@@ -1,0 +1,8 @@
+jowd: function void(jowd: integer, out jowd: float) inherit jowd {
+            i: integer;
+            for(i = attackOnTitan("Levi \b"), i != 3, i / 4) {
+                Eren("Roar");
+                t = t - 4;
+                if(x < 3) break;
+            }
+        }
