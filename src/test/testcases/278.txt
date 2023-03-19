@@ -1,3 +1,0 @@
-main: function void() {
-            while(i > 5) minus(i, 1);
-            }

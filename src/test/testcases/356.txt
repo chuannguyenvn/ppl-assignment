@@ -1,0 +1,4 @@
+main: function integer()
+    {
+	a = !true || false && "true" || !(foo && !!bar);
+    }

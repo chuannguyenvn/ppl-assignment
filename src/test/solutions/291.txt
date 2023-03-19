@@ -1,4 +1,0 @@
-Program([
-	VarDecl(_55, IntegerType)
-	VarDecl(a5, IntegerType)
-])

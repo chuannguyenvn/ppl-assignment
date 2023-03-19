@@ -1,3 +1,0 @@
-jowd: function void() {
-            if(t - 4 == 0) return false;
-            }

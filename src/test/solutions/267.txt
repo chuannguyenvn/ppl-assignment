@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(joseph, VoidType, [], None, BlockStmt([CallStmt(alice, )]))
-])

@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(main, IntegerType, [], None, BlockStmt([VarDecl(a, ArrayType([0, 1, 2, 3, 4], StringType)), VarDecl(b, ArrayType([0, 1, 2, 3, 4], StringType)), VarDecl(c, ArrayType([0, 1, 2, 3, 4], StringType))]))
+])

@@ -1,0 +1,5 @@
+Program([
+	VarDecl(a, IntegerType, StringLit(yo))
+	VarDecl(b, StringType, FuncCall(main, []))
+	VarDecl(c, FloatType, BinExpr(::, BooleanLit(True), BooleanLit(False)))
+])

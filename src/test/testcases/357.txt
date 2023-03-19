@@ -1,0 +1,4 @@
+main: function integer()
+    {
+	a = "my heart" :: "your heart";
+    }

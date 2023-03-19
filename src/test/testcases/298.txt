@@ -1,6 +1,0 @@
-main: function void() {
-            /*
-                This is a block comment
-                if(1 < 2) increase(i, 1);
-            */
-        }

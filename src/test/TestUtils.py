@@ -2,6 +2,7 @@ import sys
 import os
 from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener, ErrorListener
+
 if not './main/mt22/parser/' in sys.path:
     sys.path.append('./main/mt22/parser/')
 if not './main/mt22/astgen/' in sys.path:
@@ -55,7 +56,7 @@ class TestLexer:
     def printLexeme(dest, lexer):
         tok = lexer.nextToken()
         if tok.type != Token.EOF:
-            dest.write(tok.text+",")
+            dest.write(tok.text + ",")
             TestLexer.printLexeme(dest, lexer)
         else:
             dest.write("<EOF>")
@@ -117,7 +118,6 @@ class TestAST:
         TestAST.check(SOL_DIR, inputfile, num)
         dest = open(os.path.join(SOL_DIR, str(num) + ".txt"), "r")
         line = dest.read()
-        print(line)
         return line == expect
 
     @staticmethod

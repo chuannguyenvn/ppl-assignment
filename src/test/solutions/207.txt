@@ -1,5 +1,0 @@
-Program([
-	VarDecl(X, BooleanType)
-	VarDecl(y, BooleanType)
-	VarDecl(z, BooleanType)
-])

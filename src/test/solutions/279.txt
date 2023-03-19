@@ -1,3 +1,0 @@
-Program([
-	VarDecl(Tai, ArrayType([20], FloatType), BinExpr(::, StringLit(Float number), StringLit(is fun)))
-])

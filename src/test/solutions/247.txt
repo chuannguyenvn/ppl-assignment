@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(paper, BooleanType, [Param(n, IntegerType)], None, BlockStmt([]))
-])

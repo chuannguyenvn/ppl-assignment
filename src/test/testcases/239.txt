@@ -1,1 +1,0 @@
-main: function void() { a = {2, 3_44, 5} == "String" + 333; }

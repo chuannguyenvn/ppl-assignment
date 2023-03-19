@@ -1,0 +1,4 @@
+
+    main: integer = -69;
+    main: function integer() { }
+    main: function void() { main: integer = -main(!69);}

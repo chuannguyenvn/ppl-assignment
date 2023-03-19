@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(main, IntegerType, [], None, BlockStmt([AssignStmt(Id(a), BinExpr(+, BooleanLit(True), BinExpr(%, BinExpr(/, BinExpr(*, BooleanLit(False), StringLit(yo)), Id(yo)), IntegerLit(12345))))]))
+])

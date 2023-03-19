@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, VoidType, [], None, BlockStmt([AssignStmt(Id(accuracy), StringLit(This string contains a tab symbol: \t))]))
-])

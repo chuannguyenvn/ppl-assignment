@@ -1,5 +1,0 @@
-Program([
-	VarDecl(_123, AutoType, BinExpr(||, UnExpr(-, IntegerLit(5)), StringLit(Watch movie please)))
-	VarDecl(Yz, AutoType, BinExpr(::, IntegerLit(5), IntegerLit(7)))
-	VarDecl(Aaa, AutoType, ArrayLit([BinExpr(&&, IntegerLit(56), BooleanLit(False)), IntegerLit(1), IntegerLit(7)]))
-])

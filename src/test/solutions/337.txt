@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(main, IntegerType, [], None, BlockStmt([CallStmt(fractal, IntegerLit(69), FuncCall(fractal, [IntegerLit(69), FuncCall(fractal, [IntegerLit(69), FuncCall(fractal, [IntegerLit(69), FuncCall(fractal, [])])])]))]))
+])

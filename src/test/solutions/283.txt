@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, VoidType, [], None, BlockStmt([VarDecl(i, IntegerType, IntegerLit(5)), WhileStmt(BooleanLit(True), CallStmt(add, Id(i), IntegerLit(1)))]))
-])

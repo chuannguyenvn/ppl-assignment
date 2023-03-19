@@ -1,3 +1,0 @@
-Program([
-	VarDecl(Tai, ArrayType([2], StringType), BinExpr(==, StringLit(I love watching films?), StringLit(Hmmmm)))
-])

@@ -1,1 +1,0 @@
-x, y, z: integer = false, true, 1;

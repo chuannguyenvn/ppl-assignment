@@ -1,1 +1,0 @@
-_x6_yz, a69, XYZ: auto = 1 + 2, 3 - 4, "abc" :: "def";

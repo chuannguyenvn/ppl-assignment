@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(jowd, VoidType, [], None, BlockStmt([IfStmt(BinExpr(!=, Id(a), IntegerLit(2)), BlockStmt([AssignStmt(Id(a), IntegerLit(5))]), BlockStmt([AssignStmt(Id(a), IntegerLit(6))]))]))
-])

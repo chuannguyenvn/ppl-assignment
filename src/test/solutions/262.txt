@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(jowd, VoidType, [], None, BlockStmt([CallStmt(jowd, IntegerLit(1), IntegerLit(2), IntegerLit(3))]))
-])

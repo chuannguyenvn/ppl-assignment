@@ -1,1 +1,0 @@
-main: function void() { b = "Another random string \t"; }

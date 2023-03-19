@@ -1,8 +1,0 @@
-demo: function auto() {
-            i: boolean;
-            for(i = i == 4, x != i, x / x) {
-                Chillies("GiacMoKhac");
-                aut = aut + 3;
-                if(aut < 3) continue;
-            }
-        }

@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(taki, VoidType, [], None, BlockStmt([VarDecl(i, IntegerType, BinExpr(+, IntegerLit(7), IntegerLit(5))), ForStmt(AssignStmt(Id(i), BinExpr(::, IntegerLit(1), IntegerLit(2))), BinExpr(<, Id(i), BinExpr(+, IntegerLit(5), IntegerLit(1))), BinExpr(+, Id(i), IntegerLit(1)), BlockStmt([ContinueStmt()]))]))
-])

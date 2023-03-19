@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, VoidType, [], None, BlockStmt([CallStmt(fact, Id(intege), StringLit(999), StringLit(2222))]))
-])

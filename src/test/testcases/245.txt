@@ -1,1 +1,0 @@
-main: function void() { fact(intege, "999", "2222"); }

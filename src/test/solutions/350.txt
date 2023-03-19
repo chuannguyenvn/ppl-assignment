@@ -1,0 +1,3 @@
+Program([
+	FuncDecl(main, IntegerType, [], None, BlockStmt([AssignStmt(Id(a), BinExpr(+, BinExpr(+, BinExpr(-, FloatLit(1.001), UnExpr(-, UnExpr(-, BinExpr(/, StringLit(two), UnExpr(-, UnExpr(-, IntegerLit(3))))))), BinExpr(%, FuncCall(four, [UnExpr(-, IntegerLit(5))]), Id(six))), BinExpr(*, BinExpr(%, IntegerLit(7), IntegerLit(8)), FuncCall(nine, [UnExpr(-, FloatLit(0.0))]))))]))
+])

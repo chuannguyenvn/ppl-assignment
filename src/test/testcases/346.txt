@@ -1,0 +1,4 @@
+
+    a: integer = "yo";
+    b: string = main();
+    c: float = true :: false; 

@@ -1,1 +1,0 @@
-jowd: function void() { jowd(1, 2, 3); }

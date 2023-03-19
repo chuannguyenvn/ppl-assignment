@@ -1,1 +1,0 @@
-main: function void() { a = a :: 32 < ("34" :: _randomF12()); }

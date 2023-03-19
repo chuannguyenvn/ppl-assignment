@@ -1,1 +1,0 @@
-Tai: array[2] of string = "I love watching films?" == "Hmmmm";

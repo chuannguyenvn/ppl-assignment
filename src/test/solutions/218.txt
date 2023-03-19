@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(demo, VoidType, [], None, BlockStmt([IfStmt(BinExpr(==, Id(btl_ppl), IntegerLit(10)), CallStmt(dedung, ), CallStmt(shout, StringLit(desaitumlum)))]))
-])
