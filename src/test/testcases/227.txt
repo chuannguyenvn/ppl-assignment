@@ -1,4 +1,4 @@
 main: function void() {
-            do increase();
+            do {increase();}
             while(i < 2);
             }

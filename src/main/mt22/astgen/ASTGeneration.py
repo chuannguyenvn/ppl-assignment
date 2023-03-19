@@ -196,7 +196,7 @@ class ASTGeneration(MT22Visitor):
         if ctx.statement():
             return [self.visit(ctx.statement())] + self.visit(ctx.block_statement_element_list_tail())
         elif ctx.variable_declaration():
-            return [self.visit(ctx.variable_declaration())] + self.visit(ctx.block_statement_element_list_tail())
+            return self.visit(ctx.variable_declaration()) + self.visit(ctx.block_statement_element_list_tail())
         else:
             return []
 
@@ -204,7 +204,7 @@ class ASTGeneration(MT22Visitor):
         if ctx.statement():
             return [self.visit(ctx.statement())] + self.visit(ctx.block_statement_element_list_tail())
         elif ctx.variable_declaration():
-            return [self.visit(ctx.variable_declaration())] + self.visit(ctx.block_statement_element_list_tail())
+            return self.visit(ctx.variable_declaration()) + self.visit(ctx.block_statement_element_list_tail())
         else:
             return []
 
@@ -309,9 +309,9 @@ class ASTGeneration(MT22Visitor):
 
     def visitLiteral(self, ctx: MT22Parser.ProgramContext):
         if ctx.INTEGER_LIT():
-            return IntegerLit(ctx.INTEGER_LIT().getText())
+            return IntegerLit(int(ctx.INTEGER_LIT().getText()))
         elif ctx.FLOAT_LIT():
-            return FloatLit(ctx.FLOAT_LIT().getText())
+            return FloatLit(float(ctx.FLOAT_LIT().getText()))
         elif ctx.BOOLEAN_LIT():
             return BooleanLit(self.to_bool(ctx.BOOLEAN_LIT().getText()))
         elif ctx.STRING_LIT():

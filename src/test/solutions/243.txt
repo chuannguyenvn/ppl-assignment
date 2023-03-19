@@ -1,3 +1,3 @@
 Program([
-	FuncDecl(jowd, VoidType, [], None, BlockStmt([[<AST.VarDecl object at 0x0000015C4BE82F10>], ForStmt(AssignStmt(Id(t), BinExpr(&&, IntegerLit(12), IntegerLit(75))), BinExpr(!=, BinExpr(+, Id(x), Id(y)), IntegerLit(7)), BinExpr(/, Id(i), IntegerLit(0)), BlockStmt([CallStmt(Call, StringLit(\t\t\t)), AssignStmt(ArrayCell(a, [FloatLit(75.5)]), BinExpr(+, FloatLit(7.8), FloatLit(0.9))), BreakStmt()]))]))
+	FuncDecl(jowd, VoidType, [], None, BlockStmt([VarDecl(i, IntegerType), ForStmt(AssignStmt(Id(t), BinExpr(&&, IntegerLit(12), IntegerLit(75))), BinExpr(!=, BinExpr(+, Id(x), Id(y)), IntegerLit(7)), BinExpr(/, Id(i), IntegerLit(0)), BlockStmt([CallStmt(Call, StringLit(\t\t\t)), AssignStmt(ArrayCell(a, [FloatLit(75.5)]), BinExpr(+, FloatLit(7.8), FloatLit(0.9))), BreakStmt()]))]))
 ])
