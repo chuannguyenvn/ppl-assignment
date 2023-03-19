@@ -1,8 +1,8 @@
 Program([
-	FuncDecl(main, VoidType, [], None, BlockStmt([]))
+	FuncDecl(main, VoidType, [], main, BlockStmt([]))
 	FuncDecl(main2, IntegerType, [], None, BlockStmt([]))
 	VarDecl(main3, IntegerType)
-	FuncDecl(main4, AutoType, [], None, BlockStmt([]))
+	FuncDecl(main4, AutoType, [], some_thing, BlockStmt([]))
 	VarDecl(main5, AutoType, IntegerLit(1))
 	VarDecl(main6, AutoType)
 	VarDecl(main7, AutoType)

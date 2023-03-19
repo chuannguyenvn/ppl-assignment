@@ -7,14 +7,13 @@
     <list default="true" id="3f51661a-8217-4442-8527-876938aa7e26" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/ASTGenSuite.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/ASTGenSuite.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/solutions/393.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/393.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/solutions/394.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/394.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/solutions/395.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/395.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/solutions/396.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/396.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testcases/393.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/393.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testcases/394.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/394.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/testcases/395.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/395.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/398.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/398.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/solutions/399.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/solutions/399.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/testcases/396.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/396.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/398.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/398.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/399.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/399.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/testcases/400.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/testcases/400.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

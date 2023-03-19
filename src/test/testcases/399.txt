@@ -1,1 +1,11 @@
- mark: float = 10.0;
+main: function void(out a: string) inherit a
+        {
+            a = 1;
+            b = a;
+            c: integer = b;
+            d: string = a[----1];
+            e, f: array [1] of float = 1, {1,2,3,4,5};
+            g: integer = {a, b(), "c", d - 1, e :: f, g || h(i, j())};
+        }
+        h: auto = {main()};
+        

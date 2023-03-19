@@ -582,18 +582,18 @@ class ASTGenSuite(unittest.TestCase):
 
     def test_396(self):
         input="""
-        main: function void() {} 
+        main: function void() inherit main {}
         main2: function integer() {} 
         main3: integer; 
-        main4: function auto() {}
+        main4: function auto() inherit some_thing {}
         main5: auto = 1;
         main6, main7: auto;
         main8: function auto(a: auto) {}"""
         expect="""Program([
-	FuncDecl(main, VoidType, [], None, BlockStmt([]))
+	FuncDecl(main, VoidType, [], main, BlockStmt([]))
 	FuncDecl(main2, IntegerType, [], None, BlockStmt([]))
 	VarDecl(main3, IntegerType)
-	FuncDecl(main4, AutoType, [], None, BlockStmt([]))
+	FuncDecl(main4, AutoType, [], some_thing, BlockStmt([]))
 	VarDecl(main5, AutoType, IntegerLit(1))
 	VarDecl(main6, AutoType)
 	VarDecl(main7, AutoType)
@@ -639,16 +639,32 @@ class ASTGenSuite(unittest.TestCase):
         self.assertTrue(TestAST.test(input, expect, 397))
 
     def test_398(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""ex :  function  float  (  inherit  out kI :  boolean  ,  inherit  out Q :  string  )  inherit Nd3w 
+        { MPf :  array  [ 7_8_123 , 0 ]  of  float  = 0 - 0.50 + N (  )  + DEA (  )  / s (  )  -  ! 9 || 254_5_2_2_8.1 *  - q ;  }"""
+        expect="""Program([
+	FuncDecl(ex, FloatType, [InheritOutParam(kI, BooleanType), InheritOutParam(Q, StringType)], Nd3w, BlockStmt([VarDecl(MPf, ArrayType([78123, 0], FloatType), BinExpr(||, BinExpr(-, BinExpr(+, BinExpr(+, BinExpr(-, IntegerLit(0), FloatLit(0.5)), FuncCall(N, [])), BinExpr(/, FuncCall(DEA, []), FuncCall(s, []))), UnExpr(!, IntegerLit(9))), BinExpr(*, FloatLit(2545228.1), UnExpr(-, Id(q)))))]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 398))
 
     def test_399(self):
-        input=""" mark: float = 10.0;"""
-        expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
+        input="""main: function void(out a: string) inherit a
+        {
+            a = 1;
+            b = a;
+            c: integer = b;
+            d: string = a[----1];
+            e, f: array [1] of float = 1, {1,2,3,4,5};
+            g: integer = {a, b(), "c", d - 1, e :: f, g || h(i, j())};
+        }
+        h: auto = {main()};
+        """
+        expect="""Program([
+	FuncDecl(main, VoidType, [OutParam(a, StringType)], a, BlockStmt([AssignStmt(Id(a), IntegerLit(1)), AssignStmt(Id(b), Id(a)), VarDecl(c, IntegerType, Id(b)), VarDecl(d, StringType, ArrayCell(a, [UnExpr(-, UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(1)))))])), VarDecl(e, ArrayType([1], FloatType), IntegerLit(1)), VarDecl(f, ArrayType([1], FloatType), ArrayLit([IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4), IntegerLit(5)])), VarDecl(g, IntegerType, ArrayLit([Id(a), FuncCall(b, []), StringLit(c), BinExpr(-, Id(d), IntegerLit(1)), BinExpr(::, Id(e), Id(f)), BinExpr(||, Id(g), FuncCall(h, [Id(i), FuncCall(j, [])]))]))]))
+	VarDecl(h, AutoType, ArrayLit([FuncCall(main, [])]))
+])"""
         self.assertTrue(TestAST.test(input, expect, 399))
 
     def test_400(self):
-        input=""" mark: float = 10.0;"""
+        input="""mark: float = 10.0;"""
         expect="""Program([\n\tVarDecl(mark, FloatType, FloatLit(10.0))\n])"""
         self.assertTrue(TestAST.test(input, expect, 400))
