@@ -620,7 +620,7 @@ class ASTGenSuite(unittest.TestCase):
         input="""global1, global2: integer = 1, 2;
         main: function void(out a: integer)
         {
-            for (i = i + 1 / 2 * "3" - 4 || 5, a[foo(), bar(a[0, 0]), foo], rec(rec(rec))))
+            for (i = i + 1 / 2 * "3" - 4 || 5, a[foo(), bar(a[0, 0]), foo], rec(rec(rec)))
                 if (1 == (2 || (3 + 4) / 5 + ((6 - 7) >= -8)) :: 9)
                     break;
                 else continue;
