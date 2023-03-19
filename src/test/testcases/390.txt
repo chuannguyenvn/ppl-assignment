@@ -1,0 +1,11 @@
+main: function array [0] of integer()
+        {
+            while(true)
+            {
+                do
+                {
+                    something();
+                }
+                while (something());
+            }
+        }

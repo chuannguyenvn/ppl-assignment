@@ -1,0 +1,11 @@
+Program([
+	VarDecl(a, FloatType, FloatLit(1.0))
+	VarDecl(b, FloatType, FloatLit(2.0))
+	VarDecl(c, FloatType, FloatLit(3.0))
+	VarDecl(d, FloatType, FloatLit(4.0))
+	VarDecl(e, IntegerType, IntegerLit(5))
+	VarDecl(f, IntegerType, IntegerLit(6))
+	VarDecl(g, StringType, StringLit(abc))
+	VarDecl(h, StringType, StringLit(def))
+	VarDecl(i, StringType, StringLit(ghi))
+])

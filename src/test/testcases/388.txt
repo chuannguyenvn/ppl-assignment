@@ -1,0 +1,14 @@
+main: function auto()
+        { 
+        if (a) 
+            if (b)
+                c();
+            else 
+                d();
+            if (e) 
+                f();
+                if (g)
+                    h();
+                    else i();
+        }
+        

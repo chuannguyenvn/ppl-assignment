@@ -1,0 +1,6 @@
+main: function auto(a: float, out b: string, inherit c: integer, inherit out d: array [0,  0] of float)
+{
+a: integer;
+b, c, d: string;
+e, f, g, h: float = "a", b, 1.2e2, c[1,2,3];
+}
