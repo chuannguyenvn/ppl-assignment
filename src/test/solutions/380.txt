@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, AutoType, [Param(a, FloatType), OutParam(b, StringType), InheritParam(c, IntegerType), InheritOutParam(d, ArrayType([0, 0], FloatType))], None, BlockStmt([VarDecl(a, IntegerType), VarDecl(b, StringType), VarDecl(c, StringType), VarDecl(d, StringType), VarDecl(e, FloatType, StringLit(a)), VarDecl(f, FloatType, Id(b)), VarDecl(g, FloatType, FloatLit(120.0)), VarDecl(h, FloatType, ArrayCell(c, [IntegerLit(1), IntegerLit(2), IntegerLit(3)]))]))
-])

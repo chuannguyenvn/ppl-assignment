@@ -1,1 +1,1 @@
-x, y, z: integer = false, true, 1;
+delta: integer = 3;

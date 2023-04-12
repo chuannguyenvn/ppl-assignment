@@ -1,1 +1,0 @@
-main: function void() { a = a - 3 * 12 || b % 3e2 / "Siuuuuuuu \b"; }

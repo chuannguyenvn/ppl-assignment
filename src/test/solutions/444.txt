@@ -1,5 +1,0 @@
-Program([
-	FuncDecl(J, ArrayType([3074222354839749492887, 0], FloatType), [], cI, BlockStmt([]))
-	FuncDecl(w4, IntegerType, [], ri4, BlockStmt([]))
-	FuncDecl(y, VoidType, [], None, BlockStmt([]))
-])

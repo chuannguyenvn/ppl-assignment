@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(Y, ArrayType([3430330539486543, 0, 0, 0, 48, 46660, 0], BooleanType), [InheritOutParam(Lzkv, BooleanType), InheritParam(M, AutoType)], None, BlockStmt([]))
-])

@@ -1,3 +1,0 @@
-Program([
-	VarDecl(call, IntegerType, FuncCall(call, [IntegerLit(1), IntegerLit(2), IntegerLit(3), IntegerLit(4)]))
-])

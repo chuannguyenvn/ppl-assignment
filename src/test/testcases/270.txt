@@ -1,1 +1,0 @@
-main: function void() { lhs = "PPL" * a[5] && -33_9402.21 || {n, h, d}; }

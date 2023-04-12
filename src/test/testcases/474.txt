@@ -1,1 +1,0 @@
-f : function auto  ( ) { }    D : function auto  ( ) { return W   / sY1_      ;   c  : auto  = - W    != vG   % DM       ;  }    

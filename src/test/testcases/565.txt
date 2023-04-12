@@ -1,1 +1,0 @@
-HF : function array [ 0 ] of boolean    ( ) inherit K { }    

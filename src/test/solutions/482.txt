@@ -1,4 +1,0 @@
-Program([
-	VarDecl(T, IntegerType)
-	VarDecl(b, IntegerType)
-])

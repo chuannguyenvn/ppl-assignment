@@ -1,4 +1,0 @@
-Program([
-	VarDecl(_, StringType)
-	VarDecl(w, StringType)
-])

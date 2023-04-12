@@ -1,1 +1,0 @@
-g : function void  ( out Krp : auto    ) { ZG3MO  : string   ;  }    

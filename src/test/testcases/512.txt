@@ -1,1 +1,0 @@
-J : function auto  ( inherit out LU : auto    ) inherit v { Z ( )  ;   while ( zrh   - kA33E      ) return ;     vu ( )  ;   for ( G  = vM   - Qo    != DeLb   * U     :: 1    == - UI      , - k      , vB   % sBd    != Z   * s     :: go   && z    == PR     ) J ( )  ;     }    iVF : function integer   ( ) inherit Sx { }    

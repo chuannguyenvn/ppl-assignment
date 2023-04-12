@@ -1,6 +1,0 @@
-main: function auto() {
-            i: integer;
-            for(i = 11 * ab, i < 23, i + 1) {
-                writeInt(i);
-            }
-        }

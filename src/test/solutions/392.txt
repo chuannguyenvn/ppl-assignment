@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, ArrayType([0, 1, 2, 3], BooleanType), [], None, BlockStmt([ForStmt(AssignStmt(Id(i), IntegerLit(1)), IntegerLit(1), IntegerLit(1), BreakStmt())]))
-])

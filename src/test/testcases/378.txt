@@ -1,9 +1,0 @@
-main: function void()
-        {
-            f = 12_34.567+e89;
-            if (expr1) 
-                if (expr2) 
-                    stmt1();
-                else 
-                    stmt2();
-        }

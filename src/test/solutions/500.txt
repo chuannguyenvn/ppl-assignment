@@ -1,5 +1,0 @@
-Program([
-	VarDecl(gsatL, ArrayType([7389438330212141, 9], BooleanType), BinExpr(::, BinExpr(&&, BinExpr(&&, BinExpr(&&, Id(Mg), Id(Qm)), BinExpr(-, Id(M8), Id(I9bY))), UnExpr(!, UnExpr(-, Id(Z)))), FuncCall(QYq, [])))
-	VarDecl(r, ArrayType([7389438330212141, 9], BooleanType), UnExpr(!, UnExpr(!, FuncCall(tJA, []))))
-	VarDecl(s, ArrayType([7389438330212141, 9], BooleanType), BinExpr(::, FuncCall(Q, []), BinExpr(!=, IntegerLit(97), BinExpr(-, IntegerLit(0), FuncCall(K, [])))))
-])

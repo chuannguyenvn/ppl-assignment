@@ -1,2 +1,0 @@
-ex :  function  float  (  inherit  out kI :  boolean  ,  inherit  out Q :  string  )  inherit Nd3w 
-        { MPf :  array  [ 7_8_123 , 0 ]  of  float  = 0 - 0.50 + N (  )  + DEA (  )  / s (  )  -  ! 9 || 254_5_2_2_8.1 *  - q ;  }

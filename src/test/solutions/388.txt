@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, AutoType, [], None, BlockStmt([IfStmt(Id(a), IfStmt(Id(b), CallStmt(c, ), CallStmt(d, ))), IfStmt(Id(e), CallStmt(f, )), IfStmt(Id(g), CallStmt(h, ), CallStmt(i, ))]))
-])

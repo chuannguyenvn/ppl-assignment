@@ -1,4 +1,0 @@
-Program([
-	VarDecl(x99BG, IntegerType, Id(Ym))
-	VarDecl(B, IntegerType, UnExpr(!, BooleanLit(True)))
-])

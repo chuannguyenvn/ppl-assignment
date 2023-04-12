@@ -1,3 +1,0 @@
-Program([
-	VarDecl(Tai, BooleanType, BooleanLit(False))
-])

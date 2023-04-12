@@ -1,4 +1,0 @@
-Program([
-	VarDecl(W, AutoType, BinExpr(>=, FuncCall(b1, []), BinExpr(&&, BinExpr(+, UnExpr(!, Id(fXUT)), BinExpr(*, Id(nS), Id(I))), Id(S5P))))
-	FuncDecl(krI, VoidType, [], None, BlockStmt([BreakStmt()]))
-])

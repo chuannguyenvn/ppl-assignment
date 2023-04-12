@@ -1,4 +1,0 @@
-Program([
-	FuncDecl(j, AutoType, [OutParam(J, ArrayType([0], BooleanType))], None, BlockStmt([VarDecl(XN, ArrayType([0, 717], StringType))]))
-	VarDecl(FL, AutoType, BinExpr(||, BinExpr(&&, UnExpr(-, UnExpr(-, Id(t))), BinExpr(%, Id(Zm), Id(hh))), UnExpr(!, Id(j))))
-])

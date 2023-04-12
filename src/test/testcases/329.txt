@@ -1,5 +1,0 @@
-
-    main: function integer()
-    {
-	while (1) while(a) while(foo()) while ("abc") continue;
-    }

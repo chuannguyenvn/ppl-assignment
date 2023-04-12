@@ -1,6 +1,0 @@
-
-    main: function integer()
-    {
-	if (1 > 2) if (2 > 3) if (3 > 4) if (4 > 5) foo();
-	else bar();
-    }

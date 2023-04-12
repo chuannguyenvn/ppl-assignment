@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(P, ArrayType([89505], IntegerType), [InheritOutParam(W, IntegerType)], j, BlockStmt([]))
-])

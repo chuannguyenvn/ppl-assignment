@@ -1,3 +1,0 @@
-Program([
-	VarDecl(mark, FloatType, FloatLit(10.0))
-])

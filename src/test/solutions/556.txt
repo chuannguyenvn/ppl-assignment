@@ -1,5 +1,0 @@
-Program([
-	FuncDecl(qZ8, BooleanType, [InheritParam(n5TV, AutoType)], None, BlockStmt([VarDecl(G, ArrayType([0], BooleanType)), VarDecl(Q, ArrayType([0], BooleanType)), IfStmt(BinExpr(::, BinExpr(<=, UnExpr(-, Id(j)), UnExpr(-, Id(h))), UnExpr(!, Id(p))), ReturnStmt())]))
-	VarDecl(MMp, ArrayType([305190], BooleanType))
-	FuncDecl(O, AutoType, [], None, BlockStmt([]))
-])

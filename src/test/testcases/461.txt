@@ -1,1 +1,0 @@
-v  : array [ 3 , 53 , 0 ] of integer    ;   

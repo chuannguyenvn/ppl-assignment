@@ -1,4 +1,0 @@
-Program([
-	VarDecl(kCbNhI, ArrayType([0, 0, 0], BooleanType))
-	VarDecl(pv, ArrayType([0, 0, 0], BooleanType))
-])

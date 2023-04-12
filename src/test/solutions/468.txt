@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(vl, ArrayType([0, 78], BooleanType), [OutParam(V, ArrayType([0], IntegerType))], w, BlockStmt([VarDecl(PN, StringType, Id(UKA)), VarDecl(q, StringType, BinExpr(::, BinExpr(>, BinExpr(+, Id(d), Id(R)), UnExpr(!, Id(xd))), BinExpr(&&, Id(Vj), Id(aZ)))), VarDecl(V, StringType, BinExpr(::, BinExpr(!=, Id(f8d), BinExpr(*, Id(KOj), Id(K))), BinExpr(>=, BinExpr(*, Id(Qm), Id(H)), BinExpr(%, Id(N), Id(NJcRImR8p))))), VarDecl(f8Dx, StringType, BinExpr(::, BinExpr(==, BinExpr(/, Id(B), Id(vL)), BinExpr(+, Id(a), Id(DQDe))), UnExpr(!, Id(e)))), VarDecl(L, StringType, BinExpr(<, BinExpr(&&, Id(Gj), Id(o)), BinExpr(||, Id(s3), Id(bF))))]))
-])

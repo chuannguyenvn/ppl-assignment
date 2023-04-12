@@ -1,1 +1,0 @@
-a: integer = a / b :: c - d / e && f - g + !(h - k) % - j[--q, ((a >= b) / - c), 1 + "\n2"]; 

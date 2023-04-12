@@ -1,3 +1,0 @@
-Program([
-	VarDecl(x, ArrayType([1, 2], BooleanType))
-])

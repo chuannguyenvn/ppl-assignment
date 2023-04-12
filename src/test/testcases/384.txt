@@ -1,1 +1,0 @@
-call: integer = call(1,2,3,4);

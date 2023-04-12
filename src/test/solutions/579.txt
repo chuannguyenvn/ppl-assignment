@@ -1,3 +1,0 @@
-Program([
-	VarDecl(d, AutoType, BinExpr(-, UnExpr(!, UnExpr(-, Id(ku))), FuncCall(H, [])))
-])

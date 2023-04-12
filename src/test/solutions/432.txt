@@ -1,5 +1,0 @@
-Program([
-	VarDecl(f, ArrayType([0, 4342363286, 70234, 0], FloatType))
-	VarDecl(OIM, ArrayType([0, 4342363286, 70234, 0], FloatType))
-	FuncDecl(Gk, BooleanType, [], L, BlockStmt([VarDecl(X, ArrayType([37, 85300, 23181194235], StringType), BinExpr(==, BinExpr(||, Id(aeJX), Id(G)), BinExpr(||, Id(W), Id(d9j)))), VarDecl(d, ArrayType([37, 85300, 23181194235], StringType), UnExpr(-, Id(ear5tyL))), VarDecl(XH, ArrayType([37, 85300, 23181194235], StringType), UnExpr(-, Id(g))), WhileStmt(BinExpr(::, BinExpr(||, Id(M8D), Id(P)), BinExpr(<, UnExpr(!, Id(cb)), BinExpr(+, Id(l), Id(Z)))), ReturnStmt())]))
-])

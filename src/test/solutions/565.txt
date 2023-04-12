@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(HF, ArrayType([0], BooleanType), [], K, BlockStmt([]))
-])

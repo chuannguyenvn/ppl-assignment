@@ -1,4 +1,0 @@
-Program([
-	FuncDecl(uT4, VoidType, [], None, BlockStmt([ForStmt(AssignStmt(Id(sb), BinExpr(<=, BinExpr(%, Id(ffo), Id(A)), BinExpr(%, Id(j), Id(eam8s)))), BinExpr(<, UnExpr(-, Id(iZ)), Id(BO)), UnExpr(!, Id(eWb)), CallStmt(rCu, )), ContinueStmt()]))
-	FuncDecl(_g, AutoType, [], None, BlockStmt([BreakStmt()]))
-])

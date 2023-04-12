@@ -1,4 +1,2 @@
-main: function integer()
-    {
-	a = 1;
-    }
+main: function void () {
+        }

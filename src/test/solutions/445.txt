@@ -1,6 +1,0 @@
-Program([
-	FuncDecl(Ao, ArrayType([6], IntegerType), [], Db, BlockStmt([]))
-	VarDecl(s, AutoType)
-	VarDecl(bt, AutoType)
-	VarDecl(EwW, AutoType)
-])

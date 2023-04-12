@@ -1,3 +1,0 @@
-Program([
-	VarDecl(O, BooleanType, BinExpr(==, BinExpr(||, BinExpr(&&, UnExpr(!, Id(_)), BinExpr(+, Id(M7), FuncCall(wiD, []))), IntegerLit(0)), BinExpr(||, BinExpr(||, BinExpr(||, BinExpr(-, BinExpr(-, UnExpr(-, Id(VzCD)), Id(x)), Id(tH3)), UnExpr(!, Id(L))), Id(v)), Id(O))))
-])

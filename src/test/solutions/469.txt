@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(M, VoidType, [], J, BlockStmt([DoWhileStmt(BinExpr(<=, UnExpr(-, Id(wpMT)), BinExpr(&&, Id(LCEk), Id(WD))), BlockStmt([]))]))
-])

@@ -1,4 +1,0 @@
-Program([
-	VarDecl(s, ArrayType([0], FloatType))
-	VarDecl(hoC, ArrayType([0], FloatType))
-])

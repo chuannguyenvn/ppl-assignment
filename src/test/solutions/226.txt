@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(jowd, IntegerType, [], None, BlockStmt([IfStmt(BinExpr(==, Id(Xyz), IntegerLit(2)), IfStmt(BinExpr(==, Id(Yzx), Id(Xyz)), CallStmt(jowd, ), CallStmt(eliminate, StringLit(PPL))), AssignStmt(Id(music), BooleanLit(False)))]))
-])

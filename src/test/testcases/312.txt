@@ -1,5 +1,0 @@
-
-    main: function integer()
-    {
-	a = {1, 2, 3};
-    }

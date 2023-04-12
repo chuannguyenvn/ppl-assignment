@@ -1,1 +1,0 @@
-r : function integer   ( inherit t : array [ 0 , 14_5_7 , 1 , 39 ] of integer     , yk : integer     ) { n7u ( )  ;   If , Y  : auto  = Ya   && l__     :: ! _dzA      , I6cA   && Y       ;  }    

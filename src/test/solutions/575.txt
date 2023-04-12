@@ -1,4 +1,0 @@
-Program([
-	FuncDecl(OI, VoidType, [Param(z, AutoType), InheritOutParam(J, AutoType)], None, BlockStmt([]))
-	FuncDecl(j, BooleanType, [InheritOutParam(Kqpz, BooleanType)], _t, BlockStmt([]))
-])

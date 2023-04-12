@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, IntegerType, [], None, BlockStmt([DoWhileStmt(IntegerLit(1), BlockStmt([BreakStmt(), ContinueStmt(), ReturnStmt()]))]))
-])

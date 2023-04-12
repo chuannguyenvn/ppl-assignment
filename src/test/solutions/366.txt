@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, IntegerType, [], None, BlockStmt([AssignStmt(Id(zero), BinExpr(::, BinExpr(==, BinExpr(||, BinExpr(+, BinExpr(*, IntegerLit(1), IntegerLit(2)), IntegerLit(3)), BinExpr(+, BinExpr(%, IntegerLit(4), ArrayCell(five, [IntegerLit(6)])), BinExpr(%, FuncCall(seven, [IntegerLit(8), ArrayCell(nine, [IntegerLit(10), IntegerLit(11), BinExpr(&&, ArrayCell(twelve, [IntegerLit(13)]), IntegerLit(14))])]), IntegerLit(15)))), IntegerLit(16)), BooleanLit(True)))]))
-])

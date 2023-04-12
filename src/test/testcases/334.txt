@@ -1,5 +1,0 @@
-
-    main: function integer()
-    {
-	do {break; continue; return;} while (1);
-    }

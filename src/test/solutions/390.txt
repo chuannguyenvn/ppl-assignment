@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, ArrayType([0], IntegerType), [], None, BlockStmt([WhileStmt(BooleanLit(True), BlockStmt([DoWhileStmt(FuncCall(something, []), BlockStmt([CallStmt(something, )]))]))]))
-])

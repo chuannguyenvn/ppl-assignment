@@ -1,6 +1,0 @@
-jowd: function integer() {
-            if(Xyz == 2)
-                if(Yzx == Xyz) jowd();
-                else eliminate("PPL");
-            else music = false;
-        }

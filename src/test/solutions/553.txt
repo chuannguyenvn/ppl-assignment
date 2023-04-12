@@ -1,3 +1,0 @@
-Program([
-	VarDecl(J, ArrayType([0], IntegerType))
-])

@@ -1,5 +1,0 @@
-
-    main: function integer()
-    {
-	a = foo(((1)));
-    }

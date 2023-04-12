@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, IntegerType, [], None, BlockStmt([AssignStmt(Id(a), ArrayCell(a, [Id(one), ArrayCell(a, [IntegerLit(2)]), ArrayCell(a, [StringLit(3)]), ArrayCell(_1, [BinExpr(>, IntegerLit(4), IntegerLit(5)), BinExpr(<, IntegerLit(6), IntegerLit(7))]), FuncCall(_8, [ArrayCell(nine, [IntegerLit(0)])])]))]))
-])

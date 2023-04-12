@@ -1,3 +1,0 @@
-jowd: function void() {
-            if(a != 2) {a = 5;} else {a = 6;}
-            }

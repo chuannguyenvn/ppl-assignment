@@ -1,3 +1,0 @@
-main: function void() { 
-        a = arr[23 :: "Concat tis \f" && ("Eeeee lol" :: 34)]; 
-        }

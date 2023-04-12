@@ -1,1 +1,0 @@
-K : function auto  ( inherit out O : void   , ak : array [ 0 ] of boolean     , r : array [ 1 , 4 , 64 , 0 ] of string      ) { }    P : function auto  ( Z : void   , X : array [ 0 ] of float     , inherit out Nkn : void    ) { }    

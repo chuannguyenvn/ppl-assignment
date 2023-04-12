@@ -1,7 +1,0 @@
-
-    main: function void ()
-    {
-	break;
-	continue;
-    }
-    

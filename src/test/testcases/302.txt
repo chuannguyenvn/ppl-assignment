@@ -1,9 +1,2 @@
-
-    // this is the main function
-    main: function void() // main function is a function that return a void object, which is an object originated from the void
-    { // curly brace denotes the start of the main function
-	/* main function's main function is
-	to do some main functions, which are functions
-	that main and typically appear in a main function */
-    } // another curly brace informs the function that this is its end
-    // that is all there is to it
+x, y, z: integer = 1, 2, 3;
+        a, b: float;

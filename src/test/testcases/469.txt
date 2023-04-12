@@ -1,1 +1,0 @@
-M : function void  ( ) inherit J { do { }  while ( - wpMT    <= LCEk   && WD      ) ;   }    

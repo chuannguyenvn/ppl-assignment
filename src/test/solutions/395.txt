@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, VoidType, [], None, BlockStmt([BreakStmt(), ContinueStmt(), ReturnStmt(), ReturnStmt(IntegerLit(1)), ReturnStmt(ArrayCell(a, [IntegerLit(1)])), ReturnStmt(StringLit(a)), ReturnStmt(StringLit(for))]))
-])

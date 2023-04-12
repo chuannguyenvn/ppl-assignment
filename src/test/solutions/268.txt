@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(data, VoidType, [], None, BlockStmt([]))
-])

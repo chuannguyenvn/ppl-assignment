@@ -1,5 +1,0 @@
-Program([
-	VarDecl(x, AutoType)
-	VarDecl(o85hKb, AutoType)
-	VarDecl(T3llGB, AutoType)
-])

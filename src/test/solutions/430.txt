@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(E, AutoType, [OutParam(RmNQQq3, FloatType)], None, BlockStmt([]))
-])

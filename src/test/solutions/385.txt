@@ -1,3 +1,0 @@
-Program([
-	VarDecl(main, IntegerType, FuncCall(foo, [FuncCall(foo, [FuncCall(foo, [])])]))
-])

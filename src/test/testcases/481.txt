@@ -1,1 +1,0 @@
-w : function void  ( inherit out hP : boolean     ) inherit s { }    

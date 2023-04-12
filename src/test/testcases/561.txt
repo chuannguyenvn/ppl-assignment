@@ -1,1 +1,0 @@
-i : function boolean   ( out nSt : array [ 4_83 ] of integer      ) inherit K { }    

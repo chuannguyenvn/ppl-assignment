@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(j, AutoType, [], Y, BlockStmt([]))
-])

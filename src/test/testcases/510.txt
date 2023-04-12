@@ -1,1 +1,0 @@
-a : function void  ( ) inherit Qo { return Y   * Q    <= Dei   * oW      ;   }    

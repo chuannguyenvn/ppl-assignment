@@ -1,7 +1,0 @@
-
-    main: function integer()
-    {
-	break;
-	continue;
-	return;
-    }

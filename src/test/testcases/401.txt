@@ -1,1 +1,0 @@
-E : function array [ 6_1 ] of boolean    ( ) inherit JwwZ { }    

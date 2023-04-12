@@ -37,9 +37,9 @@ def main(argv):
         elif argv[1] == 'ASTGenSuite':
             from ASTGenSuite import ASTGenSuite
             getAndTest(ASTGenSuite)
-        # elif argv[1] == 'CheckerSuite':
-        #     from CheckerSuite import CheckerSuite
-        #     getAndTest(CheckerSuite)
+        elif argv[1] == 'CheckerSuite':
+            from CheckerSuite import CheckerSuite
+            getAndTest(CheckerSuite)
         # elif argv[1] == 'CodeGenSuite':
         #     from CodeGenSuite import CheckCodeGenSuite
         #     getAndTest(CheckCodeGenSuite)

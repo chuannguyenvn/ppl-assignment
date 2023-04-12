@@ -1,1 +1,0 @@
-CQi : function array [ 8 ] of float    ( inherit bV : boolean     ) inherit u { }    

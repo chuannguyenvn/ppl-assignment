@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(l, ArrayType([348506, 822, 6976, 7], IntegerType), [], v, BlockStmt([]))
-])

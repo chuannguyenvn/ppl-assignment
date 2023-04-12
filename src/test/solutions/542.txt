@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(YivL9Vg, ArrayType([0], FloatType), [], None, BlockStmt([VarDecl(tjzaVmo, ArrayType([69, 0], StringType)), VarDecl(H, ArrayType([69, 0], StringType)), VarDecl(b, ArrayType([69, 0], StringType)), VarDecl(NM, ArrayType([69, 0], StringType)), VarDecl(a, ArrayType([69, 0], StringType)), VarDecl(ATm, ArrayType([69, 0], StringType)), BlockStmt([VarDecl(Ho, IntegerType)])]))
-])

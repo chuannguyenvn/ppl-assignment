@@ -1,4 +1,0 @@
-Program([
-	FuncDecl(Ks, ArrayType([0], IntegerType), [InheritParam(i, ArrayType([2], StringType))], None, BlockStmt([]))
-	FuncDecl(o, VoidType, [], None, BlockStmt([VarDecl(OE, AutoType), VarDecl(Rs6, AutoType), VarDecl(Nz, AutoType), VarDecl(M, AutoType), VarDecl(Sp, AutoType), VarDecl(r, AutoType), BreakStmt()]))
-])

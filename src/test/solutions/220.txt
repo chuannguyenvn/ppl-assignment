@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(alvis, IntegerType, [], None, BlockStmt([]))
-])

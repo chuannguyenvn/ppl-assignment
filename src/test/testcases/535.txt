@@ -1,1 +1,0 @@
-Z5  : void  ;   g  : array [ 51_5 ] of string    ;   

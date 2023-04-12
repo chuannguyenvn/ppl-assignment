@@ -1,4 +1,0 @@
-Program([
-	VarDecl(t, IntegerType, BinExpr(+, UnExpr(-, IntegerLit(7)), BinExpr(*, IntegerLit(0), IntegerLit(91))))
-	FuncDecl(example, IntegerType, [OutParam(test, IntegerType)], None, BlockStmt([]))
-])

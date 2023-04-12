@@ -1,1 +1,0 @@
-I : function auto  ( ) inherit Y { Ib , d  : void  ;  }    i : function void  ( inherit s : float     ) { continue ;   }    qj : function void  ( ) { }    

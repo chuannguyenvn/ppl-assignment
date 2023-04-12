@@ -1,4 +1,0 @@
-main: function integer()
-    {
-	a = ("i love" :: "eating babies") :: "' powdered milk";
-    }

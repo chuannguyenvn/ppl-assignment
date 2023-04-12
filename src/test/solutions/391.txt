@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, ArrayType([0], BooleanType), [], None, BlockStmt([WhileStmt(BooleanLit(True), IfStmt(BinExpr(==, BooleanLit(False), Id(False)), DoWhileStmt(BooleanLit(False), BlockStmt([CallStmt(something, )])), CallStmt(False, )))]))
-])

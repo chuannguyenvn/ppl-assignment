@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(CQi, ArrayType([8], FloatType), [InheritParam(bV, BooleanType)], u, BlockStmt([]))
-])

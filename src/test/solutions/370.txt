@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(arr, ArrayType([0], IntegerType), [Param(arr, ArrayType([0, 0, 0], StringType))], None, BlockStmt([]))
-])

@@ -1,4 +1,0 @@
-main: function array [0,1,2,3] of boolean()
-        {
-            for (i = 1, 1, 1) break;
-        }

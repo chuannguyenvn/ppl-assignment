@@ -1,1 +1,0 @@
-P : function array [ 8_9_5_05 ] of integer    ( inherit out W : integer     ) inherit j { }    

@@ -1,7 +1,0 @@
-Program([
-	VarDecl(Ep, AutoType)
-	VarDecl(A, AutoType)
-	VarDecl(G1l, AutoType)
-	VarDecl(zPW, AutoType)
-	VarDecl(YB, AutoType)
-])

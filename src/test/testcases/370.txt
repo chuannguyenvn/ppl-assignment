@@ -1,3 +1,0 @@
-
-    arr: function array[0] of integer (arr: array[0, 0, 0] of string) { }
-    

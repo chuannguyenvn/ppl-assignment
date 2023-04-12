@@ -1,5 +1,0 @@
-Program([
-	VarDecl(Y, AutoType, BinExpr(*, IntegerLit(11), IntegerLit(24)))
-	VarDecl(z, AutoType, FuncCall(call, []))
-	VarDecl(d, AutoType, BinExpr(%, IntegerLit(175), IntegerLit(22)))
-])

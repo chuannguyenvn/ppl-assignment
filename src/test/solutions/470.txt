@@ -1,4 +1,0 @@
-Program([
-	FuncDecl(E, AutoType, [], X, BlockStmt([]))
-	VarDecl(_IF, StringType, BinExpr(%, UnExpr(!, UnExpr(!, Id(U))), UnExpr(!, Id(h))))
-])

@@ -1,5 +1,0 @@
-Program([
-	FuncDecl(wSC, ArrayType([0], BooleanType), [], Rccq, BlockStmt([]))
-	VarDecl(cM, IntegerType, BinExpr(>=, BinExpr(&&, UnExpr(-, UnExpr(-, Id(qP))), IntegerLit(3)), FuncCall(kq, [])))
-	VarDecl(HPu, IntegerType, BinExpr(||, BinExpr(+, BinExpr(-, Id(T), Id(Sh)), Id(Z)), BinExpr(%, BinExpr(/, BinExpr(*, Id(RFj), Id(sK)), Id(NwE)), UnExpr(!, Id(d)))))
-])

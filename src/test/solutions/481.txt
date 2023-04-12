@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(w, VoidType, [InheritOutParam(hP, BooleanType)], s, BlockStmt([]))
-])

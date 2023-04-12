@@ -1,1 +1,0 @@
-sd : function integer   ( inherit v : boolean    , N : void   , out u : auto   , inherit out N : auto    ) inherit yJ { Flp , Hk  : boolean   = Jk   / a      , Il   && JbRS1    <= ya   / jfK       ;  if ( Y   || F      ) break ;   else return ;     }    T  : string   ;   

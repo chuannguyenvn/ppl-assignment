@@ -1,1 +1,0 @@
-Ks : function array [ 0 ] of integer    ( inherit i : array [ 2 ] of string      ) { }    o : function void  ( ) { OE , Rs6 , Nz , M , Sp  : auto  ;  r  : auto  ;  break ;   }    

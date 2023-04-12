@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(dsas, IntegerType, [], None, BlockStmt([]))
-])

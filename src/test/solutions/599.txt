@@ -1,4 +1,0 @@
-Program([
-	FuncDecl(ynRA, FloatType, [], None, BlockStmt([]))
-	FuncDecl(MFc, ArrayType([8], StringType), [], None, BlockStmt([]))
-])

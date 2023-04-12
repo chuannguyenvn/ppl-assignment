@@ -1,5 +1,0 @@
-Program([
-	VarDecl(n, AutoType, BinExpr(::, BinExpr(-, BinExpr(+, BinExpr(-, UnExpr(!, Id(b)), Id(O)), Id(X)), UnExpr(-, UnExpr(-, Id(f)))), BinExpr(&&, UnExpr(!, Id(GYgE)), BinExpr(/, BinExpr(%, BinExpr(*, Id(Az), Id(z)), UnExpr(!, Id(t))), Id(Dk)))))
-	VarDecl(X, StringType)
-	FuncDecl(fbI, AutoType, [], None, BlockStmt([VarDecl(KZ, AutoType), VarDecl(Ae, AutoType), VarDecl(rAy, AutoType), DoWhileStmt(BinExpr(::, UnExpr(-, Id(NS)), BinExpr(||, Id(H), Id(DsSH))), BlockStmt([]))]))
-])

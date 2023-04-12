@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(main, FloatType, [], None, BlockStmt([IfStmt(BooleanLit(True), AssignStmt(ArrayCell(a, [IntegerLit(7)]), IntegerLit(2)), ContinueStmt())]))
-])

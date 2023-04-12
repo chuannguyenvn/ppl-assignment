@@ -1,4 +1,0 @@
-Program([
-	VarDecl(Az, StringType)
-	VarDecl(Ywodp, StringType)
-])

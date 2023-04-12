@@ -1,1 +1,0 @@
-y : function float   ( inherit y : array [ 43 , 9_88 ] of string      ) { r , G  : auto  ;  }    wGAG : function void  ( ) inherit Q { }    

@@ -1,1 +1,0 @@
-aut: function void(inherit n: boolean) {}

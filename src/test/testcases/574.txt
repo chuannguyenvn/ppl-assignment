@@ -1,1 +1,0 @@
-MBl : function auto  ( inherit KI : boolean     ) { }    S8ld : function array [ 2 ] of integer    ( ) inherit XOZP { b , O  : array [ 8_07 ] of boolean    = V   * n      , Jzp   && G    >= G    :: k   + L8E    < d   && i       ;  }    

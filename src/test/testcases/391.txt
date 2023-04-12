@@ -1,8 +1,0 @@
-main: function array [0] of boolean()
-        {
-            while (true) 
-                if (false == False) 
-                    do {something();} 
-                    while (false); 
-                else False();
-        }

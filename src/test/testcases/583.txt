@@ -1,1 +1,0 @@
-V6LwbBGl : function auto  ( out b : array [ 0 ] of float     , inherit nra3yEB : string    , out S : string    , R : void   , out V : integer     ) inherit B { }    

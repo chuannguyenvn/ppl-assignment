@@ -1,3 +1,0 @@
-Program([
-	VarDecl(a, IntegerType, BinExpr(::, BinExpr(/, Id(a), Id(b)), BinExpr(&&, BinExpr(-, Id(c), BinExpr(/, Id(d), Id(e))), BinExpr(+, BinExpr(-, Id(f), Id(g)), BinExpr(%, UnExpr(!, BinExpr(-, Id(h), Id(k))), UnExpr(-, ArrayCell(j, [UnExpr(-, UnExpr(-, Id(q))), BinExpr(/, BinExpr(>=, Id(a), Id(b)), UnExpr(-, Id(c))), BinExpr(+, IntegerLit(1), StringLit(\n2))])))))))
-])

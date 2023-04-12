@@ -1,3 +1,0 @@
-Program([
-	FuncDecl(ceg8S, IntegerType, [], I, BlockStmt([AssignStmt(Id(EM), BinExpr(==, UnExpr(!, Id(a)), BinExpr(||, Id(Nsk), Id(lS))))]))
-])

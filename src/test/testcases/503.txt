@@ -1,1 +1,0 @@
-u : function array [ 9 , 0 , 0 , 9_844 ] of string    ( out YF : void    ) { }    v : function float   ( ) inherit i { }    
