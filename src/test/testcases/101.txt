@@ -1,4 +1,4 @@
 
-        foo: integer = 1;
-        bar: string;
+        foo: array [2,2] of string;
+        foo[1, "av"];
         

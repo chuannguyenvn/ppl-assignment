@@ -28,7 +28,15 @@ class ScopeStack:
             if element is ScopeDivider():
                 return
 
-    def closest_scope_contains_exact(self, o):
+    def find_latest_name(self, name):
+        for i in reversed(range(len(self.stack))):
+            if type(self.stack[i]) is ScopeDivider:
+                continue
+            if self.stack[i].name == name:
+                return self.stack[i].name
+        return None
+
+    def latest_scope_contains_exact(self, o):
         for i in reversed(range(len(self.stack))):
             if type(self.stack[i]) is ScopeDivider:
                 continue
@@ -37,7 +45,7 @@ class ScopeStack:
             if self.stack[i] is ScopeDivider():
                 return False
 
-    def closest_scope_contains_name(self, o):
+    def latest_scope_contains_name(self, o):
         for i in reversed(range(len(self.stack))):
             if type(self.stack[i]) is ScopeDivider:
                 continue
@@ -50,10 +58,28 @@ class ScopeStack:
         return o in self.stack
 
     def any_scope_contains_name(self, o):
-        for element in self.stack:
-            if o.name == element.name:
-                return True
-        return False
+        return self.find_latest_name(o) is not None
+
+
+def check_redeclared(symbol, typ, scope):
+    if scope.latest_scope_contains_name(symbol):
+        raise Redeclared(typ, symbol.name)
+
+
+def check_undeclared(symbol, typ, scope):
+    if not scope.any_scope_contains_name(symbol):
+        raise Undeclared(typ, symbol.name)
+
+
+def check_invalid(symbol, typ, scope):
+    if type(typ) is Variable:
+        print("Yo")
+        if type(symbol.typ) is AutoType and symbol.init is None:
+            raise Invalid(Variable(), symbol.name)
+
+
+def check_type_mismatch_in_expression(expression, typ, scope):
+    pass
 
 
 class StaticChecker(Visitor):
@@ -66,44 +92,27 @@ class StaticChecker(Visitor):
     def visitProgram(self, program: Program, scope: ScopeStack):
         return [self.visit(decl, scope) for decl in program.decls]
 
-    # region Exceptions
-    def check_redeclared(self, symbol, typ, scope):
-        if scope.closest_scope_contains_name(symbol):
-            raise Redeclared(typ, symbol.name)
-
-    def check_undeclared(self, symbol, typ, scope):
-        if not scope.any_scope_contains_name(symbol):
-            raise Undeclared(typ, symbol.name)
-
-    def check_invalid(self, symbol, typ, scope):
-        if type(typ) is Variable:
-            print("Yo")
-            if type(symbol.typ) is AutoType and symbol.init is None:
-                raise Invalid(Variable(), symbol.name)
-
-    # endregion
-
     # region Declarations
 
     def visitVarDecl(self, var_decl: VarDecl, scope: ScopeStack):
         # 3.1 Redeclared Variable
-        self.check_redeclared(var_decl, Variable(), scope)
+        check_redeclared(var_decl, Variable(), scope)
 
         # 3.3 Invalid Variable
-        self.check_invalid(var_decl, Variable(), scope)
+        check_invalid(var_decl, Variable(), scope)
 
         scope.add_symbol(var_decl)
         return var_decl
 
     def visitParamDecl(self, param_decl: ParamDecl, scope: ScopeStack):
         # 3.1 Redeclared Parameter
-        self.check_redeclared(param_decl, Parameter(), scope)
+        check_redeclared(param_decl, Parameter(), scope)
 
         # 3.3 Invalid Parameter
         # TODO: Invalid
 
     def visitFuncDecl(self, func_decl: FuncDecl, scope: ScopeStack):
-        self.check_redeclared(func_decl, Function(), scope)
+        check_redeclared(func_decl, Function(), scope)
 
         scope.push_scope()
         scope.add_symbol(func_decl)
@@ -161,22 +170,38 @@ class StaticChecker(Visitor):
         pass
 
     def visitId(self, id: Id, scope: ScopeStack):
-        pass
+        # 3.2 Undeclared Identifier
+        check_undeclared(id, Identifier(), scope)
 
     def visitArrayCell(self, array_cell: ArrayCell, scope: ScopeStack):
-        pass
+        # 3.4 Type Mismatch In Expression
+
+        # Name not found
+        check_undeclared(array_cell)
+
+        # Type is not ArrayType
+        if type(scope.find_latest_name(array_cell.name)) is not ArrayType:
+            raise TypeMismatchInExpression(array_cell)
+
+        # Any subscript is not an integer
+        for expr in array_cell.cell:
+            if type(self.visit(expr, scope)) is not IntegerType:
+                raise TypeMismatchInExpression(array_cell)
+
+        # Dimension not matched
+        # TODO
 
     def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
-        pass
+        return IntegerType()
 
     def visitFloatLit(self, float_lit: FloatLit, scope: ScopeStack):
-        pass
+        return FloatType()
 
     def visitStringLit(self, string_lit: StringLit, scope: ScopeStack):
-        pass
+        return StringType()
 
     def visitBooleanLit(self, boolean_lit: BooleanLit, scope: ScopeStack):
-        pass
+        return BooleanType()
 
     def visitArrayLit(self, array_lit: ArrayLit, scope: ScopeStack):
         pass
