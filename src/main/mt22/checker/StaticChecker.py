@@ -48,7 +48,7 @@ class ScopeStack:
 
     def find_latest_name(self, name):
         for i in reversed(range(len(self.stack))):
-            if type(self.stack[i]) is Marker:
+            if type(self.stack[i]) not in [VarDecl, ParamDecl, FuncDecl]:
                 continue
             if self.stack[i].name == name:
                 return self.stack[i].name
@@ -56,21 +56,19 @@ class ScopeStack:
 
     def latest_scope_contains_exact(self, o):
         for i in reversed(range(len(self.stack))):
-            if type(self.stack[i]) is Marker:
-                continue
-            if self.stack[i] == o:
-                return True
             if type(self.stack[i]) is ScopeMarker:
                 return False
+            if self.stack[i] == o:
+                return True
+
 
     def latest_scope_contains_name(self, o):
         for i in reversed(range(len(self.stack))):
-            if type(self.stack[i]) is Marker:
-                continue
-            if self.stack[i].name == o.name:
-                return True
             if type(self.stack[i]) is ScopeMarker:
                 return False
+            if self.stack[i].name == o.name:
+                return True
+
 
     def any_scope_contains_exact(self, o):
         return o in self.stack
@@ -140,7 +138,8 @@ class StaticChecker(Visitor):
     def visitFuncDecl(self, func_decl: FuncDecl, scope: ScopeStack):
         check_redeclared(func_decl, Function(), scope)
 
-        scope.push_scope()
+        scope.push_scope(func_decl)
+
         scope.add_symbol(func_decl)
 
         for param in func_decl.params:
@@ -148,7 +147,8 @@ class StaticChecker(Visitor):
             scope.add_symbol(param)
 
         self.visit(func_decl.body, scope)
-        scope.pop_scope()
+
+        scope.pop_scope(func_decl)
 
     # endregion
 
@@ -161,7 +161,14 @@ class StaticChecker(Visitor):
         scope.pop_scope()
 
     def visitAssignStmt(self, assign_stmt: AssignStmt, scope: ScopeStack):
-        pass
+        # 3.5 Type Mismatch In Statement
+        # LHS can be in any type except void and array
+        lhs = scope.find_latest_name(assign_stmt.lhs.name)
+        rhs = scope.find_latest_name(assign_stmt.rhs.name)
+        if lhs.typ in [VoidType, ArrayType]:
+            raise TypeMismatchInStatement(assign_stmt)
+        
+        
 
     def visitIfStmt(self, if_stmt: IfStmt, scope: ScopeStack):
         # 3.5 Type Mismatch In Statement
@@ -181,17 +188,17 @@ class StaticChecker(Visitor):
         if type(for_stmt.init) is not AssignStmt:
             raise TypeMismatchInStatement(for_stmt)
 
-        scalar_name = self.visit(for_stmt.init.lhs).name
+        scalar_name = self.visit(for_stmt.init.lhs, scope).name
         if type(scope.find_latest_name(scalar_name).typ) is not IntegerType:
             raise TypeMismatchInStatement(for_stmt)
 
-        self.visit(for_stmt.cond)
+        self.visit(for_stmt.cond, scope)
 
         # The type of the update expression must be integer
         if type(for_stmt.upd) is not Expr:
             raise TypeMismatchInStatement(for_stmt)
 
-        if type(self.visit(for_stmt.upd)) is not IntegerType:
+        if type(self.visit(for_stmt.upd, scope)) is not IntegerType:
             raise TypeMismatchInStatement(for_stmt)
 
         self.visit(for_stmt.stmt, scope)
@@ -222,116 +229,95 @@ class StaticChecker(Visitor):
 
         scope.pop_scope(do_while_stmt)
 
+    def visitBreakStmt(self, break_stmt: BreakStmt, scope: ScopeStack):
+        # 3.6 Break/Continue not in loop
+        if not scope.is_marker_in_scope([ForStmt, WhileStmt, DoWhileStmt]):
+            raise MustInLoop(break_stmt)
 
-def visitBreakStmt(self, break_stmt: BreakStmt, scope: ScopeStack):
-    # 3.6 Break/Continue not in loop
-    if not scope.is_marker_in_scope([ForStmt, WhileStmt, DoWhileStmt]):
-        raise MustInLoop(break_stmt)
+    def visitContinueStmt(self, continue_stmt: ContinueStmt, scope: ScopeStack):
+        # 3.6 Break/Continue not in loop
+        if not scope.is_marker_in_scope([ForStmt, WhileStmt, DoWhileStmt]):
+            raise MustInLoop(continue_stmt)
 
+    def visitReturnStmt(self, return_stmt: ReturnStmt, scope: ScopeStack):
+        pass
 
-def visitContinueStmt(self, continue_stmt: ContinueStmt, scope: ScopeStack):
-    # 3.6 Break/Continue not in loop
-    if not scope.is_marker_in_scope([ForStmt, WhileStmt, DoWhileStmt]):
-        raise MustInLoop(continue_stmt)
-
-
-def visitReturnStmt(self, return_stmt: ReturnStmt, scope: ScopeStack):
-    pass
-
-
-def visitCallStmt(self, call_stmt: CallStmt, scope: ScopeStack):
-    pass
+    def visitCallStmt(self, call_stmt: CallStmt, scope: ScopeStack):
+        pass
 
     # endregion
 
     # region Expressions
 
+    def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
+        pass
 
-def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-    pass
+    def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
+        pass
 
+    def visitId(self, id: Id, scope: ScopeStack):
+        # 3.2 Undeclared Identifier
+        check_undeclared(id, Identifier(), scope)
 
-def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
-    pass
+    def visitArrayCell(self, array_cell: ArrayCell, scope: ScopeStack):
+        # 3.4 Type Mismatch In Expression
 
+        # Name not found
+        check_undeclared(array_cell)
 
-def visitId(self, id: Id, scope: ScopeStack):
-    # 3.2 Undeclared Identifier
-    check_undeclared(id, Identifier(), scope)
-
-
-def visitArrayCell(self, array_cell: ArrayCell, scope: ScopeStack):
-    # 3.4 Type Mismatch In Expression
-
-    # Name not found
-    check_undeclared(array_cell)
-
-    # Type is not ArrayType
-    if type(scope.find_latest_name(array_cell.name)) is not ArrayType:
-        raise TypeMismatchInExpression(array_cell)
-
-    # Any subscript is not an integer
-    for expr in array_cell.cell:
-        if type(self.visit(expr, scope)) is not IntegerType:
+        # Type is not ArrayType
+        if type(scope.find_latest_name(array_cell.name)) is not ArrayType:
             raise TypeMismatchInExpression(array_cell)
 
-    # Dimension not matched
-    # TODO
+        # Any subscript is not an integer
+        for expr in array_cell.cell:
+            if type(self.visit(expr, scope)) is not IntegerType:
+                raise TypeMismatchInExpression(array_cell)
 
+        # Dimension not matched
+        # TODO
 
-def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
-    return IntegerType()
+    def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
+        return IntegerType()
 
+    def visitFloatLit(self, float_lit: FloatLit, scope: ScopeStack):
+        return FloatType()
 
-def visitFloatLit(self, float_lit: FloatLit, scope: ScopeStack):
-    return FloatType()
+    def visitStringLit(self, string_lit: StringLit, scope: ScopeStack):
+        return StringType()
 
+    def visitBooleanLit(self, boolean_lit: BooleanLit, scope: ScopeStack):
+        return BooleanType()
 
-def visitStringLit(self, string_lit: StringLit, scope: ScopeStack):
-    return StringType()
+    def visitArrayLit(self, array_lit: ArrayLit, scope: ScopeStack):
+        pass
 
-
-def visitBooleanLit(self, boolean_lit: BooleanLit, scope: ScopeStack):
-    return BooleanType()
-
-
-def visitArrayLit(self, array_lit: ArrayLit, scope: ScopeStack):
-    pass
-
-
-def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
-    pass
+    def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
+        pass
 
     # endregion
 
     # region Types
 
+    def visitIntegerType(self, integer_type: IntegerType, scope: ScopeStack):
+        return integer_type
 
-def visitIntegerType(self, integer_type: IntegerType, scope: ScopeStack):
-    return integer_type
+    def visitFloatType(self, float_type: FloatType, scope: ScopeStack):
+        return float_type
 
+    def visitBooleanType(self, boolean_type: BooleanType, scope: ScopeStack):
+        return boolean_type
 
-def visitFloatType(self, float_type: FloatType, scope: ScopeStack):
-    return float_type
+    def visitStringType(self, string_type: StringType, scope: ScopeStack):
+        return string_type
 
+    def visitArrayType(self, array_type: ArrayType, scope: ScopeStack):
+        return array_type
 
-def visitBooleanType(self, boolean_type: BooleanType, scope: ScopeStack):
-    return boolean_type
+    def visitAutoType(self, auto_type: AutoType, scope: ScopeStack):
+        return auto_type
 
+    def visitVoidType(self, void_type: VoidType, scope: ScopeStack):
+        return void_type
 
-def visitStringType(self, string_type: StringType, scope: ScopeStack):
-    return string_type
-
-
-def visitArrayType(self, array_type: ArrayType, scope: ScopeStack):
-    return array_type
-
-
-def visitAutoType(self, auto_type: AutoType, scope: ScopeStack):
-    return auto_type
-
-
-def visitVoidType(self, void_type: VoidType, scope: ScopeStack):
-    return void_type
-
-# endregion
+    # endregion

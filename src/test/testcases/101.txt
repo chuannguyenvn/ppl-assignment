@@ -1,4 +1,6 @@
 
-        foo: array [2,2] of string;
-        foo[1, "av"];
+        foo: function void (){
+        a: integer;
+        n = 1;
+        };
         
