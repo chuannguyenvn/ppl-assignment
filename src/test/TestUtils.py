@@ -12,6 +12,7 @@ from MT22Lexer import MT22Lexer
 from MT22Parser import MT22Parser
 from ASTGeneration import ASTGeneration
 from StaticChecker import StaticChecker
+from StaticError import StaticError
 from lexererr import *
 import subprocess
 

@@ -5,7 +5,9 @@ from AST import *
 
 class CheckerSuite(unittest.TestCase):
     def test(self):
-        """Test short variable declaration"""
-        input = """delta: integer = 3;delta:integer = 3;"""
+        input = """
+        foo: integer = 1;
+        bar: string;
+        """
         expect = "successful"
         self.assertTrue(TestChecker.test(input, expect, 101))

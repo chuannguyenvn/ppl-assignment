@@ -30,6 +30,8 @@ class ScopeStack:
 
     def closest_scope_contains_exact(self, o):
         for i in reversed(range(len(self.stack))):
+            if type(self.stack[i]) is ScopeDivider:
+                continue
             if self.stack[i] == o:
                 return True
             if self.stack[i] is ScopeDivider():
@@ -37,6 +39,8 @@ class ScopeStack:
 
     def closest_scope_contains_name(self, o):
         for i in reversed(range(len(self.stack))):
+            if type(self.stack[i]) is ScopeDivider:
+                continue
             if self.stack[i].name == o.name:
                 return True
             if self.stack[i] is ScopeDivider():
@@ -52,45 +56,54 @@ class ScopeStack:
         return False
 
 
-class Utils:
-    @staticmethod
-    def check_redeclared(symbol, scope: ScopeStack):
-        return scope.closest_scope_contains_name(symbol)
-
-    @staticmethod
-    def check_undeclared(symbol, scope: ScopeStack):
-        return not scope.any_scope_contains_name(symbol)
-
-
 class StaticChecker(Visitor):
     def __init__(self, ast):
-        self.visitProgram(ast)
+        self.ast = ast
 
-    def visitProgram(self, program: Program):
-        global_scope = ScopeStack()
-        for decl in program.decls:
-            self.visit(decl, global_scope)
+    def check(self):
+        return self.visit(self.ast, ScopeStack())
+
+    def visitProgram(self, program: Program, scope: ScopeStack):
+        return [self.visit(decl, scope) for decl in program.decls]
+
+    # region Exceptions
+    def check_redeclared(self, symbol, typ, scope):
+        if scope.closest_scope_contains_name(symbol):
+            raise Redeclared(typ, symbol.name)
+
+    def check_undeclared(self, symbol, typ, scope):
+        if not scope.any_scope_contains_name(symbol):
+            raise Undeclared(typ, symbol.name)
+
+    def check_invalid(self, symbol, typ, scope):
+        if type(typ) is Variable:
+            print("Yo")
+            if type(symbol.typ) is AutoType and symbol.init is None:
+                raise Invalid(Variable(), symbol.name)
+
+    # endregion
 
     # region Declarations
 
     def visitVarDecl(self, var_decl: VarDecl, scope: ScopeStack):
-        if Utils.check_redeclared(var_decl, scope):
-            raise Redeclared(Variable(), var_decl.name)
-        if var_decl.typ == AutoType() and var_decl.init is None:
-            raise Invalid(Variable(), var_decl.name)
+        # 3.1 Redeclared Variable
+        self.check_redeclared(var_decl, Variable(), scope)
+
+        # 3.3 Invalid Variable
+        self.check_invalid(var_decl, Variable(), scope)
 
         scope.add_symbol(var_decl)
         return var_decl
 
     def visitParamDecl(self, param_decl: ParamDecl, scope: ScopeStack):
-        if Utils.check_redeclared(param_decl, scope):
-            raise Redeclared(Parameter(), param_decl.name)
+        # 3.1 Redeclared Parameter
+        self.check_redeclared(param_decl, Parameter(), scope)
 
+        # 3.3 Invalid Parameter
         # TODO: Invalid
 
     def visitFuncDecl(self, func_decl: FuncDecl, scope: ScopeStack):
-        if Utils.check_redeclared(func_decl, scope):
-            raise Redeclared(Function(), func_decl.name)
+        self.check_redeclared(func_decl, Function(), scope)
 
         scope.push_scope()
         scope.add_symbol(func_decl)
@@ -109,7 +122,7 @@ class StaticChecker(Visitor):
     def visitBlockStmt(self, block_stmt: BlockStmt, scope: ScopeStack):
         scope.push_scope()
         for line in block_stmt.body:
-            self.visit(line)
+            self.visit(line, scope)
 
     def visitAssignStmt(self, assign_stmt: AssignStmt, scope: ScopeStack):
         pass
@@ -175,24 +188,24 @@ class StaticChecker(Visitor):
 
     # region Types
     def visitIntegerType(self, integer_type: IntegerType, scope: ScopeStack):
-        pass
+        return integer_type
 
     def visitFloatType(self, float_type: FloatType, scope: ScopeStack):
-        pass
+        return float_type
 
     def visitBooleanType(self, boolean_type: BooleanType, scope: ScopeStack):
-        pass
+        return boolean_type
 
     def visitStringType(self, string_type: StringType, scope: ScopeStack):
-        pass
+        return string_type
 
     def visitArrayType(self, array_type: ArrayType, scope: ScopeStack):
-        pass
+        return array_type
 
     def visitAutoType(self, auto_type: AutoType, scope: ScopeStack):
-        pass
+        return auto_type
 
     def visitVoidType(self, void_type: VoidType, scope: ScopeStack):
-        pass
+        return void_type
 
     # endregion

@@ -1,1 +1,4 @@
-delta: integer = 3;delta:integer = 3;
+
+        foo: integer = 1;
+        bar: string;
+        
