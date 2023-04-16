@@ -95,13 +95,12 @@ def check_redeclared(symbol, typ, scope):
 
 
 def check_undeclared(symbol, typ, scope):
-    if not scope.any_scope_contains_name(symbol):
+    if not scope.any_scope_contains_name(symbol.name):
         raise Undeclared(typ, symbol.name)
 
 
 def check_invalid(symbol, typ, scope):
     if type_of(typ) is Variable:
-        print("Yo")
         if type_of(symbol.typ) is AutoType and symbol.init is None:
             raise Invalid(Variable(), symbol.name)
 
@@ -144,7 +143,11 @@ class StaticChecker(Visitor):
         check_invalid(var_decl, Variable(), scope)
 
         if var_decl.init is not None:
-            self.visit(var_decl.init, scope)
+            init = self.visit(var_decl.init, scope)
+            if type_of(var_decl.typ) is AutoType:
+                var_decl.typ = init
+            elif type_of(init) != type_of(var_decl.typ):
+                raise TypeMismatchInStatement(var_decl)
 
         scope.add_symbol(var_decl)
 
@@ -186,14 +189,27 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # LHS can be in any type except void and array
         lhs = self.visit(assign_stmt.lhs, scope)
-        rhs = self.visit(assign_stmt.rhs, scope)
+        rhs_type = self.visit(assign_stmt.rhs, scope)
 
+        lhs_decl = scope.find_latest_name(lhs.name)
+        lhs_type = lhs_decl.typ
         # If LHS is not an identifier or array subscripting expr
         if not isinstance(lhs, LHS):
             raise TypeMismatchInStatement(assign_stmt)
 
-        if type_of(lhs.typ) in [VoidType, ArrayType]:
+        # LHS can't be of type void or array
+        if type_of(lhs_type) in [VoidType, ArrayType]:
             raise TypeMismatchInStatement(assign_stmt)
+
+        # Can't infer type
+        if type_of(lhs_type) is AutoType:
+            if type_of(rhs_type) is AutoType:
+                raise TypeMismatchInStatement(assign_stmt)
+            else:
+                infer(lhs_decl, rhs_type, scope)
+        else:
+            if type_of(lhs_type) != type_of(rhs_type):
+                raise TypeMismatchInStatement(assign_stmt)
 
     def visitIfStmt(self, if_stmt: IfStmt, scope: ScopeStack):
         # 3.5 Type Mismatch In Statement
@@ -276,9 +292,15 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-        left = self.visit(bin_expr.left)
-        right = self.visit(bin_expr.right)
+        left = self.visit(bin_expr.left, scope)
+        right = self.visit(bin_expr.right, scope)
+        
+        if type_of(left) is Id:
+            left = scope.find_latest_name(left.name).typ
 
+        if type_of(right) is Id:
+            right = scope.find_latest_name(right.name).typ
+            
         if bin_expr.op in ['+', '-', '*', '/']:
             if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(bin_expr)
@@ -333,6 +355,8 @@ class StaticChecker(Visitor):
     def visitId(self, id: Id, scope: ScopeStack):
         # 3.2 Undeclared Identifier
         check_undeclared(id, Identifier(), scope)
+
+        return id
 
     def visitArrayCell(self, array_cell: ArrayCell, scope: ScopeStack):
         # 3.4 Type Mismatch In Expression

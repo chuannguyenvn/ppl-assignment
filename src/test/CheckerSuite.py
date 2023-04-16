@@ -6,16 +6,15 @@ from AST import *
 class CheckerSuite(unittest.TestCase):
     def test(self):
         input = """
-        
+        a: integer = 1;
+        b: integer = 2;
         foo: function string (a: integer)
         {
         
         }
         main: function void (){
-        a: string;
-        
-        b: string = foo("adsf");
-        };
+        a = a + b;
+        }
         
         
         """
