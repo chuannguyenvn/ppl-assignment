@@ -123,12 +123,14 @@ class StaticChecker(Visitor):
         return self.visit(self.ast, ScopeStack())
 
     def visitProgram(self, program: Program, scope: ScopeStack):
-        [self.visit(decl, scope) for decl in program.decls]
+        decls = [self.visit(decl, scope) for decl in program.decls]
 
         # 3.9 No entry point
         main_func = scope.find_latest_name('main')
         if main_func is None or type_of(main_func) is not FuncDecl or type_of(main_func.return_type) is not VoidType or len(main_func.params) != 0:
             raise NoEntryPoint()
+        
+        return decls
 
     # region Declarations
 
@@ -228,10 +230,11 @@ class StaticChecker(Visitor):
 
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
-        if type_of(while_stmt.cond) is not BooleanType:
-            raise TypeMismatchInStatement(if_stmt)
+        cond = self.visit(while_stmt.cond, scope)
+        if type_of(cond) is not BooleanType:
+            raise TypeMismatchInStatement(while_stmt)
 
-        self.visit(while_stmt.tstmt, scope)
+        self.visit(while_stmt.stmt, scope)
 
         scope.pop_scope(while_stmt)
 
@@ -241,7 +244,7 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
         if type_of(do_while_stmt.cond) is not BooleanType:
-            raise TypeMismatchInStatement(if_stmt)
+            raise TypeMismatchInStatement(do_while_stmt)
 
         self.visit(do_while_stmt.tstmt, scope)
 
@@ -297,16 +300,16 @@ class StaticChecker(Visitor):
         # TODO
 
     def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
-        return Integertype_of()
+        return IntegerType()
 
     def visitFloatLit(self, float_lit: FloatLit, scope: ScopeStack):
-        return Floattype_of()
+        return FloatType()
 
     def visitStringLit(self, string_lit: StringLit, scope: ScopeStack):
-        return Stringtype_of()
+        return StringType()
 
     def visitBooleanLit(self, boolean_lit: BooleanLit, scope: ScopeStack):
-        return Booleantype_of()
+        return BooleanType()
 
     def visitArrayLit(self, array_lit: ArrayLit, scope: ScopeStack):
         auto_variables = []

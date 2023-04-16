@@ -8,6 +8,17 @@ class CheckerSuite(unittest.TestCase):
         input = """
         main: function void (){
         a: string;
+        while(true)
+        {
+        {
+        {
+        {
+        break;
+        }
+        }
+        }
+        }
+    
         };
         """
         expect = "successful"

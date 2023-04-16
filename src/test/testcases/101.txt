@@ -1,5 +1,16 @@
 
         main: function void (){
         a: string;
+        while(true)
+        {
+        {
+        {
+        {
+        break;
+        }
+        }
+        }
+        }
+    
         };
         
