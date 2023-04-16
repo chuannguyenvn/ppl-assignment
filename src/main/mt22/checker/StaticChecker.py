@@ -294,13 +294,13 @@ class StaticChecker(Visitor):
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
         left = self.visit(bin_expr.left, scope)
         right = self.visit(bin_expr.right, scope)
-        
+
         if type_of(left) is Id:
             left = scope.find_latest_name(left.name).typ
 
         if type_of(right) is Id:
             right = scope.find_latest_name(right.name).typ
-            
+
         if bin_expr.op in ['+', '-', '*', '/']:
             if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(bin_expr)
@@ -424,8 +424,12 @@ class StaticChecker(Visitor):
 
         for i in range(len(func_decl.params)):
             arg = self.visit(func_call.args[i], scope)
+            if type_of(arg) is Id:
+                arg = scope.find_latest_name(arg.name).typ
             if type_of(arg) is not type_of(func_decl.params[i].typ):
                 raise TypeMismatchInExpression(func_call)
+        
+        return func_decl.return_type
 
     # endregion
 

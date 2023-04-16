@@ -1,1 +1,1 @@
-[<AST.VarDecl object at 0x0000018BDA306D60>, <AST.VarDecl object at 0x0000018BDA306580>, None, None]
+Type mismatch in expression: FuncCall(foo, [Id(b)])
