@@ -3,6 +3,11 @@ from MT22Parser import MT22Parser
 from AST import *
 from StaticError import *
 
+def type_of(typ):
+    if type(typ) is type(type):
+        return typ
+    else:
+        return type(typ)
 
 class Marker:
     pass
@@ -36,34 +41,34 @@ class ScopeStack:
         else:
             self.stack.append(ScopeMarker(type(typ)))
 
-    def pop_scope(self, typ=ScopeMarker):
-        for i in range(len(self.stack)):
+    def pop_scope(self, typ=None):
+        for i in reversed(range(len(self.stack))):
             element = self.stack.pop()
             if typ is None:
-                if type(element) is ScopeMarker:
+                if type_of(element) is ScopeMarker:
                     return
             else:
-                if type(element) is ScopeMarker and element.typ is type(typ):
+                if type_of(element) is ScopeMarker and element.typ is type_of(typ):
                     return
 
     def find_latest_name(self, name):
         for i in reversed(range(len(self.stack))):
-            if type(self.stack[i]) not in [VarDecl, ParamDecl, FuncDecl]:
+            if type_of(self.stack[i]) not in [VarDecl, ParamDecl, FuncDecl]:
                 continue
             if self.stack[i].name == name:
-                return self.stack[i].name
+                return self.stack[i]
         return None
 
     def latest_scope_contains_exact(self, o):
         for i in reversed(range(len(self.stack))):
-            if type(self.stack[i]) is ScopeMarker:
+            if type_of(self.stack[i]) is ScopeMarker:
                 return False
             if self.stack[i] == o:
                 return True
 
     def latest_scope_contains_name(self, o):
         for i in reversed(range(len(self.stack))):
-            if type(self.stack[i]) is ScopeMarker:
+            if type_of(self.stack[i]) is ScopeMarker:
                 return False
             if self.stack[i].name == o.name:
                 return True
@@ -76,7 +81,7 @@ class ScopeStack:
 
     def is_marker_in_scope(self, marker_types):
         for i in range(len(self.stack)):
-            if type(self.stack[i]) is ScopeMarker and self.stack[i].typ in marker_types:
+            if type_of(self.stack[i]) is ScopeMarker and self.stack[i].typ in marker_types:
                 return True
 
         return False
@@ -93,17 +98,21 @@ def check_undeclared(symbol, typ, scope):
 
 
 def check_invalid(symbol, typ, scope):
-    if type(typ) is Variable:
+    if type_of(typ) is Variable:
         print("Yo")
-        if type(symbol.typ) is AutoType and symbol.init is None:
+        if type_of(symbol.typ) is AutoType and symbol.init is None:
             raise Invalid(Variable(), symbol.name)
 
 
 def try_infer(symbol, typ, exception, scope):
-    if type(symbol) is AutoType:
+    if type_of(symbol) is AutoType:
         scope.find_latest_name(symbol.name).typ = typ
-    elif type(symbol) is not typ:
+    elif type_of(symbol) is not typ:
         raise exception
+
+
+def infer(symbol, typ, scope):
+    scope.find_latest_name(symbol.name).typ = typ
 
 
 class StaticChecker(Visitor):
@@ -118,7 +127,7 @@ class StaticChecker(Visitor):
 
         # 3.9 No entry point
         main_func = scope.find_latest_name('main')
-        if main_func is None or type(main_func) is not FuncDecl or type(main_func.return_type) is not VoidType or len(main_func.params) != 0:
+        if main_func is None or type_of(main_func) is not FuncDecl or type_of(main_func.return_type) is not VoidType or len(main_func.params) != 0:
             raise NoEntryPoint()
 
     # region Declarations
@@ -144,9 +153,9 @@ class StaticChecker(Visitor):
     def visitFuncDecl(self, func_decl: FuncDecl, scope: ScopeStack):
         check_redeclared(func_decl, Function(), scope)
 
-        scope.push_scope(func_decl)
-
         scope.add_symbol(func_decl)
+
+        scope.push_scope(func_decl)
 
         for param in func_decl.params:
             self.visit(param, scope)
@@ -169,9 +178,14 @@ class StaticChecker(Visitor):
     def visitAssignStmt(self, assign_stmt: AssignStmt, scope: ScopeStack):
         # 3.5 Type Mismatch In Statement
         # LHS can be in any type except void and array
-        lhs = scope.find_latest_name(assign_stmt.lhs.name)
-        rhs = scope.find_latest_name(assign_stmt.rhs.name)
-        if lhs.typ in [VoidType, ArrayType]:
+        lhs = self.visit(assign_stmt.lhs, scope)
+        rhs = self.visit(assign_stmt.rhs, scope)
+
+        # If LHS is not an identifier or array subscripting expr
+        if not isinstance(lhs, LHS):
+            raise TypeMismatchInStatement(assign_stmt)
+
+        if type_of(lhs.typ) in [VoidType, ArrayType]:
             raise TypeMismatchInStatement(assign_stmt)
 
     def visitIfStmt(self, if_stmt: IfStmt, scope: ScopeStack):
@@ -189,20 +203,20 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
 
         # The type of the scalar variable must be integer
-        if type(for_stmt.init) is not AssignStmt:
+        if type_of(for_stmt.init) is not AssignStmt:
             raise TypeMismatchInStatement(for_stmt)
 
         scalar_name = self.visit(for_stmt.init.lhs, scope).name
-        if type(scope.find_latest_name(scalar_name).typ) is not IntegerType:
+        if type_of(scope.find_latest_name(scalar_name).typ) is not IntegerType:
             raise TypeMismatchInStatement(for_stmt)
 
         self.visit(for_stmt.cond, scope)
 
         # The type of the update expression must be integer
-        if type(for_stmt.upd) is not Expr:
+        if type_of(for_stmt.upd) is not Expr:
             raise TypeMismatchInStatement(for_stmt)
 
-        if type(self.visit(for_stmt.upd, scope)) is not IntegerType:
+        if type_of(self.visit(for_stmt.upd, scope)) is not IntegerType:
             raise TypeMismatchInStatement(for_stmt)
 
         self.visit(for_stmt.stmt, scope)
@@ -214,7 +228,7 @@ class StaticChecker(Visitor):
 
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
-        if type(while_stmt.cond) is not BooleanType:
+        if type_of(while_stmt.cond) is not BooleanType:
             raise TypeMismatchInStatement(if_stmt)
 
         self.visit(while_stmt.tstmt, scope)
@@ -226,7 +240,7 @@ class StaticChecker(Visitor):
 
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
-        if type(do_while_stmt.cond) is not BooleanType:
+        if type_of(do_while_stmt.cond) is not BooleanType:
             raise TypeMismatchInStatement(if_stmt)
 
         self.visit(do_while_stmt.tstmt, scope)
@@ -271,31 +285,50 @@ class StaticChecker(Visitor):
         check_undeclared(array_cell)
 
         # Type is not ArrayType
-        if type(scope.find_latest_name(array_cell.name)) is not ArrayType:
+        if type_of(scope.find_latest_name(array_cell.name)) is not ArrayType:
             raise TypeMismatchInExpression(array_cell)
 
         # Any subscript is not an integer
         for expr in array_cell.cell:
-            if type(self.visit(expr, scope)) is not IntegerType:
+            if type_of(self.visit(expr, scope)) is not IntegerType:
                 raise TypeMismatchInExpression(array_cell)
 
         # Dimension not matched
         # TODO
 
     def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
-        return IntegerType()
+        return Integertype_of()
 
     def visitFloatLit(self, float_lit: FloatLit, scope: ScopeStack):
-        return FloatType()
+        return Floattype_of()
 
     def visitStringLit(self, string_lit: StringLit, scope: ScopeStack):
-        return StringType()
+        return Stringtype_of()
 
     def visitBooleanLit(self, boolean_lit: BooleanLit, scope: ScopeStack):
-        return BooleanType()
+        return Booleantype_of()
 
     def visitArrayLit(self, array_lit: ArrayLit, scope: ScopeStack):
-        pass
+        auto_variables = []
+        first_concrete_type = None
+
+        for exp in array_lit.explist:
+            exp_type = self.visit(exp, scope)
+            if type_of(exp_type) is AutoType:
+                auto_variables.append(exp)
+            else:
+                if first_concrete_type is None:
+                    first_concrete_type = exp_type
+                elif first_concrete_type is not type_of(exp_type):
+                    raise TypeMismatchInExpression(array_lit)
+
+        # If all elements in the array literal is of AutoType
+        if first_concrete_type is None:
+            raise TypeMismatchInExpression(array_lit)
+
+        # If there's at least one concrete type, infer the AutoType variables
+        for var in auto_variables:
+            infer(var, first_concrete_type, scope)
 
     def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
         pass
@@ -304,22 +337,22 @@ class StaticChecker(Visitor):
 
     # region Types
 
-    def visitIntegerType(self, integer_type: IntegerType, scope: ScopeStack):
+    def visitIntegertype_of(self, integer_type: IntegerType, scope: ScopeStack):
         return integer_type
 
-    def visitFloatType(self, float_type: FloatType, scope: ScopeStack):
+    def visitFloattype_of(self, float_type: FloatType, scope: ScopeStack):
         return float_type
 
-    def visitBooleanType(self, boolean_type: BooleanType, scope: ScopeStack):
+    def visitBooleantype_of(self, boolean_type: BooleanType, scope: ScopeStack):
         return boolean_type
 
-    def visitStringType(self, string_type: StringType, scope: ScopeStack):
+    def visitStringtype_of(self, string_type: StringType, scope: ScopeStack):
         return string_type
 
-    def visitArrayType(self, array_type: ArrayType, scope: ScopeStack):
+    def visitArraytype_of(self, array_type: ArrayType, scope: ScopeStack):
         return array_type
 
-    def visitAutoType(self, auto_type: AutoType, scope: ScopeStack):
+    def visitAutotype_of(self, auto_type: AutoType, scope: ScopeStack):
         return auto_type
 
     def visitVoidType(self, void_type: VoidType, scope: ScopeStack):

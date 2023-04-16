@@ -6,8 +6,8 @@ from AST import *
 class CheckerSuite(unittest.TestCase):
     def test(self):
         input = """
-        foo: function void (){
-  
+        main: function void (){
+        a: string;
         };
         """
         expect = "successful"
