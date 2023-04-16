@@ -1,16 +1,14 @@
 
+        
+        foo: function string (a: integer)
+        {
+        
+        }
         main: function void (){
         a: string;
-        while(true)
-        {
-        {
-        {
-        {
-        break;
-        }
-        }
-        }
-        }
-    
+        
+        b: string = foo("adsf");
         };
+        
+        
         

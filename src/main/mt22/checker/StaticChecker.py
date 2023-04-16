@@ -3,11 +3,13 @@ from MT22Parser import MT22Parser
 from AST import *
 from StaticError import *
 
+
 def type_of(typ):
     if type(typ) is type(type):
         return typ
     else:
         return type(typ)
+
 
 class Marker:
     pass
@@ -129,7 +131,7 @@ class StaticChecker(Visitor):
         main_func = scope.find_latest_name('main')
         if main_func is None or type_of(main_func) is not FuncDecl or type_of(main_func.return_type) is not VoidType or len(main_func.params) != 0:
             raise NoEntryPoint()
-        
+
         return decls
 
     # region Declarations
@@ -140,7 +142,10 @@ class StaticChecker(Visitor):
 
         # 3.3 Invalid Variable
         check_invalid(var_decl, Variable(), scope)
-
+        
+        if var_decl.init is not None:
+            self.visit(var_decl.init, scope)
+            
         scope.add_symbol(var_decl)
 
         return var_decl
@@ -334,28 +339,42 @@ class StaticChecker(Visitor):
             infer(var, first_concrete_type, scope)
 
     def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
-        pass
+        # 3.4 Type Mismatch In Expression
+        func_decl = scope.find_latest_name(func_call.name)
+
+        # Return type must not be void
+        if type_of(func_decl.return_type) is VoidType:
+            raise TypeMismatchInExpression(func_call)
+
+        # Parameters must match
+        if len(func_decl.params) != len(func_call.args):
+            raise TypeMismatchInExpression(func_call)
+
+        for i in range(len(func_decl.params)):
+            arg = self.visit(func_call.args[i], scope)
+            if type_of(arg) is not type_of(func_decl.params[i].typ):
+                raise TypeMismatchInExpression(func_call)
 
     # endregion
 
     # region Types
 
-    def visitIntegertype_of(self, integer_type: IntegerType, scope: ScopeStack):
+    def visitIntegerType(self, integer_type: IntegerType, scope: ScopeStack):
         return integer_type
 
-    def visitFloattype_of(self, float_type: FloatType, scope: ScopeStack):
+    def visitFloatType(self, float_type: FloatType, scope: ScopeStack):
         return float_type
 
-    def visitBooleantype_of(self, boolean_type: BooleanType, scope: ScopeStack):
+    def visitBooleanType(self, boolean_type: BooleanType, scope: ScopeStack):
         return boolean_type
 
-    def visitStringtype_of(self, string_type: StringType, scope: ScopeStack):
+    def visitStringType(self, string_type: StringType, scope: ScopeStack):
         return string_type
 
-    def visitArraytype_of(self, array_type: ArrayType, scope: ScopeStack):
+    def visitArrayType(self, array_type: ArrayType, scope: ScopeStack):
         return array_type
 
-    def visitAutotype_of(self, auto_type: AutoType, scope: ScopeStack):
+    def visitAutoType(self, auto_type: AutoType, scope: ScopeStack):
         return auto_type
 
     def visitVoidType(self, void_type: VoidType, scope: ScopeStack):
