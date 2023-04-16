@@ -172,6 +172,8 @@ class StaticChecker(Visitor):
             init = self.visit(var_decl.init, scope)
             if type_of(var_decl.typ) is AutoType:
                 var_decl.typ = init
+            elif type_of(var_decl.typ) is FloatType and type_of(init) is IntegerType:
+                pass
             elif type_of(init) != type_of(var_decl.typ):
                 raise TypeMismatchInStatement(var_decl)
 
@@ -326,13 +328,13 @@ class StaticChecker(Visitor):
         left = self.visit(bin_expr.left, scope)
         right = self.visit(bin_expr.right, scope)
 
-        if type_of(left) is Id:
-            left = scope.find_latest_name(left.name).typ
+        if type_of(left) is VarDecl:
+            left = left.typ
 
-        if type_of(right) is Id:
-            right = scope.find_latest_name(right.name).typ
+        if type_of(right) is VarDecl:
+            right = right.typ
 
-        if bin_expr.op in ['+', '-', '*', '/']:
+        if bin_expr.op in ['+', '-', '*', '/']:              
             if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(bin_expr)
             if FloatType in [type_of(left), type_of(right)]:
@@ -435,7 +437,7 @@ class StaticChecker(Visitor):
                 auto_variables.append(exp)
             else:
                 if first_concrete_type is None:
-                    first_concrete_type = exp_type
+                    first_concrete_type = type_of(exp_type)
                 elif first_concrete_type is not type_of(exp_type):
                     raise TypeMismatchInExpression(array_lit)
 
@@ -446,6 +448,8 @@ class StaticChecker(Visitor):
         # If there's at least one concrete type, infer the AutoType variables
         for var in auto_variables:
             scope.infer(var, first_concrete_type)
+            
+        # TODO: Return what?
 
     def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
         # 3.4 Type Mismatch In Expression

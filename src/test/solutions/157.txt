@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(<, Id(b), IntegerLit(10))
+Type mismatch in statement: ForStmt(AssignStmt(Id(a), IntegerLit(1)), BinExpr(<, Id(b), IntegerLit(10)), BinExpr(+, Id(b), IntegerLit(1)), ForStmt(AssignStmt(Id(b), IntegerLit(1)), BinExpr(<, Id(a), IntegerLit(10)), BinExpr(+, Id(a), IntegerLit(1)), IfStmt(BinExpr(!=, Id(a), Id(b)), WhileStmt(BinExpr(==, BinExpr(%, Id(a), Id(b)), IntegerLit(0)), ForStmt(AssignStmt(Id(a), IntegerLit(0)), BooleanLit(True), IntegerLit(1), ReturnStmt())))))

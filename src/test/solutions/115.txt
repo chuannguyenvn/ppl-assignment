@@ -1,1 +1,1 @@
-Type mismatch in statement: VarDecl(b, FloatType, IntegerLit(2))
+['s', 'u', 'c', 'c', 'e', 's', 's', 'f', 'u', 'l']
