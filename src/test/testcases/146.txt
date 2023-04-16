@@ -1,0 +1,15 @@
+
+    foo: function boolean(){}
+    bar: function string(){}
+    main: function void(){
+        if (1 > 0)
+            foo();
+        else
+        {
+            bar();
+            bar();
+            bar();
+            return;
+        }
+    }
+    

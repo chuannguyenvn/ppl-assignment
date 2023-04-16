@@ -1,0 +1,8 @@
+
+    a: boolean;
+    foo: function void(){}
+    main: function void(){
+        if (a)
+            foo();
+    }
+    

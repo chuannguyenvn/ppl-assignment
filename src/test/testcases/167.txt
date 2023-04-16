@@ -1,0 +1,9 @@
+
+    main: function void(){}
+    foo: function void(a: auto){}
+    bar: function integer(){}
+    a: auto = bar();
+    foo(a);
+    b: auto = bar() + 1.2;
+    foo(b);
+    

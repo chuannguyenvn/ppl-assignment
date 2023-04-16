@@ -1,5 +1,4 @@
 from Visitor import Visitor
-from MT22Parser import MT22Parser
 from AST import *
 from StaticError import *
 
@@ -88,32 +87,59 @@ class ScopeStack:
 
         return False
 
+    def try_infer(self, symbol, typ, exception):
+        if type_of(symbol) in [VarDecl, ParamDecl]:
+            decl = self.find_latest_name(symbol.name)
+            if type_of(decl.typ) is AutoType:
+                decl.typ = typ
+            elif type_of(decl.typ) is not typ:
+                raise exception
+        elif type_of(symbol) is FuncDecl:
+            func_decl = self.find_latest_name(symbol.name)
+            if type_of(func_decl.return_type) is AutoType:
+                func_decl.return_type = typ
+            elif type_of(func_decl.return_type) is not typ:
+                raise exception
+        else:
+            if type_of(symbol) is not typ:
+                raise exception
+    def try_two_way_infer(self, lhs, rhs, exception):
+        decl = self.find_latest_name(lhs.name)
+        if type_of(decl.typ) is AutoType:
+            decl.typ = typ
+        elif type_of(decl.typ) is not typ:
+            raise exception
+        
+    def try_infer_func_return(self, symbol, typ, exception):
+        func_decl = self.find_latest_name(symbol.name)
 
-def check_redeclared(symbol, typ, scope):
-    if scope.latest_scope_contains_name(symbol):
-        raise Redeclared(typ, symbol.name)
+        if type_of(symbol.return_type) not in [AutoType, return_type]:
+            raise exception
 
+        func_decl.return_type = typ
 
-def check_undeclared(symbol, typ, scope):
-    if not scope.any_scope_contains_name(symbol.name):
-        raise Undeclared(typ, symbol.name)
+    def try_infer_func_params(self, symbol, param_types, exception):
+        if len(symbol.params) != len(param_types):
+            raise exception
 
+        for i in range(len(param_types)):
+            self.try_infer(symbol.params[i], param_types[i], exception)
 
-def check_invalid(symbol, typ, scope):
-    if type_of(typ) is Variable:
-        if type_of(symbol.typ) is AutoType and symbol.init is None:
-            raise Invalid(Variable(), symbol.name)
+    def check_redeclared(self, symbol, typ):
+        if self.latest_scope_contains_name(symbol):
+            raise Redeclared(typ, symbol.name)
 
+    def check_undeclared(self, symbol, typ):
+        if not self.any_scope_contains_name(symbol.name):
+            raise Undeclared(typ, symbol.name)
 
-def try_infer(symbol, typ, exception, scope):
-    if type_of(symbol) is AutoType:
-        scope.find_latest_name(symbol.name).typ = typ
-    elif type_of(symbol) is not typ:
-        raise exception
+    def check_invalid(self, symbol, typ):
+        if type_of(typ) is Variable:
+            if type_of(symbol.typ) is AutoType and symbol.init is None:
+                raise Invalid(Variable(), symbol.name)
 
-
-def infer(symbol, typ, scope):
-    scope.find_latest_name(symbol.name).typ = typ
+    def infer(self, symbol, typ):
+        self.find_latest_name(symbol.name).typ = typ
 
 
 class StaticChecker(Visitor):
@@ -131,16 +157,16 @@ class StaticChecker(Visitor):
         if main_func is None or type_of(main_func) is not FuncDecl or type_of(main_func.return_type) is not VoidType or len(main_func.params) != 0:
             raise NoEntryPoint()
 
-        return decls
+        return "successful"
 
     # region Declarations
 
     def visitVarDecl(self, var_decl: VarDecl, scope: ScopeStack):
         # 3.1 Redeclared Variable
-        check_redeclared(var_decl, Variable(), scope)
-
+        scope.check_redeclared(var_decl, Variable())
         # 3.3 Invalid Variable
-        check_invalid(var_decl, Variable(), scope)
+
+        scope.check_invalid(var_decl, Variable())
 
         if var_decl.init is not None:
             init = self.visit(var_decl.init, scope)
@@ -155,13 +181,13 @@ class StaticChecker(Visitor):
 
     def visitParamDecl(self, param_decl: ParamDecl, scope: ScopeStack):
         # 3.1 Redeclared Parameter
-        check_redeclared(param_decl, Parameter(), scope)
+        scope.check_redeclared(param_decl, Parameter())
 
         # 3.3 Invalid Parameter
         # TODO: Invalid
 
     def visitFuncDecl(self, func_decl: FuncDecl, scope: ScopeStack):
-        check_redeclared(func_decl, Function(), scope)
+        scope.check_redeclared(func_decl, Function())
 
         scope.add_symbol(func_decl)
 
@@ -189,10 +215,18 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # LHS can be in any type except void and array
         lhs = self.visit(assign_stmt.lhs, scope)
-        rhs_type = self.visit(assign_stmt.rhs, scope)
+        rhs = self.visit(assign_stmt.rhs, scope)
 
-        lhs_decl = scope.find_latest_name(lhs.name)
+        lhs_decl = lhs
+        rhs_decl = rhs if type_of(rhs) in [VarDecl, ParamDecl, FuncDecl] else None
         lhs_type = lhs_decl.typ
+        rhs_type = rhs
+
+        if type_of(rhs) in [VarDecl, ParamDecl]:
+            rhs_type = rhs_decl.typ
+        elif type_of(rhs) is FuncDecl:
+            rhs_type = rhs_decl.return_type
+
         # If LHS is not an identifier or array subscripting expr
         if not isinstance(lhs, LHS):
             raise TypeMismatchInStatement(assign_stmt)
@@ -201,12 +235,9 @@ class StaticChecker(Visitor):
         if type_of(lhs_type) in [VoidType, ArrayType]:
             raise TypeMismatchInStatement(assign_stmt)
 
-        # Can't infer type
+        # Can't infer type: won't happen
         if type_of(lhs_type) is AutoType:
-            if type_of(rhs_type) is AutoType:
-                raise TypeMismatchInStatement(assign_stmt)
-            else:
-                infer(lhs_decl, rhs_type, scope)
+            scope.try_infer(lhs_decl, rhs_type)
         else:
             if type_of(lhs_type) != type_of(rhs_type):
                 raise TypeMismatchInStatement(assign_stmt)
@@ -215,7 +246,8 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
 
-        try_infer(if_stmt.cond, BooleanType, TypeMismatchInStatement(if_stmt), scope)
+        cond = self.visit(if_stmt.cond, scope)
+        scope.try_infer(cond, BooleanType, TypeMismatchInStatement(if_stmt))
 
         self.visit(if_stmt.tstmt, scope)
         self.visit(if_stmt.fstmt, scope)
@@ -252,8 +284,7 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
         cond = self.visit(while_stmt.cond, scope)
-        if type_of(cond) is not BooleanType:
-            raise TypeMismatchInStatement(while_stmt)
+        scope.try_infer(cond, BooleanType, TypeMismatchInStatement(while_stmt))
 
         self.visit(while_stmt.stmt, scope)
 
@@ -264,8 +295,8 @@ class StaticChecker(Visitor):
 
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
-        if type_of(do_while_stmt.cond) is not BooleanType:
-            raise TypeMismatchInStatement(do_while_stmt)
+        cond = self.visit(do_while_stmt.cond, scope)
+        scope.try_infer(cond, BooleanType, TypeMismatchInStatement(do_while_stmt))
 
         self.visit(do_while_stmt.tstmt, scope)
 
@@ -354,18 +385,22 @@ class StaticChecker(Visitor):
 
     def visitId(self, id: Id, scope: ScopeStack):
         # 3.2 Undeclared Identifier
-        check_undeclared(id, Identifier(), scope)
+        scope.check_undeclared(id, Identifier())
 
-        return id
+        id_decl = scope.find_latest_name(id.name)
+
+        return id_decl
 
     def visitArrayCell(self, array_cell: ArrayCell, scope: ScopeStack):
         # 3.4 Type Mismatch In Expression
 
         # Name not found
-        check_undeclared(array_cell)
+        scope.check_undeclared(array_cell.name, Identifier())
+
+        array_decl = scope.find_latest_name(array_cell.name)
 
         # Type is not ArrayType
-        if type_of(scope.find_latest_name(array_cell.name)) is not ArrayType:
+        if type_of(array_decl) is not ArrayType:
             raise TypeMismatchInExpression(array_cell)
 
         # Any subscript is not an integer
@@ -375,6 +410,8 @@ class StaticChecker(Visitor):
 
         # Dimension not matched
         # TODO
+
+        return array_decl
 
     def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
         return IntegerType()
@@ -408,7 +445,7 @@ class StaticChecker(Visitor):
 
         # If there's at least one concrete type, infer the AutoType variables
         for var in auto_variables:
-            infer(var, first_concrete_type, scope)
+            scope.infer(var, first_concrete_type)
 
     def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
         # 3.4 Type Mismatch In Expression
@@ -422,14 +459,16 @@ class StaticChecker(Visitor):
         if len(func_decl.params) != len(func_call.args):
             raise TypeMismatchInExpression(func_call)
 
+        arg_types = []
         for i in range(len(func_decl.params)):
-            arg = self.visit(func_call.args[i], scope)
-            if type_of(arg) is Id:
-                arg = scope.find_latest_name(arg.name).typ
-            if type_of(arg) is not type_of(func_decl.params[i].typ):
-                raise TypeMismatchInExpression(func_call)
-        
-        return func_decl.return_type
+            arg_type = self.visit(func_call.args[i], scope)
+            if type_of(arg_type) is Id:
+                arg_type = scope.find_latest_name(arg_type.name).typ
+            arg_types.append(arg_type)
+
+        scope.try_infer_func_params(func_decl, arg_types, TypeMismatchInExpression(func_call))
+
+        return func_decl
 
     # endregion
 

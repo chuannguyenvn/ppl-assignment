@@ -1,0 +1,5 @@
+
+    a: auto = 1;
+    a: integer = 2;
+    main: function void(){}
+    

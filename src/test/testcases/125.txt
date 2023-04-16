@@ -1,0 +1,8 @@
+
+    a: auto = 1;
+    b: auto = 2;
+    main: function void(){
+    c: auto = a + b;
+    }
+    c: auto = "lmao";
+    

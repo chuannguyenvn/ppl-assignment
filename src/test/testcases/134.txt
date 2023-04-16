@@ -1,0 +1,6 @@
+
+    main: function void(){}
+    foo: function string(){}
+    a: integer;
+    b: string = foo(a);
+    

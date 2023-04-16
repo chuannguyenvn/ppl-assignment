@@ -1,0 +1,7 @@
+
+    main: function void(){}
+    foo: function void(a: string){}
+    a: auto = "asdf";
+    b: auto = a :: "lmao";
+    foo(b);
+    

@@ -1,0 +1,12 @@
+
+    foo: function boolean(){}
+    main: function void(){
+        a: integer;
+        for (a = 1, a < 10, a + 1)
+        {
+            return;
+            break;
+            continue;
+        }
+    }
+    

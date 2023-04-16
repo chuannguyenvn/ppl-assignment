@@ -1,0 +1,8 @@
+
+    foo: function boolean(){}
+    main: function void(){
+        a: string;
+        for (a = 1, a < 10, a + 1)
+            break;
+    }
+    

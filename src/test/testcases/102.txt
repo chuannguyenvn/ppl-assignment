@@ -1,1 +1,4 @@
-1_234_567
+
+    main: function void(){}
+    main: function void(){}
+    

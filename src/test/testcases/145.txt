@@ -1,0 +1,6 @@
+
+    foo: function boolean(){}
+    main: function void(){
+        if (true) if (false) if (foo()) return;
+    }
+    

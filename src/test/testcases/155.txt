@@ -1,0 +1,11 @@
+
+    foo: function boolean(){}
+    main: function void(){
+        a: integer;
+        for (a = 1, a < 10, a + 1)
+        {
+            if (a == 1.1) return;
+            else continue;
+        }
+    }
+    

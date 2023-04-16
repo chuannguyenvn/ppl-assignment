@@ -1,0 +1,6 @@
+
+    a: auto = 1 / 0;
+    b: auto = 0 % 0;
+    c: auto = a + b;
+    main: function void(){}
+    

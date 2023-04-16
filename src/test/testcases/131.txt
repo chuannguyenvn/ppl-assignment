@@ -1,0 +1,7 @@
+
+    main: function void(){}
+    foo: function string(a: auto){}
+    a: integer;
+    b: auto = foo(a);
+    c: integer = a;
+    

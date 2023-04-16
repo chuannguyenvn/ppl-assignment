@@ -1,0 +1,11 @@
+
+    a: auto = "lmao";
+    main: function void(){}
+    bar: function auto(){}
+    goo: function integer(){}
+    foo: function boolean(b: auto){
+        a: auto = 2;
+        for (a = 1, bar(), goo())
+            return;
+    }
+    

@@ -1,0 +1,5 @@
+
+    main: function void(){}
+    foo: function boolean(){}
+    a: string = foo();
+    

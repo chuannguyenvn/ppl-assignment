@@ -1,0 +1,6 @@
+
+    a: auto = 1;
+    b: boolean = true;
+    c: auto = a * b;
+    main: function void(){}
+    
