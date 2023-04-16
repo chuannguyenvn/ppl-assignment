@@ -7,8 +7,7 @@ class CheckerSuite(unittest.TestCase):
     def test(self):
         input = """
         foo: function void (){
-        a: integer;
-        n = 1;
+  
         };
         """
         expect = "successful"

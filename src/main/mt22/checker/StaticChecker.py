@@ -61,14 +61,12 @@ class ScopeStack:
             if self.stack[i] == o:
                 return True
 
-
     def latest_scope_contains_name(self, o):
         for i in reversed(range(len(self.stack))):
             if type(self.stack[i]) is ScopeMarker:
                 return False
             if self.stack[i].name == o.name:
                 return True
-
 
     def any_scope_contains_exact(self, o):
         return o in self.stack
@@ -101,8 +99,11 @@ def check_invalid(symbol, typ, scope):
             raise Invalid(Variable(), symbol.name)
 
 
-def check_type_mismatch_in_expression(expression, typ, scope):
-    pass
+def try_infer(symbol, typ, exception, scope):
+    if type(symbol) is AutoType:
+        scope.find_latest_name(symbol.name).typ = typ
+    elif type(symbol) is not typ:
+        raise exception
 
 
 class StaticChecker(Visitor):
@@ -113,7 +114,12 @@ class StaticChecker(Visitor):
         return self.visit(self.ast, ScopeStack())
 
     def visitProgram(self, program: Program, scope: ScopeStack):
-        return [self.visit(decl, scope) for decl in program.decls]
+        [self.visit(decl, scope) for decl in program.decls]
+
+        # 3.9 No entry point
+        main_func = scope.find_latest_name('main')
+        if main_func is None or type(main_func) is not FuncDecl or type(main_func.return_type) is not VoidType or len(main_func.params) != 0:
+            raise NoEntryPoint()
 
     # region Declarations
 
@@ -167,14 +173,12 @@ class StaticChecker(Visitor):
         rhs = scope.find_latest_name(assign_stmt.rhs.name)
         if lhs.typ in [VoidType, ArrayType]:
             raise TypeMismatchInStatement(assign_stmt)
-        
-        
 
     def visitIfStmt(self, if_stmt: IfStmt, scope: ScopeStack):
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
-        if type(self.visit(if_stmt.cond)) is not BooleanType:
-            raise TypeMismatchInStatement(if_stmt)
+
+        try_infer(if_stmt.cond, BooleanType, TypeMismatchInStatement(if_stmt), scope)
 
         self.visit(if_stmt.tstmt, scope)
         self.visit(if_stmt.fstmt, scope)
@@ -250,7 +254,8 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-        pass
+        left_type = self.visit(bin_expr.left)
+        right_type = self.visit(bin_expr.right)
 
     def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
         pass

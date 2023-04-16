@@ -1,6 +1,5 @@
 
         foo: function void (){
-        a: integer;
-        n = 1;
+  
         };
         
