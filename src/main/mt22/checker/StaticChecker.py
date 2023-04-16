@@ -142,10 +142,10 @@ class StaticChecker(Visitor):
 
         # 3.3 Invalid Variable
         check_invalid(var_decl, Variable(), scope)
-        
+
         if var_decl.init is not None:
             self.visit(var_decl.init, scope)
-            
+
         scope.add_symbol(var_decl)
 
         return var_decl
@@ -276,11 +276,59 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-        left_type = self.visit(bin_expr.left)
-        right_type = self.visit(bin_expr.right)
+        left = self.visit(bin_expr.left)
+        right = self.visit(bin_expr.right)
+
+        if bin_expr.op in ['+', '-', '*', '/']:
+            if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
+                raise TypeMismatchInExpression(bin_expr)
+            if FloatType in [type_of(left), type_of(right)]:
+                return FloatType()
+            else:
+                return IntegerType()
+        if bin_expr.op is '%':
+            if type_of(left) is not IntegerType or type_of(right) is not IntegerType:
+                raise TypeMismatchInExpression(bin_expr)
+            else:
+                return IntegerType()
+        if bin_expr.op in ['&&', '||']:
+            if type_of(left) is not BooleanType or type_of(right) is not BooleanType:
+                raise TypeMismatchInExpression(bin_expr)
+            else:
+                return BooleanType()
+        if bin_expr.op is '::':
+            if type_of(left) is not StringType or type_of(right) is not StringType:
+                raise TypeMismatchInExpression(bin_expr)
+            else:
+                return StringType()
+        if bin_expr.op in ['==', '!=']:
+            if type_of(left) not in [IntegerType, BooleanType] or type_of(right) not in [IntegerType, BooleanType] or type_of(left) != type_of(right):
+                raise TypeMismatchInExpression(bin_expr)
+            else:
+                return BooleanType()
+        if bin_expr.op in ['<', '>', '<=', '>=']:
+            if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
+                raise TypeMismatchInExpression(bin_expr)
+            else:
+                return BooleanType()
 
     def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
-        pass
+        val = self.visit(un_expr.val, scope)
+
+        if un_expr.op is '-':
+            if type_of(val) not in [IntegerType, FloatType]:
+                raise TypeMismatchInExpression(un_expr)
+            else:
+                if type_of(val) is FloatType:
+                    return FloatType()
+                else:
+                    return IntegerType()
+        if un_expr.op is '!':
+            if type_of(val) is not BooleanType:
+                raise TypeMismatchInExpression(un_expr)
+            else:
+                return BooleanType()
+        # TODO: indexing expression
 
     def visitId(self, id: Id, scope: ScopeStack):
         # 3.2 Undeclared Identifier
