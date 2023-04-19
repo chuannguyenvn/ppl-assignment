@@ -1,11 +1,11 @@
 
                     main: function void() {}
-        
+
                     foo: function auto (a: auto) {
                         b: integer = a;
                         c: integer = f4();
                         d: integer = a % f4();
                     }
-        
+
                     f4: function auto() {}
                 

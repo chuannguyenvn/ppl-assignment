@@ -166,6 +166,8 @@ class ScopeStack:
             self.set_type(lhs, rhs_type)
         elif type_of(rhs_type) is AutoType:
             self.set_type(rhs, lhs_type)
+        elif type_of(lhs_type) is FloatType and type_of(rhs_type) is IntegerType:
+            return
         elif not is_same_type(lhs_type, rhs_type):
             raise exception
 
@@ -178,6 +180,17 @@ class StaticChecker(Visitor):
         return self.visit(self.ast, ScopeStack())
 
     def visitProgram(self, program: Program, scope: ScopeStack):
+        self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('printInteger', IntegerType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('readFloat', IntegerType(), [], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('writeFloat', IntegerType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('readBoolean', IntegerType(), [], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('printBoolean', IntegerType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('readString', IntegerType(), [], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('printString', IntegerType(), [ParamDecl('anArg', StringType())], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('super', IntegerType(), [], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('preventDefault', IntegerType(), [], None, BlockStmt([])), scope)
+        
         for decl in program.decls:
             self.visit(decl, scope)
 
@@ -359,11 +372,11 @@ class StaticChecker(Visitor):
 
         # Parameters must match
         if len(func_decl.params) != len(call_stmt.args):
-            raise TypeMismatchInStatement(call_stmt)
+            raise Undeclared(Function(), call_stmt.name)
 
         for i in range(len(func_decl.params)):
             arg = self.visit(call_stmt.args[i], scope)
-            scope.try_two_way_infer(func_decl.params[i], arg, TypeMismatchInStatement(call_stmt))
+            scope.try_two_way_infer(func_decl.params[i], arg, TypeMismatchInExpression(call_stmt.args[i]))
 
         return func_decl
 
@@ -506,7 +519,7 @@ class StaticChecker(Visitor):
 
         # Parameters must match
         if len(func_decl.params) != len(func_call.args):
-            raise TypeMismatchInExpression(func_call)
+            raise Undeclared(Function(), func_call.name)
 
         arg_types = []
         for i in range(len(func_decl.params)):

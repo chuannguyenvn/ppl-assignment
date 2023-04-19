@@ -1,1 +1,1 @@
-Type mismatch in statement: ReturnStmt(StringLit(Yoon Jae))
+Type mismatch in expression: FuncCall(f2, [])

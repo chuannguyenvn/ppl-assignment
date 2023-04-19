@@ -6,7 +6,7 @@
                     f3: function auto() {
                         return "Yoon Jae";
                     }
-        
+
                     foo: function auto () {
                         a: auto = {f1(), "string"};
                         b: array [2] of string = a;

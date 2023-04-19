@@ -1,11 +1,11 @@
 
                     main: function void() {}
-        
+
                     foo: function auto () {
                         a: auto = {f1(), "string"};
                         b: array [2] of string = a;
                         c: string = f1();
                     }
-        
+
                     f1: function auto () {}
                 
