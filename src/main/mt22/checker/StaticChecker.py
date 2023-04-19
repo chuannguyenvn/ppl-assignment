@@ -4,7 +4,7 @@ from StaticError import *
 
 
 def type_of(typ):
-    if type(typ) is type(type):
+    if type(typ) is type(AST):
         return typ
     else:
         return type(typ)
@@ -92,13 +92,13 @@ class ScopeStack:
             decl = self.find_latest_name(symbol.name)
             if type_of(decl.typ) is AutoType:
                 decl.typ = typ
-            elif type_of(decl.typ) is not typ:
+            elif type_of(decl.typ) != type_of(typ):
                 raise exception
         elif type_of(symbol) is FuncDecl:
             func_decl = self.find_latest_name(symbol.name)
             if type_of(func_decl.return_type) is AutoType:
                 func_decl.return_type = typ
-            elif type_of(func_decl.return_type) is not typ:
+            elif type_of(func_decl.return_type) != type_of(typ):
                 raise exception
         else:
             if type_of(symbol) is not typ:
@@ -148,7 +148,8 @@ class ScopeStack:
         if type_of(symbol) is FuncDecl:
             return type_of(symbol.return_type)
 
-        return symbol
+        return type_of(symbol)
+
 
 class StaticChecker(Visitor):
     def __init__(self, ast):
@@ -177,12 +178,12 @@ class StaticChecker(Visitor):
         scope.check_invalid(var_decl, Variable())
 
         if var_decl.init is not None:
-            init = self.visit(var_decl.init, scope)
+            init_type = scope.deduct_type(self.visit(var_decl.init, scope))
             if type_of(var_decl.typ) is AutoType:
-                var_decl.typ = init
-            elif type_of(var_decl.typ) is FloatType and type_of(init) is IntegerType:
+                var_decl.typ = init_type()
+            elif type_of(var_decl.typ) is FloatType and type_of(init_type) is IntegerType:
                 pass
-            elif type_of(init) != type_of(var_decl.typ):
+            elif init_type != type_of(var_decl.typ):
                 raise TypeMismatchInVarDecl(var_decl)
 
         scope.add_symbol(var_decl)
@@ -333,73 +334,55 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-        left = scope.deduct_type(self.visit(bin_expr.left, scope))
-        right = scope.deduct_type(self.visit(bin_expr.right, scope))
-
-        # if type_of(left) in [VarDecl, ParamDecl]:
-        #     left = left.typ
-        # elif type_of(left) is FuncDecl:
-        #     left = left.return_type
-        # 
-        # if type_of(right) in [VarDecl, ParamDecl]:
-        #     right = right.typ
-        # elif type_of(right) is FuncDecl:
-        #     right = right.return_type
-
-        l = type_of(left)
-        ll = type_of(FloatType)
-        lll = l == FloatType
+        left_type = scope.deduct_type(self.visit(bin_expr.left, scope))
+        right_type = scope.deduct_type(self.visit(bin_expr.right, scope))
 
         if bin_expr.op in ['+', '-', '*', '/']:
-            if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
+            if left_type not in [IntegerType, FloatType] or right_type not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(bin_expr)
-            if FloatType in [type_of(left), type_of(right)]:
+            if FloatType in [left_type, right_type]:
                 return FloatType()
             else:
                 return IntegerType()
         if bin_expr.op == '%':
-            if type_of(left) is not IntegerType or type_of(right) is not IntegerType:
+            if left_type is not IntegerType or right_type is not IntegerType:
                 raise TypeMismatchInExpression(bin_expr)
             else:
                 return IntegerType()
         if bin_expr.op in ['&&', '||']:
-            if type_of(left) is not BooleanType or type_of(right) is not BooleanType:
+            if left_type is not BooleanType or right_type is not BooleanType:
                 raise TypeMismatchInExpression(bin_expr)
             else:
                 return BooleanType()
         if bin_expr.op == '::':
-            if type_of(left) is not StringType or type_of(right) is not StringType:
+            if left_type is not StringType or right_type is not StringType:
                 raise TypeMismatchInExpression(bin_expr)
             else:
                 return StringType()
         if bin_expr.op in ['==', '!=']:
-            if type_of(left) not in [IntegerType, BooleanType] or type_of(right) not in [IntegerType, BooleanType] or type_of(left) != type_of(right):
+            if left_type not in [IntegerType, BooleanType] or right_type not in [IntegerType, BooleanType] or left_type != right_type:
                 raise TypeMismatchInExpression(bin_expr)
             else:
                 return BooleanType()
         if bin_expr.op in ['<', '>', '<=', '>=']:
-            if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
+            if left_type not in [IntegerType, FloatType] or right_type not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(bin_expr)
             else:
                 return BooleanType()
 
     def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
-        val = self.visit(un_expr.val, scope)
-        if type_of(val) in [VarDecl, ParamDecl]:
-            val = val.typ
-        if type_of(val) is FuncDecl:
-            val = val.return_type
+        val_type = scope.deduct_type(self.visit(un_expr.val, scope))
 
         if un_expr.op == '-':
-            if type_of(val) not in [IntegerType, FloatType]:
+            if val_type not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(un_expr)
             else:
-                if type_of(val) is FloatType:
+                if val_type is FloatType:
                     return FloatType()
                 else:
                     return IntegerType()
         if un_expr.op == '!':
-            if type_of(val) is not BooleanType:
+            if val_type is not BooleanType:
                 raise TypeMismatchInExpression(un_expr)
             else:
                 return BooleanType()
@@ -486,7 +469,7 @@ class StaticChecker(Visitor):
         arg_types = []
         for i in range(len(func_decl.params)):
             arg_type = self.visit(func_call.args[i], scope)
-            if type_of(arg_type) is Id:
+            if type_of(arg_type) in [VarDecl, Id]:
                 arg_type = scope.find_latest_name(arg_type.name).typ
             arg_types.append(arg_type)
 
