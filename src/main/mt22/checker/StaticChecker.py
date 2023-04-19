@@ -144,11 +144,11 @@ class ScopeStack:
 
     def deduct_type(self, symbol):
         if type_of(symbol) in [VarDecl, ParamDecl]:
-            return type_of(symbol.typ)
+            return symbol.typ
         if type_of(symbol) is FuncDecl:
-            return type_of(symbol.return_type)
+            return symbol.return_type
 
-        return type_of(symbol)
+        return symbol
 
 
 class StaticChecker(Visitor):
@@ -180,10 +180,10 @@ class StaticChecker(Visitor):
         if var_decl.init is not None:
             init_type = scope.deduct_type(self.visit(var_decl.init, scope))
             if type_of(var_decl.typ) is AutoType:
-                var_decl.typ = init_type()
+                var_decl.typ = init_type
             elif type_of(var_decl.typ) is FloatType and type_of(init_type) is IntegerType:
                 pass
-            elif init_type != type_of(var_decl.typ):
+            elif type_of(init_type) != type_of(var_decl.typ):
                 raise TypeMismatchInVarDecl(var_decl)
 
         scope.add_symbol(var_decl)
@@ -334,8 +334,8 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-        left_type = scope.deduct_type(self.visit(bin_expr.left, scope))
-        right_type = scope.deduct_type(self.visit(bin_expr.right, scope))
+        left_type = type_of(scope.deduct_type(self.visit(bin_expr.left, scope)))
+        right_type = type_of(scope.deduct_type(self.visit(bin_expr.right, scope)))
 
         if bin_expr.op in ['+', '-', '*', '/']:
             if left_type not in [IntegerType, FloatType] or right_type not in [IntegerType, FloatType]:
@@ -371,7 +371,7 @@ class StaticChecker(Visitor):
                 return BooleanType()
 
     def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
-        val_type = scope.deduct_type(self.visit(un_expr.val, scope))
+        val_type = type_of(scope.deduct_type(self.visit(un_expr.val, scope)))
 
         if un_expr.op == '-':
             if val_type not in [IntegerType, FloatType]:
@@ -440,8 +440,8 @@ class StaticChecker(Visitor):
                 auto_variables.append(exp)
             else:
                 if first_concrete_type is None:
-                    first_concrete_type = type_of(exp_type)
-                elif first_concrete_type is not type_of(exp_type):
+                    first_concrete_type = exp_type
+                elif type_of(first_concrete_type) is not type_of(exp_type):
                     raise TypeMismatchInExpression(array_lit)
 
         # If all elements in the array literal is of AutoType
@@ -452,7 +452,10 @@ class StaticChecker(Visitor):
         for var in auto_variables:
             scope.infer(var, first_concrete_type)
 
-        # TODO: Return what?
+        if type_of(first_concrete_type) is ArrayType:
+            return ArrayType([len(array_lit.explist)] + first_concrete_type.dimensions, first_concrete_type.typ)
+        else:
+            return ArrayType([len(array_lit.explist)], first_concrete_type)
 
     def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
         # 3.4 Type Mismatch In Expression
