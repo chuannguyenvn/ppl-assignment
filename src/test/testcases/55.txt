@@ -1,0 +1,10 @@
+
+            main: function void() {}
+            foo: function integer() {
+                a: integer = 5;
+                while (a < 10) {
+                    a: string = "abc";
+                }
+                return a;
+            }
+        

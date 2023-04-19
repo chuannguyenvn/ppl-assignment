@@ -1,0 +1,13 @@
+
+            main: function void() {}
+            foo: function integer() {
+                a: integer = 5;
+                if(1 == 2) {
+                    a: string = "abc";
+                }
+                else {
+                    a: integer = 6;
+                }
+                return a;
+            }
+        

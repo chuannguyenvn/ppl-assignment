@@ -1,0 +1,10 @@
+
+            main: function void() {}
+            foo: function boolean (x: auto) {
+                c: boolean;
+                c = (foo(c) && foo(x)) || f4(c, "a");
+                return f4(x, f1());
+            }
+            f4: function auto (a: auto, b: auto) {}
+            f1: function string() {}
+        

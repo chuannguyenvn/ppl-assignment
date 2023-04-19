@@ -1,0 +1,13 @@
+
+            main: function void() {}
+            foo: function integer() {
+                a: integer = foo2() + foo3(5);
+                return a;
+            }
+            foo2: function integer() {
+                return 1;
+            }
+            foo3: function integer(a: integer) {
+                return a - 1;
+            }
+        

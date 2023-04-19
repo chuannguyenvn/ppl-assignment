@@ -1,0 +1,12 @@
+
+            main: function void() {}
+            foo: function array [3] of string () {
+                a: auto = {"a", "b", "c"};
+                b: auto = a;
+                c: auto = {a, b};
+                d: auto = {c, {a, a}};
+                e: array [2,2,3] of string = d;
+                f: array [2,3] of string = e[2];
+                return a;
+            }
+        

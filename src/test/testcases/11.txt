@@ -1,0 +1,7 @@
+
+            main: function void() {
+                a: integer = 5;
+                b: boolean = 5;
+                c: float = !b + (a == 5);
+            }
+        

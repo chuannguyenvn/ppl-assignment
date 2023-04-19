@@ -1,0 +1,7 @@
+
+            A: integer = 5;
+            B: boolean = true || false;
+            C: string = "abc" :: "def";
+            D: float = 5.0 + A;
+            main: function void() {}
+        

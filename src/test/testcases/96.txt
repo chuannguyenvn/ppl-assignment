@@ -1,0 +1,54 @@
+
+            f1: function void() {
+                return;
+            }
+            f2: function integer(inherit a: auto) {
+                return a + 1;
+            }
+            f3: function string(inherit b: string) inherit f2 {
+                preventDefault();
+                return b :: "abc";
+            }
+            f4: function auto(x: auto, y: auto) inherit f3 {
+                super(x);
+                y = 1;
+                return 1;
+            }
+            f9: function array [2] of integer(x: auto, y: auto) inherit f7 {
+                super(x);
+                y = 1;
+                return {y, f2(y)};
+            }
+            main: function void() {}
+            foo: function auto(arg: auto) {
+                a: auto = {f2(1), f6(2)};
+                b: array [2] of integer = a;
+
+                e: auto = f8("a", 1);
+                c: auto = f6(1) + e[0,0];
+                d: integer = c;
+
+                if (d == 5) {
+                    return 1;
+                }
+                else {
+                    return f6(5);
+                }
+                return f2(d);
+            }
+            f5: function float() {
+                return 0;
+            }
+            f6: function auto (inherit a: auto) {
+                return a + 1;
+            }
+            f7: function auto (inherit b: string) inherit f6 {
+                preventDefault();
+                return {b, "abc"};
+            }
+            f8: function array [1, 2] of integer(x: auto, y: auto) inherit f7 {
+                super(x);
+                y = 1;
+                return {{y, y}};
+            }
+        

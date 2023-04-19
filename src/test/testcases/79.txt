@@ -1,0 +1,7 @@
+
+            main: function void() {}
+            foo: function array [3] of string () {
+                a: auto = {"a", "b", "c"};
+                return a;
+            }
+        

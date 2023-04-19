@@ -1,0 +1,1 @@
+Type mismatch in statement: VarDecl(a, ArrayType([2, 2, 2], IntegerType), ArrayLit([ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(3), IntegerLit(4)])]), ArrayLit([ArrayLit([FloatLit(5.0), FloatLit(6.1)]), ArrayLit([FloatLit(7.8), FloatLit(9.9)])])]))

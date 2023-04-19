@@ -1,0 +1,23 @@
+
+            main: function void() {}
+            f1: function string () {
+                return "abc";
+            }
+            f3: function auto() {
+                return "Yoon Jae";
+            }
+            foo: function auto () {
+                a: auto = {f1(), "string"};
+                b: array [2] of string = a;
+                c: auto = ((f1() :: f2()) :: (f3() :: f4())) :: (f5() :: f6());
+                d: string = c;
+            }
+            f4: function auto() {}
+            f2: function string() {
+                return "Park Ji Bin the SK";
+            }
+            f5: function auto() {
+                return "Blind 2022";
+            }
+            f6: function auto() {}
+        

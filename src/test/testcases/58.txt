@@ -1,0 +1,11 @@
+
+            main: function void() {}
+            foo: function integer() {
+                a: integer = 5;
+                while (a < 10) {      
+                    b: auto = 5;
+                    for(b = 10, b < 100, b + 2) 
+                        return a;
+                }
+            }
+        

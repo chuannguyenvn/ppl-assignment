@@ -1,0 +1,12 @@
+
+            main: function void() {}
+            foo: function auto (a: auto) {
+                b: integer;
+                b = a;
+                c: integer;
+                c = f4();
+                d: integer;
+                d = a % f4();
+            }
+            f4: function auto() {}
+        

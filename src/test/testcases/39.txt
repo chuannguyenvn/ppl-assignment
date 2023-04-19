@@ -1,0 +1,6 @@
+
+            a: float = 1;
+            b: auto = a + 2;
+            c: integer = 2.3;
+            main: function void() {}
+        

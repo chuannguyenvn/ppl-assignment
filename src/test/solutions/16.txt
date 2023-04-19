@@ -1,0 +1,1 @@
+Type mismatch in statement: VarDecl(d, StringType, BinExpr(::, BinExpr(::, StringLit(abc), StringLit(def)), StringLit(xyz)))

@@ -1,0 +1,1 @@
+Type mismatch in statement: VarDecl(a, ArrayType([2], BooleanType), ArrayLit([IntegerLit(1), IntegerLit(2)]))

@@ -1,0 +1,9 @@
+
+            main: function void() {}
+            f1: function auto(a: auto, b: auto) {
+                f2(1, "abc");
+            }
+            f2: function auto(a: auto, b: auto) {
+                f1(a, b);
+            }
+        

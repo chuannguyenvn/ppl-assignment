@@ -157,7 +157,7 @@ class StaticChecker(Visitor):
         if main_func is None or type_of(main_func) is not FuncDecl or type_of(main_func.return_type) is not VoidType or len(main_func.params) != 0:
             raise NoEntryPoint()
 
-        return "successful"
+        return []
 
     # region Declarations
 

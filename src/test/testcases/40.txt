@@ -1,0 +1,9 @@
+
+            foo: function integer(a: integer) {
+                return a;
+            }
+            a, b, c: integer = 3 + 0, a + 1, foo(5);
+            main: function void() {
+                printInteger(a + b + c);
+            }
+        

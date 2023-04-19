@@ -1,0 +1,7 @@
+
+            main: function void() {
+                a: integer = 5;
+                b: boolean = 7;
+                c: integer = (a == 4) == b;
+            }
+        

@@ -1,0 +1,5 @@
+
+            A: integer = 5;
+            main1: function void(a: integer, b: float, c: boolean) {}
+            main: function void() {}
+        

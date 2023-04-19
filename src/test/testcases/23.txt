@@ -1,0 +1,7 @@
+
+            b: integer;
+            foo: function void(c: float) {
+                a: float = b + c;
+            }
+            main: function void() {}
+        
