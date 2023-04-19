@@ -1,1 +1,1 @@
-Type mismatch in statement: VarDecl(C, StringType, BinExpr(::, StringLit(abc), StringLit(def)))
+[]

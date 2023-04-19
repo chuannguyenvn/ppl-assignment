@@ -103,13 +103,14 @@ class ScopeStack:
         else:
             if type_of(symbol) is not typ:
                 raise exception
+
     def try_two_way_infer(self, lhs, rhs, exception):
         decl = self.find_latest_name(lhs.name)
         if type_of(decl.typ) is AutoType:
             decl.typ = typ
         elif type_of(decl.typ) is not typ:
             raise exception
-        
+
     def try_infer_func_return(self, symbol, typ, exception):
         func_decl = self.find_latest_name(symbol.name)
 
@@ -252,7 +253,7 @@ class StaticChecker(Visitor):
         scope.try_infer(cond, BooleanType, TypeMismatchInStatement(if_stmt))
 
         self.visit(if_stmt.tstmt, scope)
-        self.visit(if_stmt.fstmt, scope)
+        if if_stmt.fstmt is not None: self.visit(if_stmt.fstmt, scope)
 
     def visitForStmt(self, for_stmt: ForStmt, scope: ScopeStack):
         scope.push_scope(for_stmt)
@@ -300,7 +301,7 @@ class StaticChecker(Visitor):
         cond = self.visit(do_while_stmt.cond, scope)
         scope.try_infer(cond, BooleanType, TypeMismatchInStatement(do_while_stmt))
 
-        self.visit(do_while_stmt.tstmt, scope)
+        self.visit(do_while_stmt.stmt, scope)
 
         scope.pop_scope(do_while_stmt)
 
@@ -334,14 +335,14 @@ class StaticChecker(Visitor):
         if type_of(right) is VarDecl:
             right = right.typ
 
-        if bin_expr.op in ['+', '-', '*', '/']:              
+        if bin_expr.op in ['+', '-', '*', '/']:
             if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(bin_expr)
             if FloatType in [type_of(left), type_of(right)]:
                 return FloatType()
             else:
                 return IntegerType()
-        if bin_expr.op is '%':
+        if bin_expr.op == '%':
             if type_of(left) is not IntegerType or type_of(right) is not IntegerType:
                 raise TypeMismatchInExpression(bin_expr)
             else:
@@ -351,7 +352,7 @@ class StaticChecker(Visitor):
                 raise TypeMismatchInExpression(bin_expr)
             else:
                 return BooleanType()
-        if bin_expr.op is '::':
+        if bin_expr.op == '::':
             if type_of(left) is not StringType or type_of(right) is not StringType:
                 raise TypeMismatchInExpression(bin_expr)
             else:
@@ -370,7 +371,7 @@ class StaticChecker(Visitor):
     def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
         val = self.visit(un_expr.val, scope)
 
-        if un_expr.op is '-':
+        if un_expr.op == '-':
             if type_of(val) not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(un_expr)
             else:
@@ -378,7 +379,7 @@ class StaticChecker(Visitor):
                     return FloatType()
                 else:
                     return IntegerType()
-        if un_expr.op is '!':
+        if un_expr.op == '!':
             if type_of(val) is not BooleanType:
                 raise TypeMismatchInExpression(un_expr)
             else:
@@ -448,7 +449,7 @@ class StaticChecker(Visitor):
         # If there's at least one concrete type, infer the AutoType variables
         for var in auto_variables:
             scope.infer(var, first_concrete_type)
-            
+
         # TODO: Return what?
 
     def visitFuncCall(self, func_call: FuncCall, scope: ScopeStack):
@@ -456,7 +457,7 @@ class StaticChecker(Visitor):
         func_decl = scope.find_latest_name(func_call.name)
 
         # Return type must not be void
-        if type_of(func_decl.return_type) is VoidType:
+        if type_of(func_decl) is not FuncDecl or type_of(func_decl.return_type) is VoidType:
             raise TypeMismatchInExpression(func_call)
 
         # Parameters must match
