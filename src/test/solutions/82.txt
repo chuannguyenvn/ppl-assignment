@@ -1,1 +1,1 @@
-Type mismatch in expression: ArrayLit([Id(c), ArrayLit([Id(a), Id(a)])])
+[]

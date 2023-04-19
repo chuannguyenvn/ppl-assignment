@@ -10,6 +10,10 @@ def type_of(typ):
         return type(typ)
 
 
+def is_same_type(typ1, typ2):
+    return str(typ1) == str(typ2)
+
+
 class Marker:
     pass
 
@@ -183,7 +187,7 @@ class StaticChecker(Visitor):
                 var_decl.typ = init_type
             elif type_of(var_decl.typ) is FloatType and type_of(init_type) is IntegerType:
                 pass
-            elif type_of(init_type) != type_of(var_decl.typ):
+            elif not is_same_type(init_type, var_decl.typ):
                 raise TypeMismatchInVarDecl(var_decl)
 
         scope.add_symbol(var_decl)
@@ -400,12 +404,12 @@ class StaticChecker(Visitor):
         # 3.4 Type Mismatch In Expression
 
         # Name not found
-        scope.check_undeclared(array_cell.name, Identifier())
+        scope.check_undeclared(array_cell, Identifier())
 
         array_decl = scope.find_latest_name(array_cell.name)
 
         # Type is not ArrayType
-        if type_of(array_decl) is not ArrayType:
+        if type_of(array_decl) is not VarDecl or type_of(scope.deduct_type(array_decl)) is not ArrayType:
             raise TypeMismatchInExpression(array_cell)
 
         # Any subscript is not an integer
@@ -413,10 +417,11 @@ class StaticChecker(Visitor):
             if type_of(self.visit(expr, scope)) is not IntegerType:
                 raise TypeMismatchInExpression(array_cell)
 
-        # Dimension not matched
-        # TODO
+        # for i in range(len(array_cell.cell)):
+        #     if array_cell.cell[i].val >= array_decl.typ.dimensions[i]:
+        #         raise TypeMismatchInExpression(array_cell)
 
-        return array_decl
+        return ArrayType(array_decl.typ.dimensions[len(array_cell.cell):], array_decl.typ.typ)
 
     def visitIntegerLit(self, integer_lit: IntegerLit, scope: ScopeStack):
         return IntegerType()
@@ -435,18 +440,18 @@ class StaticChecker(Visitor):
         first_concrete_type = None
 
         for exp in array_lit.explist:
-            exp_type = self.visit(exp, scope)
+            exp_type = scope.deduct_type(self.visit(exp, scope))
             if type_of(exp_type) is AutoType:
                 auto_variables.append(exp)
             else:
                 if first_concrete_type is None:
                     first_concrete_type = exp_type
-                elif type_of(first_concrete_type) is not type_of(exp_type):
-                    raise TypeMismatchInExpression(array_lit)
+                elif not is_same_type(first_concrete_type, exp_type):
+                    raise IllegalArrayLiteral(array_lit)
 
         # If all elements in the array literal is of AutoType
         if first_concrete_type is None:
-            raise TypeMismatchInExpression(array_lit)
+            raise IllegalArrayLiteral(array_lit)
 
         # If there's at least one concrete type, infer the AutoType variables
         for var in auto_variables:

@@ -1,1 +1,1 @@
-Type mismatch in expression: ArrayLit([FuncCall(f1, []), StringLit(string)])
+Type mismatch in expression: FuncCall(f2, [])

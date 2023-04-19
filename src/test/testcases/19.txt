@@ -2,11 +2,11 @@
                     b: integer = 5;
                     c: integer = 6;
                     a: integer = b + c;
-        
+
                     foo: function integer(a: string) {
                         return 0;
                     }
-        
+
                     main: function void() {
                         a: integer = 7;
                         {

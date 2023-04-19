@@ -1,1 +1,1 @@
-Type mismatch in expression: ArrayLit([IntegerLit(1), StringLit(c)])
+Illegal array literal: ArrayLit([IntegerLit(1), StringLit(c)])
