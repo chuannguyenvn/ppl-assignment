@@ -1,1 +1,1 @@
-[]
+Type mismatch in statement: CallStmt(f4, IntegerLit(2), StringLit(a))
