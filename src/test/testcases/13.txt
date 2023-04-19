@@ -1,5 +1,5 @@
 
-            main: function void() {
-                a: string = "int" :: "float";
-            }
-        
+                    main: function void() {
+                        a: string = "int" :: "float";
+                    }
+                

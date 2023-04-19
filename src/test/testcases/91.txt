@@ -1,10 +1,10 @@
 
-            main: function void() {}
-            f4: function void (a: auto, b: auto) {}
-            foo: function integer (x: auto) {
-                f4(1.0, "a");
-                f4(2, "a");
-                f4(x, "b");
-                f4("c", "d");
-            }
-        
+                    main: function void() {}
+                    f4: function void (a: auto, b: auto) {}
+                    foo: function integer (x: auto) {
+                        f4(1.0, "a");
+                        f4(2, "a");
+                        f4(x, "b");
+                        f4("c", "d");
+                    }
+                

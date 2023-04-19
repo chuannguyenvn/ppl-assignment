@@ -1,12 +1,12 @@
 
-            main: function void() {}
-            foo: function integer() {
-                a: integer = 5;
-                while (a < 10) {
-                    continue;
-                    a = a + 1;
-                    break;
-                }
-                return a;
-            }
-        
+                    main: function void() {}
+                    foo: function integer() {
+                        a: integer = 5;
+                        while (a < 10) {
+                            continue;
+                            a = a + 1;
+                            break;
+                        }
+                        return a;
+                    }
+                

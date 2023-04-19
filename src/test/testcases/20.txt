@@ -1,25 +1,25 @@
 
-            b: integer = 5;
-            c: integer = 6;
-            a: integer = b + c;
-
-            foo: function void(a: integer) {
-
-            }
-
-            main: function void() {
-                a: integer = 7;
-                {
-                    a: boolean = b == c;
-                    {
-                        a: float = 1.0 + b;
+                    b: integer = 5;
+                    c: integer = 6;
+                    a: integer = b + c;
+        
+                    foo: function void(a: integer) {
+        
+                    }
+        
+                    main: function void() {
+                        a: integer = 7;
                         {
-                            a: string = "abc";
+                            a: boolean = b == c;
                             {
-                                d: integer = foo(a);
+                                a: float = 1.0 + b;
+                                {
+                                    a: string = "abc";
+                                    {
+                                        d: integer = foo(a);
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
-        
+                

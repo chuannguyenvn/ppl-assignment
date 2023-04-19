@@ -1,7 +1,7 @@
 
-            b: integer;
-            c: integer;
-            main: function void() {
-                a: integer = b + c;
-            }
-        
+                    b: integer;
+                    c: integer;
+                    main: function void() {
+                        a: integer = b + c;
+                    }
+                

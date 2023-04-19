@@ -1,9 +1,9 @@
 
-            main: function void() {}
-            foo: function array [3] of string () {
-                a: auto = {"a", "b", "c"};
-                b: array [3] of string = a;
-                c: array [2,3] of string = {a, b};
-                return a;
-            }
-        
+                    main: function void() {}
+                    foo: function array [3] of string () {
+                        a: auto = {"a", "b", "c"};
+                        b: array [3] of string = a;
+                        c: array [2,3] of string = {a, b};
+                        return a;
+                    }
+                

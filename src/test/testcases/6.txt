@@ -1,5 +1,5 @@
 
-            A: integer = 5;
-            A: boolean = 5;
-            main: function void() {}
-        
+                    A: integer = 5;
+                    A: boolean = 5;
+                    main: function void() {}
+                

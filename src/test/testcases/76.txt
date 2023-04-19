@@ -1,7 +1,7 @@
 
-            main: function void() {}
-            foo: function array [3] of float (a: integer) {
-                b: array [3, 2] of float = {{1.0, 2.0}, {4.8, 5.7}, {7.1, 9.3}};
-                return b[0];
-            }
-        
+                    main: function void() {}
+                    foo: function array [3] of float (a: integer) {
+                        b: array [3, 2] of float = {{1.0, 2.0}, {4.8, 5.7}, {7.1, 9.3}};
+                        return b[0];
+                    }
+                

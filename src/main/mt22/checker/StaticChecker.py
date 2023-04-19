@@ -142,6 +142,13 @@ class ScopeStack:
     def infer(self, symbol, typ):
         self.find_latest_name(symbol.name).typ = typ
 
+    def deduct_type(self, symbol):
+        if type_of(symbol) in [VarDecl, ParamDecl]:
+            return type_of(symbol.typ)
+        if type_of(symbol) is FuncDecl:
+            return type_of(symbol.return_type)
+
+        return symbol
 
 class StaticChecker(Visitor):
     def __init__(self, ast):
@@ -176,7 +183,7 @@ class StaticChecker(Visitor):
             elif type_of(var_decl.typ) is FloatType and type_of(init) is IntegerType:
                 pass
             elif type_of(init) != type_of(var_decl.typ):
-                raise TypeMismatchInStatement(var_decl)
+                raise TypeMismatchInVarDecl(var_decl)
 
         scope.add_symbol(var_decl)
 
@@ -326,14 +333,22 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, scope: ScopeStack):
-        left = self.visit(bin_expr.left, scope)
-        right = self.visit(bin_expr.right, scope)
+        left = scope.deduct_type(self.visit(bin_expr.left, scope))
+        right = scope.deduct_type(self.visit(bin_expr.right, scope))
 
-        if type_of(left) is VarDecl:
-            left = left.typ
+        # if type_of(left) in [VarDecl, ParamDecl]:
+        #     left = left.typ
+        # elif type_of(left) is FuncDecl:
+        #     left = left.return_type
+        # 
+        # if type_of(right) in [VarDecl, ParamDecl]:
+        #     right = right.typ
+        # elif type_of(right) is FuncDecl:
+        #     right = right.return_type
 
-        if type_of(right) is VarDecl:
-            right = right.typ
+        l = type_of(left)
+        ll = type_of(FloatType)
+        lll = l == FloatType
 
         if bin_expr.op in ['+', '-', '*', '/']:
             if type_of(left) not in [IntegerType, FloatType] or type_of(right) not in [IntegerType, FloatType]:
@@ -370,6 +385,10 @@ class StaticChecker(Visitor):
 
     def visitUnExpr(self, un_expr: UnExpr, scope: ScopeStack):
         val = self.visit(un_expr.val, scope)
+        if type_of(val) in [VarDecl, ParamDecl]:
+            val = val.typ
+        if type_of(val) is FuncDecl:
+            val = val.return_type
 
         if un_expr.op == '-':
             if type_of(val) not in [IntegerType, FloatType]:

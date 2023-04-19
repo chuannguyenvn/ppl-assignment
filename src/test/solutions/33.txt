@@ -1,1 +1,1 @@
-Type mismatch in statement: VarDecl(a, ArrayType([2, 2, 2], IntegerType), ArrayLit([ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(3), IntegerLit(4)])]), ArrayLit([ArrayLit([IntegerLit(5), IntegerLit(6)]), ArrayLit([IntegerLit(7), IntegerLit(8)])])]))
+Type mismatch in Variable Declaration: VarDecl(a, ArrayType([2, 2, 2], IntegerType), ArrayLit([ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(3), IntegerLit(4)])]), ArrayLit([ArrayLit([IntegerLit(5), IntegerLit(6)]), ArrayLit([IntegerLit(7), IntegerLit(8)])])]))

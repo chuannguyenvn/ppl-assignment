@@ -1,10 +1,10 @@
 
-            main: function void() {}
-            foo: function integer() {
-                a: integer = 5;
-                if(1 == 2) a = a + 1;
-                else {
-                    return a;
-                }
-            }
-        
+                    main: function void() {}
+                    foo: function integer() {
+                        a: integer = 5;
+                        if(1 == 2) a = a + 1;
+                        else {
+                            return a;
+                        }
+                    }
+                

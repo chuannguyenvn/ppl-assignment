@@ -1,11 +1,11 @@
 
-            main: function void() {}
-            foo: function integer() {
-                a: integer = 5;
-                for(a = 5, a < 10, a + 1) {
-                    continue;
-                    a = a + 1;
-                }
-                return a;
-            }
-        
+                    main: function void() {}
+                    foo: function integer() {
+                        a: integer = 5;
+                        for(a = 5, a < 10, a + 1) {
+                            continue;
+                            a = a + 1;
+                        }
+                        return a;
+                    }
+                
