@@ -1,1 +1,1 @@
-Type mismatch in statement: AssignStmt(Id(b), Id(a))
+Type mismatch in statement: FuncCall(f4, [])

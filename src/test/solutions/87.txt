@@ -1,1 +1,1 @@
-Type mismatch in Variable Declaration: VarDecl(b, IntegerType, Id(a))
+Type mismatch in statement: FuncCall(f4, [])
