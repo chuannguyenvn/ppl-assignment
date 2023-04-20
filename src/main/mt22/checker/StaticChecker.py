@@ -79,6 +79,12 @@ class Inspector:
                     return self.scope_stack[i]
         return None
 
+    def find_latest_of_type(self, typ: Type) -> Decl:
+        for i in reversed(range(len(self.scope_stack))):
+            if self.scope_stack[i] is typ:
+                return self.scope_stack[i]
+        return None
+
     def is_marker_in_scope(self, marker_types: List[Type]) -> bool:
         for i in range(len(self.scope_stack)):
             if type_of(self.scope_stack[i]) is ScopeMarker and type_of(self.scope_stack[i].owner) in marker_types:
@@ -120,15 +126,13 @@ class StaticChecker(Visitor):
 
     def visitProgram(self, program: Program, inspector: Inspector):
         self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('printInteger', IntegerType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('readFloat', IntegerType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('writeFloat', IntegerType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('readBoolean', IntegerType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('printBoolean', IntegerType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('readString', IntegerType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('printString', IntegerType(), [ParamDecl('anArg', StringType())], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('super', IntegerType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('preventDefault', IntegerType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printInteger', VoidType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('readFloat', FloatType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('writeFloat', VoidType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('readBoolean', BooleanType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printBoolean', VoidType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('readString', StringType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printString', VoidType(), [ParamDecl('anArg', StringType())], None, BlockStmt([])), inspector)
 
         for decl in program.decls:
             self.visit(decl, inspector)
@@ -183,6 +187,12 @@ class StaticChecker(Visitor):
 
         inspector.push_scope(func_decl)
 
+        if func_decl.inherit:
+            parent_func_decl = inspector.find_latest_name(func_decl.inherit)
+            inherit_params = list(filter(lambda p: p.inherit, parent_func_decl.params))
+            inspector.add_symbol(self.visit(FuncDecl('super', parent_func_decl.return_type, inherit_params, None, BlockStmt([])), inspector))
+            inspector.add_symbol(self.visit(FuncDecl('preventDefault', VoidType(), [], None, BlockStmt([])), inspector))
+
         for param in func_decl.params:
             self.visit(param, inspector)
             inspector.add_symbol(param)
@@ -191,16 +201,16 @@ class StaticChecker(Visitor):
 
         inspector.pop_scope(func_decl)
 
+        return func_decl
+
     # endregion
 
     # region Statemements
 
     def visitBlockStmt(self, block_stmt: BlockStmt, inspector: Inspector):
         inspector.push_scope()
-
         for line in block_stmt.body:
             self.visit(line, inspector)
-
         inspector.pop_scope()
 
     def visitAssignStmt(self, assign_stmt: AssignStmt, inspector: Inspector):
