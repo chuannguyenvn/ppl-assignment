@@ -27,6 +27,7 @@ class Type(AST):
 class Decl(AST):
     pass
 
+
 # Types
 
 
@@ -282,7 +283,9 @@ class FuncDecl(Decl):
         self.body = body
 
     def __str__(self):
-        return "FuncDecl({}, {}, [{}], {}, {})".format(self.name, str(self.return_type), ", ".join([str(param) for param in self.params]), self.inherit if self.inherit else "None", str(self.body))
+        return "FuncDecl({}, {}, [{}], {}, {})".format(self.name, str(self.return_type), ", ".join([str(param) for param in self.params]),
+                                                       self.inherit if self.inherit else "None", str(self.body))
+
 
 # Program
 

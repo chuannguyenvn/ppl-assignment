@@ -1,1 +1,1 @@
-Undeclared Function: super
+Type mismatch in statement: CallStmt(super, IntegerLit(1), IntegerLit(2))

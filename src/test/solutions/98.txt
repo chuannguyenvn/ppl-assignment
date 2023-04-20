@@ -1,1 +1,1 @@
-Type mismatch in statement: FuncCall(isPrime, [Id(a)])
+Type mismatch in statement: FuncCall(readInteger, [])
