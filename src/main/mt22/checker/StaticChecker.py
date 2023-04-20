@@ -25,7 +25,7 @@ def get_type(symbol):
 def set_type(symbol, typ):
     if type_of(symbol) in [VarDecl, ParamDecl]:
         symbol.typ = typ
-    if type_of(symbol) is FuncDecl:
+    elif type_of(symbol) is FuncDecl:
         symbol.return_type = typ
 
 
@@ -37,7 +37,8 @@ def infer(lhs, rhs, exception):
     elif type_of(rhs_type) is AutoType:
         set_type(rhs, lhs_type)
     elif type_of(lhs_type) is FloatType and type_of(rhs_type) is IntegerType:
-        return
+        if isinstance(lhs, Type):
+            raise exception
     elif not is_same_type(lhs_type, rhs_type):
         raise exception
 
@@ -348,10 +349,9 @@ class StaticChecker(Visitor):
             else:
                 return IntegerType()
         if bin_expr.op == '%':
-            if left_type is not IntegerType or right_type is not IntegerType:
-                raise TypeMismatchInExpression(bin_expr)
-            else:
-                return IntegerType()
+            infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
+            infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
+            return IntegerType()
         if bin_expr.op in ['&&', '||']:
             infer(left, BooleanType(), TypeMismatchInExpression(bin_expr))
             infer(right, BooleanType(), TypeMismatchInExpression(bin_expr))
