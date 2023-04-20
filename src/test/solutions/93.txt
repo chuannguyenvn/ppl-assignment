@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(||, BinExpr(&&, FuncCall(foo, [Id(c)]), FuncCall(foo, [Id(x)])), FuncCall(f4, [Id(c), StringLit(a)]))
+[]

@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(||, Id(b), Id(b))
+Type mismatch in statement: ReturnStmt(IntegerLit(1))

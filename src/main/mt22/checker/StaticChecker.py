@@ -119,16 +119,16 @@ class StaticChecker(Visitor):
         return self.visit(self.ast, Inspector())
 
     def visitProgram(self, program: Program, inspector: Inspector):
-        # self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('printInteger', IntegerType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('readFloat', IntegerType(), [], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('writeFloat', IntegerType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('readBoolean', IntegerType(), [], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('printBoolean', IntegerType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('readString', IntegerType(), [], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('printString', IntegerType(), [ParamDecl('anArg', StringType())], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('super', IntegerType(), [], None, BlockStmt([])), scope)
-        # self.visit(FuncDecl('preventDefault', IntegerType(), [], None, BlockStmt([])), scope)
+        self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printInteger', IntegerType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('readFloat', IntegerType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('writeFloat', IntegerType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('readBoolean', IntegerType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printBoolean', IntegerType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('readString', IntegerType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printString', IntegerType(), [ParamDecl('anArg', StringType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('super', IntegerType(), [], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('preventDefault', IntegerType(), [], None, BlockStmt([])), inspector)
 
         for decl in program.decls:
             self.visit(decl, inspector)
@@ -210,7 +210,7 @@ class StaticChecker(Visitor):
         rhs = self.visit(assign_stmt.rhs, inspector)
 
         # If LHS is not an identifier or array subscripting expr
-        if type_of(lhs) != VarDecl:
+        if type_of(lhs) not in [VarDecl, ParamDecl]:
             raise TypeMismatchInStatement(assign_stmt)
 
         # LHS can't be of type void or array
@@ -325,8 +325,10 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, inspector: Inspector):
-        left_type = type_of(get_type(self.visit(bin_expr.left, inspector)))
-        right_type = type_of(get_type(self.visit(bin_expr.right, inspector)))
+        left = self.visit(bin_expr.left, inspector)
+        right = self.visit(bin_expr.right, inspector)
+        left_type = type_of(get_type(left))
+        right_type = type_of(get_type(right))
 
         if bin_expr.op in ['+', '-', '*', '/']:
             if left_type not in [IntegerType, FloatType] or right_type not in [IntegerType, FloatType]:
@@ -341,15 +343,13 @@ class StaticChecker(Visitor):
             else:
                 return IntegerType()
         if bin_expr.op in ['&&', '||']:
-            if left_type is not BooleanType or right_type is not BooleanType:
-                raise TypeMismatchInExpression(bin_expr)
-            else:
-                return BooleanType()
+            infer(left, BooleanType(), TypeMismatchInExpression(bin_expr))
+            infer(right, BooleanType(), TypeMismatchInExpression(bin_expr))
+            return BooleanType()
         if bin_expr.op == '::':
-            if left_type is not StringType or right_type is not StringType:
-                raise TypeMismatchInExpression(bin_expr)
-            else:
-                return StringType()
+            infer(left, StringType(), TypeMismatchInExpression(bin_expr))
+            infer(right, StringType(), TypeMismatchInExpression(bin_expr))
+            return StringType()
         if bin_expr.op in ['==', '!=']:
             if left_type not in [IntegerType, BooleanType] or right_type not in [IntegerType, BooleanType] or left_type != right_type:
                 raise TypeMismatchInExpression(bin_expr)
@@ -362,7 +362,8 @@ class StaticChecker(Visitor):
                 return BooleanType()
 
     def visitUnExpr(self, un_expr: UnExpr, inspector: Inspector):
-        val_type = type_of(get_type(self.visit(un_expr.val, inspector)))
+        val = self.visit(un_expr.val, inspector)
+        val_type = type_of(get_type(val))
 
         if un_expr.op == '-':
             if val_type not in [IntegerType, FloatType]:
@@ -373,10 +374,8 @@ class StaticChecker(Visitor):
                 else:
                     return IntegerType()
         if un_expr.op == '!':
-            if val_type is not BooleanType:
-                raise TypeMismatchInExpression(un_expr)
-            else:
-                return BooleanType()
+            infer(val, BooleanType(), TypeMismatchInExpression(un_expr))
+            return BooleanType()
         # TODO: indexing expression
 
     def visitId(self, id: Id, inspector: Inspector):
@@ -427,9 +426,10 @@ class StaticChecker(Visitor):
         first_concrete_type = None
 
         for exp in array_lit.explist:
-            exp_type = get_type(self.visit(exp, inspector))
+            exp_visited = self.visit(exp, inspector)
+            exp_type = get_type(exp_visited)
             if type_of(exp_type) is AutoType:
-                auto_variables.append(exp)
+                auto_variables.append(exp_visited)
             else:
                 if first_concrete_type is None:
                     first_concrete_type = exp_type

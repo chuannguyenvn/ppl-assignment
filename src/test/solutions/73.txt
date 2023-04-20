@@ -1,1 +1,1 @@
-Type mismatch in statement: CallStmt(super, Id(b))
+Undeclared Function: super

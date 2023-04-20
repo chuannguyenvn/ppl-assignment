@@ -1,1 +1,1 @@
-Type mismatch in expression: ArrayLit([FuncCall(f1, []), FuncCall(f2, []), FuncCall(f3, []), FuncCall(f4, []), FuncCall(f5, []), FuncCall(f6, [])])
+[]
