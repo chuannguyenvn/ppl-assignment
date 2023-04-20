@@ -3,8 +3,6 @@ from StaticError import *
 from AST import *
 
 
-
-
 def type_of(typ):
     if type(typ) is type(AST):
         return typ
@@ -52,20 +50,21 @@ class ScopeMarker:
 class Inspector:
 
     def __init__(self):
-        self.stack = [ScopeMarker()]
+        self.scope_stack = [ScopeMarker()]
+        self.is_first_pass = True
 
     def add_symbol(self, o):
-        self.stack.append(o)
+        self.scope_stack.append(o)
 
     def push_scope(self, owner=None):
         if owner is None:
-            self.stack.append(ScopeMarker())
+            self.scope_stack.append(ScopeMarker())
         else:
-            self.stack.append(ScopeMarker(owner))
+            self.scope_stack.append(ScopeMarker(owner))
 
     def pop_scope(self, owner=None):
-        for i in reversed(range(len(self.stack))):
-            element = self.stack.pop()
+        for i in reversed(range(len(self.scope_stack))):
+            element = self.scope_stack.pop()
             if owner is None:
                 if type_of(element) is ScopeMarker:
                     return
@@ -74,23 +73,23 @@ class Inspector:
                     return
 
     def find_latest_name(self, name: str) -> Decl:
-        for i in reversed(range(len(self.stack))):
-            if type_of(self.stack[i]) in [VarDecl, ParamDecl, FuncDecl]:
-                if self.stack[i].name == name:
-                    return self.stack[i]
+        for i in reversed(range(len(self.scope_stack))):
+            if type_of(self.scope_stack[i]) in [VarDecl, ParamDecl, FuncDecl]:
+                if self.scope_stack[i].name == name:
+                    return self.scope_stack[i]
         return None
 
     def is_marker_in_scope(self, marker_types: List[Type]) -> bool:
-        for i in range(len(self.stack)):
-            if type_of(self.stack[i]) is ScopeMarker and type_of(self.stack[i].owner) in marker_types:
+        for i in range(len(self.scope_stack)):
+            if type_of(self.scope_stack[i]) is ScopeMarker and type_of(self.scope_stack[i].owner) in marker_types:
                 return True
         return False
 
     def check_redeclared(self, symbol: Decl, kind: Kind):
-        for i in reversed(range(len(self.stack))):
-            if type_of(self.stack[i]) is ScopeMarker:
+        for i in reversed(range(len(self.scope_stack))):
+            if type_of(self.scope_stack[i]) is ScopeMarker:
                 return
-            if self.stack[i].name == symbol.name:
+            if self.scope_stack[i].name == symbol.name:
                 raise Redeclared(kind, symbol.name)
 
     def check_undeclared(self, symbol: Decl, kind: Kind):
@@ -103,12 +102,12 @@ class Inspector:
                 raise Invalid(Variable(), symbol.name)
 
     def get_latest_marker(self, marker_type=None) -> ScopeMarker:
-        for i in reversed(range(len(self.stack))):
-            if type_of(self.stack[i]) is ScopeMarker:
+        for i in reversed(range(len(self.scope_stack))):
+            if type_of(self.scope_stack[i]) is ScopeMarker:
                 if marker_type is None:
-                    return self.stack[i]
-                elif type_of(self.stack[i].owner) is marker_type:
-                    return self.stack[i]
+                    return self.scope_stack[i]
+                elif type_of(self.scope_stack[i].owner) is marker_type:
+                    return self.scope_stack[i]
         return None
 
 
@@ -119,7 +118,7 @@ class StaticChecker(Visitor):
     def check(self):
         return self.visit(self.ast, Inspector())
 
-    def visitProgram(self, program: Program, scope: Inspector):
+    def visitProgram(self, program: Program, inspector: Inspector):
         # self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), scope)
         # self.visit(FuncDecl('printInteger', IntegerType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), scope)
         # self.visit(FuncDecl('readFloat', IntegerType(), [], None, BlockStmt([])), scope)
@@ -132,10 +131,15 @@ class StaticChecker(Visitor):
         # self.visit(FuncDecl('preventDefault', IntegerType(), [], None, BlockStmt([])), scope)
 
         for decl in program.decls:
-            self.visit(decl, scope)
+            self.visit(decl, inspector)
+
+        inspector.is_first_pass = False
+
+        for decl in program.decls:
+            self.visit(decl, inspector)
 
         # 3.9 No entry point
-        main_func = scope.find_latest_name('main')
+        main_func = inspector.find_latest_name('main')
         if main_func is None or type_of(main_func) is not FuncDecl or type_of(main_func.return_type) is not VoidType or len(main_func.params) != 0:
             raise NoEntryPoint()
 
@@ -144,6 +148,9 @@ class StaticChecker(Visitor):
     # region Declarations
 
     def visitVarDecl(self, var_decl: VarDecl, inspector: Inspector):
+        if inspector.is_first_pass:
+            return
+
         # 3.1 Redeclared Variable
         inspector.check_redeclared(var_decl, Variable())
         # 3.3 Invalid Variable
@@ -159,6 +166,9 @@ class StaticChecker(Visitor):
         return var_decl
 
     def visitParamDecl(self, param_decl: ParamDecl, inspector: Inspector):
+        if inspector.is_first_pass:
+            return
+
         # 3.1 Redeclared Parameter
         inspector.check_redeclared(param_decl, Parameter())
 
@@ -166,9 +176,10 @@ class StaticChecker(Visitor):
         # TODO: Invalid
 
     def visitFuncDecl(self, func_decl: FuncDecl, inspector: Inspector):
-        inspector.check_redeclared(func_decl, Function())
-
-        inspector.add_symbol(func_decl)
+        if inspector.is_first_pass:
+            inspector.check_redeclared(func_decl, Function())
+            inspector.add_symbol(func_decl)
+            return
 
         inspector.push_scope(func_decl)
 
