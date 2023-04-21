@@ -1,5 +1,7 @@
 
-                    main: function void() {
-                        a: integer = "int" :: "float";
-                    }
-                
+        main: function void()
+        {
+            a: auto = 2 + 3.4;
+            b: auto = 1 != true;
+        }
+        

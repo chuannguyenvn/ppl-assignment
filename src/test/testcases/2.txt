@@ -1,3 +1,6 @@
-main: function integer() {
-                    return 0;
-                }
+
+        main: function void() 
+        {
+            a: auto = 1.0 != 1.0;
+        }
+        

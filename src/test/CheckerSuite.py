@@ -4,59 +4,97 @@ from AST import *
 
 
 class CheckerSuite(unittest.TestCase):
+
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8051
     def test_001(self):
-        input = """main1: function void() {}"""
-        expect = """No entry point"""
+        input = """
+        foo: function void(a: float)
+        {
+            a  = 1;
+        }
+
+        bar: function void(a: auto, b: integer)
+        {
+            a = a + b;
+        }
+
+        main: function void()
+        {
+            foo(1);
+        }
+        """
+        expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 1))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8066
     def test_002(self):
-        input = """main: function integer() {
-                    return 0;
-                }"""
-        expect = """No entry point"""
+        input = """
+        main: function void() 
+        {
+            a: auto = 1.0 != 1.0;
+        }
+        """
+        expect = """Type mismatch in expression: BinExpr(!=, FloatLit(1.0), FloatLit(1.0))"""
         self.assertTrue(TestChecker.test(input, expect, 2))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8057 (1)
     def test_003(self):
-        input = """main: function void(a: integer) {}"""
-        expect = """No entry point"""
+        input = """
+        main: function void()
+        {
+            a: integer = 5.4;
+        }
+        """
+        expect = """Type mismatch in Variable Declaration: VarDecl(a, IntegerType, FloatLit(5.4))"""
         self.assertTrue(TestChecker.test(input, expect, 3))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8057 (2)
     def test_004(self):
-        input = """main: function void(a: integer, b: integer) {}
-                    main2: function boolean() {
-                        return true;
-                    }
-                    A: float = 5;
-                    main1: function void() {
-                        A: integer = 5;
-                    }
-                """
-        expect = """No entry point"""
+        input = """
+        main: function void()
+        {
+            a: integer;
+            a = 5.4;
+        }
+        """
+        expect = """Type mismatch in statement: AssignStmt(Id(a), FloatLit(5.4))"""
         self.assertTrue(TestChecker.test(input, expect, 4))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8083
     def test_005(self):
-        input = """main: function void() {}"""
+        input = """
+        main: function void()
+        {
+            return 1;
+        }
+        """
         expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 5))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7989
     def test_006(self):
         input = """
-                    A: integer = 5;
-                    A: boolean = 5;
-                    main: function void() {}
-                """
-        expect = """Redeclared Variable: A"""
+        foo: function void(out x: int){}
+        main: function void()
+        {
+            foo(2);
+        }
+        """
+        expect = """Type mismatch in ?"""
         self.assertTrue(TestChecker.test(input, expect, 6))
 
     def test_007(self):
         input = """
-                    A: integer = 5;
-                    main: function void(a: integer, b: float, c: boolean) {}
-                    main: function void() {}
-                """
-        expect = """Redeclared Function: main"""
+        foo: function void(out x: int){}
+        main: function void()
+        {
+            foo(2);
+        }
+        """
+        expect = """Type mismatch in ?"""
         self.assertTrue(TestChecker.test(input, expect, 7))
 
+    # TODO: https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7991
     def test_008(self):
         input = """
                     main: function void() {
@@ -66,268 +104,257 @@ class CheckerSuite(unittest.TestCase):
         expect = """Type mismatch in expression: BinExpr(+, IntegerLit(1), StringLit(float))"""
         self.assertTrue(TestChecker.test(input, expect, 8))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8047
     def test_009(self):
         input = """
-                    main: function void() {
-                        a: integer = "int" :: "float";
-                    }
-                """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, IntegerType, BinExpr(::, StringLit(int), StringLit(float)))"""
+        main: function void()
+        {
+            a: auto = 2 + 3.4;
+            b: auto = 1 != true;
+        }
+        """
+        expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 9))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7988 (1)
     def test_010(self):
         input = """
-                    main: function void() {
-                        a: integer = 5;
-                        b: boolean = 7;
-                        c: integer = (a == 4) == b;
-                    }
-                """
-        expect = """Type mismatch in Variable Declaration: VarDecl(b, BooleanType, IntegerLit(7))"""
+        x: auto = foo();
+        foo: function integer(){}
+        main: function void()
+        {
+            x = 5;
+            x: integer;
+        }
+        """
+        expect = """Undeclared Identifier: x"""
         self.assertTrue(TestChecker.test(input, expect, 10))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7988 (2)
     def test_011(self):
         input = """
-                    main: function void() {
-                        a: integer = 5;
-                        b: boolean = 5;
-                        c: float = !b + (a == 5);
-                    }
-                """
-        expect = """Type mismatch in Variable Declaration: VarDecl(b, BooleanType, IntegerLit(5))"""
+        x: auto = foo();
+        foo: function integer(){}
+        main: function void()
+        {
+            {
+                x = 5;
+            }
+            x: integer;
+        }
+        """
+        expect = """Undeclared Identifier: x"""
         self.assertTrue(TestChecker.test(input, expect, 11))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7988 (3)
     def test_012(self):
         input = """
-                    main: function void() {
-                        a: float;
-                        b: integer;
-                        c: string;
-                        d: boolean;
-                        e: integer = !(((-a + b) < (7 % 5)) == true);
-                    }
-                """
-        expect = """Type mismatch in Variable Declaration: VarDecl(e, IntegerType, UnExpr(!, BinExpr(==, BinExpr(<, BinExpr(+, UnExpr(-, Id(a)), Id(b)), BinExpr(%, IntegerLit(7), IntegerLit(5))), BooleanLit(True))))"""
+        x: auto = foo();
+        foo: function integer(){}
+        main: function void()
+        {
+            {
+                x: integer;
+            }
+            x = 5;
+        }
+        """
+        expect = """Undeclared Identifier: x"""
         self.assertTrue(TestChecker.test(input, expect, 12))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8110
     def test_013(self):
         input = """
-                    main: function void() {
-                        a: string = "int" :: "float";
-                    }
-                """
-        expect = """[]"""
+        main: function void()
+        {
+            x = 5;
+        }
+        x: auto = 1;
+        """
+        expect = """Undeclared Identifier: x"""
         self.assertTrue(TestChecker.test(input, expect, 13))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8149 (1)
     def test_014(self):
         input = """
-                    A: integer = 5;
-                    B: boolean = true || false;
-                    C: string = "abc" :: "def";
-                    D: float = 5.0 + A;
-                    main: function void() {}
-                """
+        a: function void (p : array [1] of integer) {}
+        foo: function auto(){}
+        bar: function auto(){}
+        goo: function auto(){}
+        gar: function auto(){}
+        main: function void()
+        {
+            a({1});
+            b: boolean = foo() == bar();
+            c: float = goo() + gar();
+        }
+        """
         expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 14))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8149 (2)
     def test_015(self):
         input = """
-                    A: integer = 5;
-                    main1: function void(a: integer, b: float, c: boolean) {}
-                    main: function void() {}
-                """
+        foo: function auto(){}
+        bar: function auto(){}
+        goo: function auto(){}
+        main: function void()
+        {
+            a: auto = foo() + bar();
+            b: integer = foo(); // ?
+            c: auto = -goo();
+            d: integer = goo(); // ?
+        }
+        """
         expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 15))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8610
     def test_016(self):
         input = """
-                    main: function void() {
-                        a: integer = 2 * 3 + 8 % 5 - 7 / 7;
-                        b: boolean = (2 == 3) && !(true) || (3 != 8);
-                        c: float = 2 * 3.5 + 8 % 5 - 7 / 7;
-                        d: string = ("abc" :: "def") :: "xyz";
-                    }
-                """
+        foo1: function auto(){}
+        foo2: function auto(){}
+        a: array [2] of integer = { foo1(), foo2() };
+        b: integer = foo1();
+        c: integer = foo2();
+        main: function void(){}
+        """
         expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 16))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8106
     def test_017(self):
         input = """
-                    main: function void() {
-                        a: integer = 2 * 3 + 8 % 5 - 7 / 7;
-                        b: boolean = (2 == 3) && !(true) || (3 != 8);
-                        c: float = 2 * 3.5 + 8 % 5.5 - 7 / 7;
-                        d: string = ("abc" :: "def") :: "xyz";
-                    }
-                """
-        expect = """Type mismatch in expression: BinExpr(%, IntegerLit(8), FloatLit(5.5))"""
+        foo: function void(a: auto){}
+        bar: function void(a: auto) inherit foo {}
+        main: function void(){}
+        """
+        expect = """?"""
         self.assertTrue(TestChecker.test(input, expect, 17))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7977
     def test_018(self):
         input = """
-                    foo: function integer() {
-                        return 2;
-                    }
-                    foo2: function integer() {
-                        return 3;
-                    }
-                    main: function void() {
-                        a: integer = foo() + foo2();
-                    }
-                """
-        expect = """[]"""
+        foo: function void(a: auto)
+        {
+            return 1;
+        }
+        main: function void(){}
+        """
+        expect = """?"""
         self.assertTrue(TestChecker.test(input, expect, 18))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8098
     def test_019(self):
         input = """
-                    b: integer = 5;
-                    c: integer = 6;
-                    a: integer = b + c;
-
-                    foo: function integer(a: string) {
-                        return 0;
-                    }
-
-                    main: function void() {
-                        a: integer = 7;
-                        {
-                            a: boolean = b == c;
-                            {
-                                a: float = 1.0 + b;
-                                {
-                                    a: string = "abc";
-                                    {
-                                        d: integer = foo(a);
-                                    }
-                                }
-                            }
-                        }
-                        a: boolean;
-                    }
-                """
-        expect = """Redeclared Variable: a"""
+        main: function void()
+        {
+            // a: auto = {}; -> Not in testcases
+            // a: array [0] of integer; -> Not in testcases
+            a: array [5] of integer = {1, 2, 3};
+        }
+        """
+        expect = """?"""
         self.assertTrue(TestChecker.test(input, expect, 19))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8087
     def test_020(self):
         input = """
-                    b: integer = 5;
-                    c: integer = 6;
-                    a: integer = b + c;
-
-                    foo: function void(a: integer) {
-
-                    }
-
-                    main: function void() {
-                        a: integer = 7;
-                        {
-                            a: boolean = b == c;
-                            {
-                                a: float = 1.0 + b;
-                                {
-                                    a: string = "abc";
-                                    {
-                                        d: integer = foo(a);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                """
-        expect = """Type mismatch in expression: FuncCall(foo, [Id(a)])"""
+        main: function void()
+        {
+            // a: auto = {}; -> Not in testcases
+            // a: array [0] of integer; -> Not in testcases
+            a: array [5] of integer = {1, 2, 3};
+        }
+        """
+        expect = """?"""
         self.assertTrue(TestChecker.test(input, expect, 20))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8399
     def test_021(self):
         input = """
-                    b: integer = 5;
-                    c: integer = 6;
-                    a: integer = b + c;
-
-                    main: function void() {
-                        a: integer = 7;
-                        {
-                            a: boolean = b == c;
-                            {
-                                a: float = 1.0 + b;
-                                {
-                                    a: string = "abc";
-                                    {
-                                        printString(a);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                """
+        main: function void()
+        {
+            a: auto = 1.5 < 2;
+        }
+        """
         expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 21))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8317
     def test_022(self):
         input = """
-                    b: integer = 5;
-                    c: integer = 6;
-                    a: integer = b + c;
-
-                    main: function void() {
-                        a: float = b - c;
-                    }
-                """
-        expect = """[]"""
+        foo: integer = 2;
+        foo: function void () {}
+        main: function void() {}
+        """
+        expect = """Redeclared Variable: foo"""
         self.assertTrue(TestChecker.test(input, expect, 22))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8170
     def test_023(self):
         input = """
-                    b: integer;
-                    foo: function void(c: float) {
-                        a: float = b + c;
-                    }
-                    main: function void() {}
-                """
-        expect = """[]"""
+        foo: function auto() { return 10; }
+        foo2: function void() { a: string = foo(); }
+        main: function void() {}
+        """
+        expect = """?"""
         self.assertTrue(TestChecker.test(input, expect, 23))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8642
     def test_024(self):
         input = """
-                    b: integer;
-                    foo: function void() {
-                        c: integer = 5;
-                    }
-                    main: function void() {
-                        a: integer = b + c;
-                    }
-                """
-        expect = """Undeclared Identifier: c"""
+        foo: function integer(inherit x: integer) inherit bar
+        {
+            super(2);
+        }
+
+        bar: function integer(inherit y: integer) inherit foo2
+        {
+            super("Hi");
+        }
+
+        foo2: function integer(inherit z: float){}
+        """
+        expect = """?"""
         self.assertTrue(TestChecker.test(input, expect, 24))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8646
     def test_025(self):
         input = """
-                    b: integer;
-                    main: function void() {
-                        c: integer;
-                        a: integer = b + c;
-                    }
-                """
+        a: float = foo(1, 2) + 1.5;
+        foo: function auto(a: integer, b: integer)
+        {
+            return a + b;
+        }
+        b: float = foo(1, 2);
+        main: function void(){}
+        """
         expect = """[]"""
         self.assertTrue(TestChecker.test(input, expect, 25))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8657
     def test_026(self):
         input = """
-                    b: integer;
-                    c: integer;
-                    main: function void() {
-                        a: integer = b + c;
-                    }
-                """
-        expect = """[]"""
+        a: integer = 2.3; //1
+        b: auto; //2
+        foo: function void(a: integer, b: float) {} //3
+        bar: function void() inherit foo {} //4
+        a: function void() {} //5
+        main: function void(){}
+        """
+        expect = """Invalid Variable: b""" # "trong khi duyệt sơ bộ mình không cần phải check Redeclared"
         self.assertTrue(TestChecker.test(input, expect, 26))
 
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8660
     def test_027(self):
         input = """
-                    main: function void() {
-                        a: integer = b + c;
-                    }
-                """
-        expect = """Undeclared Identifier: b"""
+        x, y: integer: 1, foo(1, 2, 3);
+        x, y: string;
+        foo: function integer (x: integer, y: integer, x:integer){}
+        main: function void(){}
+        """
+        expect = """Redeclared Variable: x"""
         self.assertTrue(TestChecker.test(input, expect, 27))
 
     def test_028(self):

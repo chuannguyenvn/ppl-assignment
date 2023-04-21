@@ -1,1 +1,6 @@
-main: function void() {}
+
+        main: function void()
+        {
+            return 1;
+        }
+        
