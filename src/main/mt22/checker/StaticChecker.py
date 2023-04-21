@@ -190,8 +190,15 @@ class StaticChecker(Visitor):
 
         if func_decl.inherit:
             parent_func_decl = inspector.find_latest_name(func_decl.inherit)
-            inherit_params = list(filter(lambda p: p.inherit, parent_func_decl.params))
-            inspector.add_symbol(self.visit(FuncDecl('super', parent_func_decl.return_type, inherit_params, None, BlockStmt([])), inspector))
+
+            # 3.3 Invalid Variable/Parameter declaration
+            param_names = list(map(lambda p: p.name, func_decl.params))
+            for parent_param in parent_func_decl.params:
+                if parent_param.inherit and parent_param.name in param_names:
+                    raise Invalid(Parameter(), parent_param.name)
+
+            # 2.3 Inheritance features
+            inspector.add_symbol(self.visit(FuncDecl('super', parent_func_decl.return_type, parent_func_decl.params, None, BlockStmt([])), inspector))
             inspector.add_symbol(self.visit(FuncDecl('preventDefault', VoidType(), [], None, BlockStmt([])), inspector))
 
         for param in func_decl.params:
