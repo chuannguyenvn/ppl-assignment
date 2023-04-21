@@ -466,10 +466,6 @@ class StaticChecker(Visitor):
         if type_of(func_decl) is not FuncDecl:
             raise TypeMismatchInStatement(func_call)
 
-        # Return type must not be void
-        if type_of(func_decl) is not FuncDecl or type_of(func_decl.return_type) is VoidType:
-            raise TypeMismatchInExpression(func_call)
-
         # Parameters must match
         if len(func_decl.params) != len(func_call.args):
             raise Undeclared(Function(), func_call.name)
