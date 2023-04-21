@@ -1,4 +1,7 @@
 
-                    a : array[1] of integer = {1, "c"};
-                    main: function void() {}
-                
+        a: auto = 1;
+        main: function void()
+        {
+            b: auto = a();
+        }
+        

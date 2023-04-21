@@ -1,4 +1,9 @@
 
-                    a : array[2, 2] of integer = {{1, 2}, {"c", "d"}};
-                    main: function void() {}
-                
+        foo: function integer(){}
+        a: auto = foo;
+        main: function void()
+        {
+            a[foo(), 1+4] = 222;
+            b: integer = foo();
+        }
+        

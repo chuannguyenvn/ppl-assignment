@@ -1,4 +1,9 @@
 
-                    a : array[2, 2] of integer = {{1, "c"}, {3, "a", "d"}};
-                    main: function void() {}
-                
+        foo: function integer(){}
+        main: function void()
+        {
+            foo: integer = 3;
+            a: integer;
+            a = foo();
+        }
+        

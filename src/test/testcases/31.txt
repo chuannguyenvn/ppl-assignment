@@ -1,4 +1,9 @@
 
-                    a : array[1] of integer = {1, 2};
-                    main: function void() {}
-                
+        a: array [1, 1] of type boolean;
+        foo: function auto(){}
+        main: function void()
+        {
+            a[foo(), 1+4] = 222;
+            b: integer = foo();
+        }
+        
