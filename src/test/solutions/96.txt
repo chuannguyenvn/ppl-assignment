@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(+, Id(a), IntegerLit(1))
+Type mismatch in Variable Declaration: VarDecl(a, AutoType, ArrayLit([FuncCall(f2, [IntegerLit(1)]), FuncCall(f6, [IntegerLit(2)])]))

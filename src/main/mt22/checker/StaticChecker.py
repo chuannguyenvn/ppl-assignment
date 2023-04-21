@@ -32,6 +32,19 @@ def set_type(symbol, typ):
 def infer(lhs, rhs, exception):
     lhs_type = get_type(lhs)
     rhs_type = get_type(rhs)
+
+    if type_of(lhs_type) is ArrayType or type_of(rhs_type) is ArrayType:
+        if not is_same_type(lhs_type, rhs_type):
+            raise exception
+
+        if type_of(lhs) is ArrayLit:
+            for exp in lhs.explist:
+                infer(exp, rhs.typ, exception)
+
+        if type_of(rhs) is ArrayLit:
+            for exp in rhs.explist:
+                infer(exp, lhs.typ, exception)
+
     if type_of(lhs_type) is AutoType:
         set_type(lhs, rhs_type)
     elif type_of(rhs_type) is AutoType:
@@ -158,8 +171,8 @@ class StaticChecker(Visitor):
 
         # 3.1 Redeclared Variable
         inspector.check_redeclared(var_decl, Variable())
-        # 3.3 Invalid Variable
 
+        # 3.3 Invalid Variable
         inspector.check_invalid(var_decl, Variable())
 
         if var_decl.init is not None:
@@ -349,11 +362,15 @@ class StaticChecker(Visitor):
         right_type = type_of(get_type(right))
 
         if bin_expr.op in ['+', '-', '*', '/']:
-            if left_type not in [IntegerType, FloatType] or right_type not in [IntegerType, FloatType]:
+            if left_type not in [IntegerType, FloatType, AutoType] or right_type not in [IntegerType, FloatType, AutoType]:
                 raise TypeMismatchInExpression(bin_expr)
             if FloatType in [left_type, right_type]:
+                infer(left, FloatType(), TypeMismatchInExpression(bin_expr))
+                infer(right, FloatType(), TypeMismatchInExpression(bin_expr))
                 return FloatType()
             else:
+                infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
+                infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
                 return IntegerType()
         if bin_expr.op == '%':
             infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
@@ -368,15 +385,23 @@ class StaticChecker(Visitor):
             infer(right, StringType(), TypeMismatchInExpression(bin_expr))
             return StringType()
         if bin_expr.op in ['==', '!=']:
-            if left_type not in [IntegerType, BooleanType] or right_type not in [IntegerType, BooleanType] or left_type != right_type:
-                raise TypeMismatchInExpression(bin_expr)
-            else:
-                return BooleanType()
+            if IntegerType in [left_type, right_type]:
+                infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
+                infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
+            if BooleanType in [left_type, right_type]:
+                infer(left, BooleanType(), TypeMismatchInExpression(bin_expr))
+                infer(right, BooleanType(), TypeMismatchInExpression(bin_expr))
+            return BooleanType()
         if bin_expr.op in ['<', '>', '<=', '>=']:
-            if left_type not in [IntegerType, FloatType] or right_type not in [IntegerType, FloatType]:
+            if left_type not in [IntegerType, FloatType, AutoType] or right_type not in [IntegerType, FloatType, AutoType]:
                 raise TypeMismatchInExpression(bin_expr)
+            if FloatType in [left_type, right_type]:
+                infer(left, FloatType(), TypeMismatchInExpression(bin_expr))
+                infer(right, FloatType(), TypeMismatchInExpression(bin_expr))
             else:
-                return BooleanType()
+                infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
+                infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
+            return BooleanType()
 
     def visitUnExpr(self, un_expr: UnExpr, inspector: Inspector):
         val = self.visit(un_expr.val, inspector)
@@ -393,7 +418,6 @@ class StaticChecker(Visitor):
         if un_expr.op == '!':
             infer(val, BooleanType(), TypeMismatchInExpression(un_expr))
             return BooleanType()
-        # TODO: indexing expression
 
     def visitId(self, id: Id, inspector: Inspector):
         # 3.2 Undeclared Identifier
@@ -423,8 +447,10 @@ class StaticChecker(Visitor):
         # for i in range(len(array_cell.cell)):
         #     if array_cell.cell[i].val >= array_decl.typ.dimensions[i]:
         #         raise TypeMismatchInExpression(array_cell)
-
-        return ArrayType(array_decl.typ.dimensions[len(array_cell.cell):], array_decl.typ.typ)
+        if len(array_cell.cell) == len(array_decl.typ.dimensions):
+            return array_decl.typ.typ
+        else:
+            return ArrayType(array_decl.typ.dimensions[len(array_cell.cell):], array_decl.typ.typ)
 
     def visitIntegerLit(self, integer_lit: IntegerLit, inspector: Inspector):
         return IntegerType()
