@@ -34,9 +34,6 @@ def infer(lhs, rhs, exception):
     rhs_type = get_type(rhs)
 
     if type_of(lhs_type) is ArrayType or type_of(rhs_type) is ArrayType:
-        if not is_same_type(lhs_type, rhs_type):
-            raise exception
-
         if type_of(lhs) is ArrayLit:
             for exp in lhs.explist:
                 infer(exp, rhs.typ, exception)
@@ -50,8 +47,7 @@ def infer(lhs, rhs, exception):
     elif type_of(rhs_type) is AutoType:
         set_type(rhs, lhs_type)
     elif type_of(lhs_type) is FloatType and type_of(rhs_type) is IntegerType:
-        if isinstance(lhs, Type):
-            raise exception
+        pass
     elif not is_same_type(lhs_type, rhs_type):
         raise exception
 
@@ -364,43 +360,43 @@ class StaticChecker(Visitor):
         if bin_expr.op in ['+', '-', '*', '/']:
             if left_type not in [IntegerType, FloatType, AutoType] or right_type not in [IntegerType, FloatType, AutoType]:
                 raise TypeMismatchInExpression(bin_expr)
-            if FloatType in [left_type, right_type]:
-                infer(left, FloatType(), TypeMismatchInExpression(bin_expr))
-                infer(right, FloatType(), TypeMismatchInExpression(bin_expr))
+            if left_type is FloatType:
+                infer(left, right, TypeMismatchInExpression(bin_expr))
+                return FloatType()
+            elif right_type is FloatType:
+                infer(right, left, TypeMismatchInExpression(bin_expr))
                 return FloatType()
             else:
-                infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
-                infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
                 return IntegerType()
         if bin_expr.op == '%':
-            infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
-            infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
+            infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
+            infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
             return IntegerType()
         if bin_expr.op in ['&&', '||']:
-            infer(left, BooleanType(), TypeMismatchInExpression(bin_expr))
-            infer(right, BooleanType(), TypeMismatchInExpression(bin_expr))
+            infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
+            infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
             return BooleanType()
         if bin_expr.op == '::':
-            infer(left, StringType(), TypeMismatchInExpression(bin_expr))
-            infer(right, StringType(), TypeMismatchInExpression(bin_expr))
+            infer(StringType(), left, TypeMismatchInExpression(bin_expr))
+            infer(StringType(), right, TypeMismatchInExpression(bin_expr))
             return StringType()
         if bin_expr.op in ['==', '!=']:
             if IntegerType in [left_type, right_type]:
-                infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
-                infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
+                infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
+                infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
             if BooleanType in [left_type, right_type]:
-                infer(left, BooleanType(), TypeMismatchInExpression(bin_expr))
-                infer(right, BooleanType(), TypeMismatchInExpression(bin_expr))
+                infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
+                infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
             return BooleanType()
         if bin_expr.op in ['<', '>', '<=', '>=']:
             if left_type not in [IntegerType, FloatType, AutoType] or right_type not in [IntegerType, FloatType, AutoType]:
                 raise TypeMismatchInExpression(bin_expr)
             if FloatType in [left_type, right_type]:
-                infer(left, FloatType(), TypeMismatchInExpression(bin_expr))
-                infer(right, FloatType(), TypeMismatchInExpression(bin_expr))
+                infer(FloatType(), left, TypeMismatchInExpression(bin_expr))
+                infer(FloatType(), right, TypeMismatchInExpression(bin_expr))
             else:
-                infer(left, IntegerType(), TypeMismatchInExpression(bin_expr))
-                infer(right, IntegerType(), TypeMismatchInExpression(bin_expr))
+                infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
+                infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
             return BooleanType()
 
     def visitUnExpr(self, un_expr: UnExpr, inspector: Inspector):
@@ -416,7 +412,7 @@ class StaticChecker(Visitor):
                 else:
                     return IntegerType()
         if un_expr.op == '!':
-            infer(val, BooleanType(), TypeMismatchInExpression(un_expr))
+            infer(BooleanType(), val, TypeMismatchInExpression(un_expr))
             return BooleanType()
 
     def visitId(self, id: Id, inspector: Inspector):
@@ -505,7 +501,7 @@ class StaticChecker(Visitor):
 
         for i in range(len(func_decl.params)):
             arg = self.visit(func_call.args[i], inspector)
-            infer(func_decl.params[i], arg, TypeMismatchInExpression(func_call.args[i]))
+            infer(func_decl.params[i], arg, TypeMismatchInExpression(func_call))
 
         return func_decl
 

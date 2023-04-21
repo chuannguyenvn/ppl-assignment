@@ -1,1 +1,1 @@
-Type mismatch in expression: Id(a)
+Type mismatch in expression: FuncCall(foo, [Id(a)])
