@@ -1,8 +1,8 @@
 
-            foo: function integer(a: integer, b: float) {
-                return a;
-            }
-            goo: function integer() inherit foo {
-                super(1, 2);
-            }
+        main: function void() {}
+        foo: function auto(a: string, b: string)
+        {
+            return a::b;
+        }
+        a: float = foo("hello", "Hi");
         

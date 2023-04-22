@@ -1,10 +1,7 @@
 
-            foo: function integer() {
-                a: integer = 5;
-                if(1 == 2) {
-                    a: string = "abc";
-                    b: integer;
-                    return b;
-                }
-            }
+        main: function void()
+        {
+            a: integer;
+            for (a = 1, 1, a + 1) {}
+        }
         

@@ -1,1 +1,1 @@
-No entry point
+Type mismatch in Variable Declaration: VarDecl(u, IntegerType, Id(z))

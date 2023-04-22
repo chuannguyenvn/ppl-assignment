@@ -1,9 +1,7 @@
 
-            foo: function integer() {
-                return 123;
-            }
-            goo: function integer() inherit foo {
-                super();
-                return 2;
-            }
+        main: function void() {}
+        foo: function void(inherit a: auto)
+        {
+            a: auto = 1;
+        }
         

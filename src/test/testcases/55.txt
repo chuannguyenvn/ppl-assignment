@@ -1,9 +1,5 @@
 
-            foo: function integer() {
-                a: integer = 5;
-                while (a < 10) {
-                    a: string = "abc";
-                }
-                return a;
-            }
+        main: function void() {}
+        M: function void (a: integer) inherit N {}
+        N: function void (inherit a: integer) {}
         

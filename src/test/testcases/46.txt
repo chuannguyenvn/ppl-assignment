@@ -1,9 +1,9 @@
 
-            main: function void() {}
-            foo: function integer(a: integer, b: boolean) {
-                return a;
-            }
-            goo: function integer() inherit foo {
-                preventDefault(1, 2);
-            }
+        main: function void() {}
+        bar: function void (inherit a: integer) {}
+        foo: function void (a: integer) inherit bar
+        {
+            preventDefault();
+            end: auto;
+        }
         

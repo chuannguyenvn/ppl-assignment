@@ -1,1 +1,4 @@
-main: function void(){}
+
+        main: function void(){}
+        end: auto;
+        
