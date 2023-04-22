@@ -3,7 +3,7 @@
         a: auto = foo;
         main: function void()
         {
-            a[foo(), 1+4] = 222;
+            a[foo(), 1 + 4] = 222;
             b: integer = foo();
         }
         

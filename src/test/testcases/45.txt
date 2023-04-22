@@ -1,10 +1,4 @@
 
-                    main: function void() {}
-                    foo: function integer(a: integer, b: boolean) {
-                        return a;
-                    }
-                    goo: function integer() inherit foo {
-                        preventDefault();
-                        return 2;
-                    }
-                
+        main: function void() {}
+        foo: function void (inherit a: integer, a: float) inherit bar {}
+        

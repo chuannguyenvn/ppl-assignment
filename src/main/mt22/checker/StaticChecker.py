@@ -193,6 +193,8 @@ class StaticChecker(Visitor):
         if inspector.is_first_pass:
             inspector.check_redeclared(func_decl, Function())
             inspector.add_symbol(func_decl)
+            if func_decl.name == 'super' or func_decl.name == 'preventDefault':
+                raise Redeclared(Function(), func_decl.name)
             return
 
         inspector.push_scope(func_decl)
@@ -335,15 +337,15 @@ class StaticChecker(Visitor):
         func_decl = inspector.find_latest_name(call_stmt.name)
 
         if type_of(func_decl) is not FuncDecl:
-            raise TypeMismatchInStatement(call_stmt)
+            raise Undeclared(Function(), call_stmt.name)
 
         # Parameters must match
         if len(func_decl.params) != len(call_stmt.args):
-            raise Undeclared(Function(), call_stmt.name)
+            raise TypeMismatchInStatement(call_stmt)
 
         for i in range(len(func_decl.params)):
             arg = self.visit(call_stmt.args[i], inspector)
-            infer(func_decl.params[i], arg, TypeMismatchInExpression(call_stmt.args[i]))
+            infer(func_decl.params[i], arg, TypeMismatchInStatement(call_stmt.args[i]))
 
         return func_decl
 
@@ -420,7 +422,9 @@ class StaticChecker(Visitor):
         inspector.check_undeclared(id, Identifier())
 
         id_decl = inspector.find_latest_name(id.name)
-
+        if type_of(id_decl) is FuncDecl:
+            raise Undeclared(Identifier(), id.name)
+        
         return id_decl
 
     def visitArrayCell(self, array_cell: ArrayCell, inspector: Inspector):
@@ -445,6 +449,8 @@ class StaticChecker(Visitor):
         #         raise TypeMismatchInExpression(array_cell)
         if len(array_cell.cell) == len(array_decl.typ.dimensions):
             return array_decl.typ.typ
+        elif len(array_cell.cell) > len(array_decl.typ.dimensions):
+            raise TypeMismatchInExpression(array_cell)
         else:
             return ArrayType(array_decl.typ.dimensions[len(array_cell.cell):], array_decl.typ.typ)
 
@@ -464,17 +470,20 @@ class StaticChecker(Visitor):
         auto_variables = []
         first_concrete_type = None
 
-        for exp in array_lit.explist:
-            exp_visited = self.visit(exp, inspector)
-            exp_type = get_type(exp_visited)
-            if type_of(exp_type) is AutoType:
-                auto_variables.append(exp_visited)
-            else:
-                if first_concrete_type is None:
-                    first_concrete_type = exp_type
-                elif not is_same_type(first_concrete_type, exp_type):
-                    raise IllegalArrayLiteral(array_lit)
-
+        try:
+            for exp in array_lit.explist:
+                exp_visited = self.visit(exp, inspector)
+                exp_type = get_type(exp_visited)
+                if type_of(exp_type) is AutoType:
+                    auto_variables.append(exp_visited)
+                else:
+                    if first_concrete_type is None:
+                        first_concrete_type = exp_type
+                    elif not is_same_type(first_concrete_type, exp_type):
+                        raise IllegalArrayLiteral(array_lit)
+        except:
+            raise IllegalArrayLiteral(array_lit)
+        
         # If all elements in the array literal is of AutoType
         if first_concrete_type is None:
             raise IllegalArrayLiteral(array_lit)
@@ -493,11 +502,11 @@ class StaticChecker(Visitor):
         func_decl = inspector.find_latest_name(func_call.name)
 
         if type_of(func_decl) is not FuncDecl:
-            raise TypeMismatchInStatement(func_call)
+            raise Undeclared(Function(), func_call.name)
 
         # Parameters must match
         if len(func_decl.params) != len(func_call.args):
-            raise Undeclared(Function(), func_call.name)
+            raise TypeMismatchInExpression(func_call)
 
         for i in range(len(func_decl.params)):
             arg = self.visit(func_call.args[i], inspector)

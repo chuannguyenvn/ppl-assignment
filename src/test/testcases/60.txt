@@ -1,11 +1,7 @@
 
-                    main: function void() {}
-                    foo: function integer() {
-                        a: integer = 5;
-                        do {      
-                            if(a == 8) {
-                                return 0;
-                            }
-                        } while(a < 10);
-                    }
-                
+        main: function void() {}
+        foo: function auto() {}
+        a: float = -foo();
+        b: float = foo();
+        c: integer = foo();
+        

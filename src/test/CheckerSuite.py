@@ -373,11 +373,11 @@ class CheckerSuite(unittest.TestCase):
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8703
     def test_029(self):
         input = """
-        x : auto = {4,5,6};
+        x: auto = {4,5,6};
         y: auto = x[1,2];
         main: function void() {}
         """
-        expect = """TypeMismatchInExpression"""
+        expect = """Type mismatch in expression: ArrayCell(x, [IntegerLit(1), IntegerLit(2)])"""
         self.assertTrue(TestChecker.test(input, expect, 29))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8839
@@ -442,7 +442,7 @@ class CheckerSuite(unittest.TestCase):
             x();
         }
         """
-        expect = """Type mismatch in statement: CallStmt(x, [])"""
+        expect = """Type mismatch in statement: CallStmt(x, )"""
         self.assertTrue(TestChecker.test(input, expect, 34))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8813 (2)
@@ -454,7 +454,7 @@ class CheckerSuite(unittest.TestCase):
             x(1, 2);
         }
         """
-        expect = """Type mismatch in statement: CallStmt(x, [1, 2])"""
+        expect = """Type mismatch in statement: CallStmt(x, IntegerLit(1), IntegerLit(2))"""
         self.assertTrue(TestChecker.test(input, expect, 35))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9108
@@ -463,7 +463,7 @@ class CheckerSuite(unittest.TestCase):
         super: function integer(){}
         main: function void(){}
         """
-        expect = """Redeclared ?"""
+        expect = """Redeclared Function: super"""
         self.assertTrue(TestChecker.test(input, expect, 36))
     
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9055
@@ -493,7 +493,7 @@ class CheckerSuite(unittest.TestCase):
         a: string = 12 :: "str";
         main: function void() {}
         """
-        expect = """TypeMismatchInExpression(BinExpr(::, IntegerLit(12), StringLit(str)))"""
+        expect = """Type mismatch in expression: BinExpr(::, IntegerLit(12), StringLit(str))"""
         self.assertTrue(TestChecker.test(input, expect, 39))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9036
@@ -505,7 +505,7 @@ class CheckerSuite(unittest.TestCase):
             a: integer = foo();
         }
         """
-        expect = """Type Mismatch In Expression: """
+        expect = """Type mismatch in expression: FuncCall(foo, [])"""
         self.assertTrue(TestChecker.test(input, expect, 40))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9113
@@ -529,7 +529,7 @@ class CheckerSuite(unittest.TestCase):
             a: boolean = foo();
         }
         """
-        expect = """Type mismatch in statement: ReturnStmt(1)"""
+        expect = """Type mismatch in statement: ReturnStmt(IntegerLit(1))"""
         self.assertTrue(TestChecker.test(input, expect, 42))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9120
@@ -574,7 +574,7 @@ class CheckerSuite(unittest.TestCase):
         bar: function void (inherit a: integer) {}
         foo: function void (a: integer) inherit bar
         {
-            preventDefault()
+            preventDefault();
         }
         """
         expect = """[]"""
@@ -601,14 +601,15 @@ class CheckerSuite(unittest.TestCase):
 	        a: string = b + c;
         }
         """
-        expect = """TypeMisMatchInDecl"""
+        expect = """Type mismatch in Variable Declaration: VarDecl(a, StringType, BinExpr(+, Id(b), Id(c)))"""
         self.assertTrue(TestChecker.test(input, expect, 48))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9291 (2)
     def test_049(self):
         input = """
         main: function void() {}
-        inc : function void (out n : integer, n: float) inherit foo{
+        inc : function void (out n : integer, n: float) inherit foo
+        {
             super(0.1, 1);
             n: string = 124;
         }
@@ -623,7 +624,7 @@ class CheckerSuite(unittest.TestCase):
         input = """
         a: auto;
         """
-        expect = """Invalid Identifier: a"""
+        expect = """Invalid Variable: a"""
         self.assertTrue(TestChecker.test(input, expect, 50))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9047
@@ -639,7 +640,7 @@ class CheckerSuite(unittest.TestCase):
             u: integer = z;
         }
         """
-        expect = """TypeMisMatchInDecl: u"""
+        expect = """Type mismatch in Variable Declaration: u"""
         self.assertTrue(TestChecker.test(input, expect, 51))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9190
@@ -665,7 +666,7 @@ class CheckerSuite(unittest.TestCase):
             c: auto;
         }
         """
-        expect = """Invalid Identifier: c"""
+        expect = """Invalid Variable: c"""
         self.assertTrue(TestChecker.test(input, expect, 53))
     
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9354
@@ -705,16 +706,17 @@ class CheckerSuite(unittest.TestCase):
         main: function void() {}
         a: array[2] of integer = { {1}, {2} };
         """
-        expect = """TypeMisMatchInValDecl"""
+        expect = """Type mismatch in Variable Declaration: VarDecl(a, ArrayType([2], IntegerType), ArrayLit([ArrayLit([IntegerLit(1)]), ArrayLit([IntegerLit(2)])]))"""
         self.assertTrue(TestChecker.test(input, expect, 57))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9239
+    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9258
     def test_058(self):
         input = """
         main: function void() {}
         a: array [2, 3, 2] of integer = {{{1, 2}, {1, 2}}, {{1, 2}, {1, "2"}, {1, 2}}};
         """
-        expect = """Illegal Array Literal"""
+        expect = """Illegal array literal: ArrayLit([ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), IntegerLit(2)])]), ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), StringLit(2)]), ArrayLit([IntegerLit(1), IntegerLit(2)])])])"""
         self.assertTrue(TestChecker.test(input, expect, 58))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9258
@@ -723,7 +725,7 @@ class CheckerSuite(unittest.TestCase):
         main: function void() {}
         a: auto = { {1 , 2}, { 1,1.5} };
         """
-        expect = """Illegal Array Literal: ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), FloatLit(1.5)])])"""
+        expect = """Illegal array literal: ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), FloatLit(1.5)])])"""
         self.assertTrue(TestChecker.test(input, expect, 59))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9390

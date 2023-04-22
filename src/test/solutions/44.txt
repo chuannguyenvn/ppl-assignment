@@ -1,1 +1,1 @@
-[]
+Type mismatch in Variable Declaration: VarDecl(a, FloatType, FuncCall(foo, [StringLit(hello), StringLit(Hi)]))

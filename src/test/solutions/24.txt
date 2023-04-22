@@ -1,1 +1,1 @@
-Type mismatch in expression: StringLit(Hi)
+Type mismatch in statement: StringLit(Hi)
