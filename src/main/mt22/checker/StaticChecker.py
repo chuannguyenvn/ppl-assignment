@@ -62,11 +62,19 @@ class ScopeMarker:
 
 
 class Inspector:
-
     def __init__(self):
         self.scope_stack = [ScopeMarker()]
         self.is_first_pass = True
         self.override_auto = None
+        self.possible_types = None
+        self.lhs_type = None
+        self.lhs_exception = None
+
+    def reset_states(self):
+        self.override_auto = None
+        self.possible_types = None
+        self.lhs_type = None
+        self.lhs_exception = None
 
     def add_symbol(self, o):
         self.scope_stack.append(o)
@@ -86,12 +94,6 @@ class Inspector:
             else:
                 if type_of(element) is ScopeMarker and type_of(element.owner) == type_of(owner):
                     return
-
-    def override_auto_with(self, typ):
-        self.override_auto = typ
-
-    def stop_overriding_auto(self):
-        self.override_auto = None
 
     def find_latest_name(self, name: str) -> Decl:
         for i in reversed(range(len(self.scope_stack))):
@@ -200,12 +202,14 @@ class StaticChecker(Visitor):
         inspector.add_symbol(var_decl)
 
         if var_decl.init is not None:
-            inspector.override_auto_with(var_decl.typ)
-
+            inspector.lhs_type = var_decl.typ
+            inspector.lhs_exception = TypeMismatchInVarDecl(var_decl)
             init = self.visit(var_decl.init, inspector)
+            if inspector.possible_types and type_of(init) not in inspector.possible_types:
+                raise TypeMismatchInVarDecl(var_decl)
             infer(var_decl, init, TypeMismatchInVarDecl(var_decl))
 
-            inspector.stop_overriding_auto()
+            inspector.reset_states()
 
         return var_decl
 
@@ -390,12 +394,13 @@ class StaticChecker(Visitor):
 
             # Uncertain
             if type_of(left_type) is AutoType and type_of(right_type) is AutoType:
-                if type_of(inspector.override_auto) in [FloatType, IntegerType, AutoType]:
-                    infer(inspector.override_auto, left, TypeMismatchInExpression(bin_expr))
-                    infer(inspector.override_auto, right, TypeMismatchInExpression(bin_expr))
-                    return inspector.override_auto
+                if type_of(inspector.lhs_type) in [FloatType, IntegerType, AutoType]:
+                    infer(inspector.lhs_type, left, TypeMismatchInExpression(bin_expr))
+                    infer(inspector.lhs_type, right, TypeMismatchInExpression(bin_expr))
+                    inspector.possible_types = [FloatType, IntegerType, AutoType]
+                    return inspector.lhs_type
                 else:
-                    raise TypeMismatchInExpression(bin_expr)
+                    raise inspector.lhs_exception
 
             if type_of(right_type) is AutoType:
                 infer(left, right, TypeMismatchInExpression(bin_expr))
@@ -444,11 +449,12 @@ class StaticChecker(Visitor):
 
         if un_expr.op == '-':
             if val_type is AutoType:
-                if type_of(inspector.override_auto) not in [IntegerType, FloatType]:
-                    raise TypeMismatchInExpression(un_expr)
+                if type_of(inspector.lhs_type) in [FloatType, IntegerType, AutoType]:
+                    infer(inspector.lhs_type, val, TypeMismatchInExpression(un_expr))
+                    inspector.possible_types = [FloatType, IntegerType, AutoType]
+                    return inspector.lhs_type
                 else:
-                    infer(inspector.override_auto, val, TypeMismatchInExpression(un_expr))
-                    return inspector.override_auto
+                    raise inspector.lhs_exception
             elif val_type not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(un_expr)
             else:
@@ -481,8 +487,7 @@ class StaticChecker(Visitor):
 
         # Any subscript is not an integer
         for expr in array_cell.cell:
-            if type_of(self.visit(expr, inspector)) is not IntegerType:
-                raise TypeMismatchInExpression(expr)
+            infer(IntegerType(), self.visit(expr, inspector), TypeMismatchInExpression(expr))
 
         if len(array_cell.cell) == len(array_decl.typ.dimensions):
             return array_decl.typ.typ
