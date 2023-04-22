@@ -1,19 +1,19 @@
 
-                    main: function void() {
-                        a: integer = readInteger();
-                        printBoolean(isPrime(a));
-                        return;
+            f1: function void() {
+                a: integer = readInteger();
+                printBoolean(isPrime(a));
+                return;
+            }
+            isPrime: function boolean(n: integer) {
+                if (n <= 2) {
+                    return false;
+                }
+                i: integer = 2;
+                for (i = 2, i * i < n, i + 1) {
+                    if (n % i == 0) {
+                        return false;
                     }
-                    isPrime: function boolean(n: integer) {
-                        if (n <= 2) {
-                            return false;
-                        }
-                        i: integer = 2;
-                        for (i = 2, i * i < n, i + 1) {
-                            if (n % i == 0) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                
+                }
+                return true;
+            }
+        

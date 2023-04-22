@@ -1,3 +1,9 @@
 
-        ?
+            main: function void() {}
+            foo: function integer(a: integer, b: boolean) {
+                return a;
+            }
+            goo: function integer() inherit foo {
+                super();
+            }
         

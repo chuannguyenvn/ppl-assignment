@@ -1,11 +1,9 @@
 
-        x: auto = foo();
-        foo: function integer(){}
-        main: function void()
-        {
-            {
-                x: integer;
+            main: function void() {
+                a: float;
+                b: integer;
+                c: string;
+                d: boolean;
+                e: integer = !(((-a + b) < (7 % 5)) == true);
             }
-            x = 5;
-        }
         

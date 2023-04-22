@@ -1,18 +1,18 @@
 
-                    gcd1: function auto(x: auto, y: auto) {
-                        if ((x == 0) || (y == 0)) return x + y;
-                        if (x > y) return gcd(y, x % y);
-                        if (x < y) return gcd(x, y % x);
-                    }
-                    main: function void() {
-                        a: integer = readInteger();
-                        b: auto = readInteger();
-                        printInteger(gcd1(a, b));
-                        printInteger(gcd(a, b));
-                    }
-                    gcd: function auto(x: auto, y: auto) {
-                        if ((x == 0) || (y == 0)) return x + y;
-                        if (x > y) return gcd1(y, x % y);
-                        if (x < y) return gcd1(x, y % x);
-                    }
-                
+            gcd1: function auto(x: auto, y: auto) {
+                if ((x == 0) || (y == 0)) return x + y;
+                if (x > y) return gcd(y, x % y);
+                if (x < y) return gcd(x, y % x);
+            }
+            f1: function void() {
+                a: integer = readInteger();
+                b: auto = readInteger();
+                printInteger(gcd1(a, b));
+                printInteger(gcd(a, b));
+            }
+            gcd: function auto(x: auto, y: auto) {
+                if ((x == 0) || (y == 0)) return x + y;
+                if (x > y) return gcd1(y, x % y);
+                if (x < y) return gcd1(x, y % x);
+            }
+        

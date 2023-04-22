@@ -1,1 +1,1 @@
-Invalid Parameter: a
+Type mismatch in statement: CallStmt(preventDefault, IntegerLit(1), IntegerLit(2))

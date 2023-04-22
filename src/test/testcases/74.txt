@@ -1,10 +1,9 @@
 
-                    main: function void() {}
-                    foo: function void(inherit a: integer) {}
-                    foo2: function void(inherit b: string) inherit foo {
-                        super(1);
-                    }
-                    foo3: function void(a: string) inherit foo2 {
-                        preventDefault();
-                    }
-                
+            foo: function void(inherit a: integer) {}
+            foo2: function void(inherit b: string) inherit foo {
+                super(1);
+            }
+            foo3: function void(a: string) inherit foo2 {
+                preventDefault();
+            }
+        

@@ -1,11 +1,12 @@
 
-        main: function void()
-        {
-            x: auto = x + 10;
-            y: integer = x;
-            z: auto = z + z;
-            w: string = z;
-            t: string = z;
-            u: integer = z;
-        }
+            foo: function integer() {
+                a: integer = 5;
+                if(1 == 2) {
+                    a: string = "abc";
+                }
+                else {
+                    a: integer = 6;
+                }
+                return a;
+            }
         

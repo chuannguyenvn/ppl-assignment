@@ -1,17 +1,17 @@
 
-                    main: function void() {}
-                    a: integer;
-                    f1: function string(a: auto) {
-                        a = 1;
+            main: function void() {}
+            a: integer;
+            f1: function string(a: auto) {
+                a = 1;
+                {
+                    a: float;
+                    {
+                        a: string;
                         {
-                            a: float;
-                            {
-                                a: string;
-                                {
-                                    return a;
-                                }
-                            }
+                            return a;
                         }
-                        return a;
                     }
-                
+                }
+                return a;
+            }
+        

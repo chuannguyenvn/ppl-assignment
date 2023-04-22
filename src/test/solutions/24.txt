@@ -1,1 +1,1 @@
-Type mismatch in statement: CallStmt(super, StringLit(Hi))
+Undeclared Identifier: c

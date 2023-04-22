@@ -1,9 +1,7 @@
 
-        y: auto = foo();
-        foo: function integer(){}
-        main: function void()
-        {
-            x = 5;
-            x: integer;
-        }
+            main: function void() {
+                a: integer = 5;
+                b: boolean = 7;
+                c: integer = (a == 4) == b;
+            }
         

@@ -154,11 +154,17 @@ class StaticChecker(Visitor):
 
         # Parameters must match
         if len(func_decl.params) != len(params):
-            raise exception
+            if func_decl.name == 'super':
+                raise TypeMismatchInExpression(params)
+            else:
+                raise exception
 
         for i in range(len(params)):
             arg = self.visit(params[i], inspector)
-            infer(func_decl.params[i], arg, exception)
+            if func_decl.name == 'super':
+                infer(func_decl.params[i], arg, TypeMismatchInExpression(params[i]))
+            else:
+                infer(func_decl.params[i], arg, exception)
 
         return func_decl
 
@@ -268,8 +274,17 @@ class StaticChecker(Visitor):
 
     def visitBlockStmt(self, block_stmt: BlockStmt, inspector: Inspector):
         inspector.push_scope()
-        for line in block_stmt.body:
-            self.visit(line, inspector)
+        for i in range(len(block_stmt.body)):
+            if type_of(inspector.get_latest_marker().owner) is FuncDecl:
+                name = inspector.get_latest_marker().owner
+                if type_of(block_stmt.body[i]) is CallStmt:
+                    if i != 0:
+                        if block_stmt.body[i].name == 'super' or block_stmt.body[i].name == 'preventDefault':
+                            raise InvalidStatementInFunction(name)
+                    if block_stmt.body[i].name == 'super' or block_stmt.body[i].name == 'preventDefault':
+                        if i != 0:
+                            raise InvalidStatementInFunction(name)
+            self.visit(block_stmt.body[i], inspector)
         inspector.pop_scope()
 
     def visitAssignStmt(self, assign_stmt: AssignStmt, inspector: Inspector):

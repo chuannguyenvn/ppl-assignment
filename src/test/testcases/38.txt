@@ -1,6 +1,8 @@
 
-        a: integer = 1;
-        foo: function void (b: integer) inherit a {}
-        a: function string (inherit c: string) {}
-        main: function void () {}
+            a : array[2] of integer = {1, 2};
+            func: function auto(e: integer, b: float, c: string, d: boolean) {
+                f: integer = 5;
+                g: boolean = true;
+                return f;
+            }
         

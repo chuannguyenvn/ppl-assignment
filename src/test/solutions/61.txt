@@ -1,1 +1,1 @@
-Type mismatch in statement: CallStmt(test1, BooleanLit(True))
+No entry point

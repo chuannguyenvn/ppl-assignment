@@ -1,4 +1,9 @@
 
-        main: function void() {}
-        a: auto = { {1 , 2}, { 1,1.5} };
+            foo: function integer() {
+                a: integer = 5;
+                do {
+                    a: string = "abc";
+                } while(a < 10);
+                return a;
+            }
         

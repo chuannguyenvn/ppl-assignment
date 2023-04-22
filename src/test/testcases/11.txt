@@ -1,11 +1,7 @@
 
-        x: auto = foo();
-        foo: function integer(){}
-        main: function void()
-        {
-            {
-                x = 5;
+            main: function void() {
+                a: integer = 5;
+                b: boolean = 5;
+                c: float = !b + (a == 5);
             }
-            x: integer;
-        }
         

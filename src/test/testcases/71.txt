@@ -1,7 +1,7 @@
 
-                    main: function void() {}
-                    foo: function void(inherit a: integer) {}
-                    foo2: function void(b: integer, b: float) inherit foo {
-                        super(b);
-                    }
-                
+            main: function void() {}
+            foo: function void(inherit a: integer) {}
+            foo2: function void(b: integer, b: float) inherit foo {
+                super(b);
+            }
+        

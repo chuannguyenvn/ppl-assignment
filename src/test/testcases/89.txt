@@ -1,8 +1,7 @@
 
-                    main: function void() {}
-                    f4: function auto() {}
-                    foo: function integer (a: auto) {
-                        return a;
-                        b: integer = a;
-                    }
-                
+            f4: function auto() {}
+            foo: function integer (a: auto) {
+                return a;
+                b: integer = a;
+            }
+        

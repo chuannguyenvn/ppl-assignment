@@ -1,5 +1,5 @@
 
-                    main: function void() {
-                        a: integer = 1 + "float";
-                    }
-                
+            main: function void() {
+                a: integer = 1 + "float";
+            }
+        

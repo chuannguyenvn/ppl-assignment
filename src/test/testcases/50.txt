@@ -1,3 +1,9 @@
 
-        a: auto;
+            foo: function integer() {
+                a: integer = 5;
+                if(1 == 2) return a;
+                else {
+                    return a;
+                }
+            }
         

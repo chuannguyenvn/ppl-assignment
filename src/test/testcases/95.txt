@@ -1,13 +1,12 @@
 
-                    main: function void() {}
-                    foo: function auto(a: auto, b: auto) {
-                        if (b || b) {
-                            return a && b;
-                        }
-                        else {
-                            c: boolean;
-                            return b && c;
-                        }
-                        return a && b;
-                    }
-                
+            foo: function auto(a: auto, b: auto) {
+                if (b || b) {
+                    return a && b;
+                }
+                else {
+                    c: boolean;
+                    return b && c;
+                }
+                return a && b;
+            }
+        

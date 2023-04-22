@@ -1,9 +1,9 @@
 
-                    main: function void() {}
-                    f4: function void (a: auto, b: auto) {}
-                    foo: function string (x: auto) {
-                        c: integer;
-                        foo(c);
-                        return x;
-                    }
-                
+            main: function void() {}
+            f4: function void (a: auto, b: auto) {}
+            foo: function string (x: auto) {
+                c: integer;
+                foo(c);
+                return x;
+            }
+        

@@ -1,6 +1,5 @@
 
-                    main: function void() {}
-                    foo: function void () {
-                        a: array[0] of string;
-                    }
-                
+            foo: function void () {
+                a: array[0] of string;
+            }
+        
