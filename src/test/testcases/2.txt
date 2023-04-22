@@ -1,5 +1,5 @@
 
-        main: function void() 
+        main: function void()
         {
             a: auto = 1.0 != 1.0;
         }

@@ -12,5 +12,6 @@
         main: function void()
         {
             foo(1);
+            end: auto;
         }
         

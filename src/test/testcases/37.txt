@@ -1,5 +1,5 @@
 
         foo: function auto () {}
-        foo: function auto (a: integer , b: integer ) inherit bar {}
+        foo: function auto (a: integer, b: integer ) inherit bar {}
         main: function void() {}
         

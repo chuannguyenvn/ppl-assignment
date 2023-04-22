@@ -1,5 +1,5 @@
 
-        a: array [1, 1] of type boolean;
+        a: array [1, 1] of boolean;
         foo: function auto(){}
         main: function void()
         {

@@ -21,15 +21,16 @@ class CheckerSuite(unittest.TestCase):
         main: function void()
         {
             foo(1);
+            end: auto;
         }
         """
-        expect = """[]"""
+        expect = """Invalid Variable: end"""
         self.assertTrue(TestChecker.test(input, expect, 1))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8066
     def test_002(self):
         input = """
-        main: function void() 
+        main: function void()
         {
             a: auto = 1.0 != 1.0;
         }
@@ -66,15 +67,16 @@ class CheckerSuite(unittest.TestCase):
         main: function void()
         {
             return 1;
+            end: auto;
         }
         """
-        expect = """[]"""
+        expect = """Invalid Variable: end"""
         self.assertTrue(TestChecker.test(input, expect, 5))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7989
     def test_006(self):
         input = """
-        foo: function void(out x: int){}
+        foo: function void(out x: integer){}
         main: function void()
         {
             foo(2);
@@ -85,7 +87,7 @@ class CheckerSuite(unittest.TestCase):
 
     def test_007(self):
         input = """
-        foo: function void(out x: int){}
+        foo: function void(out x: integer){}
         main: function void()
         {
             foo(2);
@@ -350,9 +352,9 @@ class CheckerSuite(unittest.TestCase):
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8660
     def test_027(self):
         input = """
-        x, y: integer: 1, foo(1, 2, 3);
+        x, y: integer = 1, foo(1, 2, 3);
         x, y: string;
-        foo: function integer (x: integer, y: integer, x:integer){}
+        foo: function integer (x: integer, y: integer, x: integer){}
         main: function void(){}
         """
         expect = """Redeclared Variable: x"""
@@ -395,7 +397,7 @@ class CheckerSuite(unittest.TestCase):
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8913
     def test_031(self):
         input = """
-        a: array [1, 1] of type boolean;
+        a: array [1, 1] of boolean;
         foo: function auto(){}
         main: function void()
         {
@@ -465,12 +467,12 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = """Redeclared Function: super"""
         self.assertTrue(TestChecker.test(input, expect, 36))
-    
+
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9055
     def test_037(self):
         input = """
         foo: function auto () {}
-        foo: function auto (a: integer , b: integer ) inherit bar {}
+        foo: function auto (a: integer, b: integer ) inherit bar {}
         main: function void() {}
         """
         expect = """Redeclared Function: foo"""
@@ -480,8 +482,8 @@ class CheckerSuite(unittest.TestCase):
     def test_038(self):
         input = """
         a: integer = 1;
-        foo: function void (integer b) inherit a {}
-        a: function string (inherit string c) {}
+        foo: function void (b: integer) inherit a {}
+        a: function string (inherit c: string) {}
         main: function void () {}
         """
         expect = """Redeclared Function: a"""
@@ -640,7 +642,7 @@ class CheckerSuite(unittest.TestCase):
             u: integer = z;
         }
         """
-        expect = """Type mismatch in Variable Declaration: u"""
+        expect = """Type mismatch in Variable Declaration: VarDecl(u, IntegerType, Id(z))"""
         self.assertTrue(TestChecker.test(input, expect, 51))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9190
@@ -652,7 +654,7 @@ class CheckerSuite(unittest.TestCase):
             for (a = 1, 1, a + 1) {}
         }
         """
-        expect = """Type mismatch in expresison: 1"""
+        expect = """Type mismatch in statement: ForStmt(AssignStmt(Id(a), IntegerLit(1)), IntegerLit(1), BinExpr(+, Id(a), IntegerLit(1)), BlockStmt([]))"""
         self.assertTrue(TestChecker.test(input, expect, 52))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9192
@@ -662,13 +664,13 @@ class CheckerSuite(unittest.TestCase):
         foo: function string(foo: integer)
         {
             a: integer = foo;
-            b: string = foo();
+            b: string = foo(a);
             c: auto;
         }
         """
         expect = """Invalid Variable: c"""
         self.assertTrue(TestChecker.test(input, expect, 53))
-    
+
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9354
     def test_054(self):
         input = """
@@ -737,7 +739,7 @@ class CheckerSuite(unittest.TestCase):
         b: float = foo();
         c: integer = foo();
         """
-        expect = """Type mismatch in variable decl: c"""
+        expect = """Type mismatch in Variable Declaration: VarDecl(c, IntegerType, FuncCall(foo, []))"""
         self.assertTrue(TestChecker.test(input, expect, 60))
 
     # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9395

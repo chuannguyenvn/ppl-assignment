@@ -62,6 +62,7 @@ class Inspector:
     def __init__(self):
         self.scope_stack = [ScopeMarker()]
         self.is_first_pass = True
+        self.override_auto = None
 
     def add_symbol(self, o):
         self.scope_stack.append(o)
@@ -82,6 +83,12 @@ class Inspector:
                 if type_of(element) is ScopeMarker and type_of(element.owner) == type_of(owner):
                     return
 
+    def override_auto_with(self, typ):
+        self.override_auto = typ
+
+    def stop_overriding_auto(self):
+        self.override_auto = None
+
     def find_latest_name(self, name: str) -> Decl:
         for i in reversed(range(len(self.scope_stack))):
             if type_of(self.scope_stack[i]) in [VarDecl, ParamDecl, FuncDecl]:
@@ -89,11 +96,12 @@ class Inspector:
                     return self.scope_stack[i]
         return None
 
-    def find_latest_of_type(self, typ: Type) -> Decl:
+    def find_latest_name_of_type(self, name: str, types: [Type], exception=None) -> Decl:
         for i in reversed(range(len(self.scope_stack))):
-            if self.scope_stack[i] is typ:
+            if type_of(self.scope_stack[i]) in types and self.scope_stack[i].name == name:
                 return self.scope_stack[i]
-        return None
+        if exception:
+            raise exception
 
     def is_marker_in_scope(self, marker_types: List[Type]) -> bool:
         for i in range(len(self.scope_stack)):
@@ -171,11 +179,15 @@ class StaticChecker(Visitor):
         # 3.3 Invalid Variable
         inspector.check_invalid(var_decl, Variable())
 
+        inspector.add_symbol(var_decl)
+
         if var_decl.init is not None:
+            inspector.override_auto_with(var_decl.typ)
+
             init = self.visit(var_decl.init, inspector)
             infer(var_decl, init, TypeMismatchInVarDecl(var_decl))
 
-        inspector.add_symbol(var_decl)
+            inspector.stop_overriding_auto()
 
         return var_decl
 
@@ -186,15 +198,21 @@ class StaticChecker(Visitor):
         # 3.1 Redeclared Parameter
         inspector.check_redeclared(param_decl, Parameter())
 
-        # 3.3 Invalid Parameter
-        # TODO: Invalid
-
     def visitFuncDecl(self, func_decl: FuncDecl, inspector: Inspector):
         if inspector.is_first_pass:
             inspector.check_redeclared(func_decl, Function())
+
             inspector.add_symbol(func_decl)
+
             if func_decl.name == 'super' or func_decl.name == 'preventDefault':
                 raise Redeclared(Function(), func_decl.name)
+
+            param_names = []
+            for param in func_decl.params:
+                if param.name in param_names:
+                    raise Redeclared(Parameter(), param.name)
+                param_names.append(param.name)
+
             return
 
         inspector.push_scope(func_decl)
@@ -277,11 +295,14 @@ class StaticChecker(Visitor):
         if type_of(get_type(scalar)) is not IntegerType:
             raise TypeMismatchInStatement(for_stmt)
 
+        # The type of the cond expression must be boolean
         cond = self.visit(for_stmt.cond, inspector)
-        upd = self.visit(for_stmt.upd, inspector)
+        if type_of(cond) is not BooleanType:
+            raise TypeMismatchInStatement(for_stmt)
 
         # The type of the update expression must be integer
-        if not isinstance(for_stmt.upd, Expr) or type_of(upd) is not IntegerType:
+        upd = self.visit(for_stmt.upd, inspector)
+        if type_of(upd) is not IntegerType:
             raise TypeMismatchInStatement(for_stmt)
 
         self.visit(for_stmt.stmt, inspector)
@@ -362,6 +383,9 @@ class StaticChecker(Visitor):
         if bin_expr.op in ['+', '-', '*', '/']:
             if left_type not in [IntegerType, FloatType, AutoType] or right_type not in [IntegerType, FloatType, AutoType]:
                 raise TypeMismatchInExpression(bin_expr)
+            if left_type is AutoType and right_type is AutoType:
+                return AutoType()
+
             if left_type is FloatType:
                 infer(left, right, TypeMismatchInExpression(bin_expr))
                 return FloatType()
@@ -406,13 +430,16 @@ class StaticChecker(Visitor):
         val_type = type_of(get_type(val))
 
         if un_expr.op == '-':
-            if val_type not in [IntegerType, FloatType]:
+            if val_type is AutoType:
+                if type_of(inspector.override_auto) not in [IntegerType, FloatType]:
+                    raise TypeMismatchInExpression(un_expr)
+                else:
+                    infer(inspector.override_auto, val, TypeMismatchInExpression(un_expr))
+                    return inspector.override_auto
+            elif val_type not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(un_expr)
             else:
-                if val_type is FloatType:
-                    return FloatType()
-                else:
-                    return IntegerType()
+                return val_type
         if un_expr.op == '!':
             infer(BooleanType(), val, TypeMismatchInExpression(un_expr))
             return BooleanType()
@@ -424,7 +451,7 @@ class StaticChecker(Visitor):
         id_decl = inspector.find_latest_name(id.name)
         if type_of(id_decl) is FuncDecl:
             raise Undeclared(Identifier(), id.name)
-        
+
         return id_decl
 
     def visitArrayCell(self, array_cell: ArrayCell, inspector: Inspector):
@@ -442,7 +469,7 @@ class StaticChecker(Visitor):
         # Any subscript is not an integer
         for expr in array_cell.cell:
             if type_of(self.visit(expr, inspector)) is not IntegerType:
-                raise TypeMismatchInExpression(array_cell)
+                raise TypeMismatchInExpression(expr)
 
         # for i in range(len(array_cell.cell)):
         #     if array_cell.cell[i].val >= array_decl.typ.dimensions[i]:
@@ -483,7 +510,7 @@ class StaticChecker(Visitor):
                         raise IllegalArrayLiteral(array_lit)
         except:
             raise IllegalArrayLiteral(array_lit)
-        
+
         # If all elements in the array literal is of AutoType
         if first_concrete_type is None:
             raise IllegalArrayLiteral(array_lit)
@@ -499,10 +526,7 @@ class StaticChecker(Visitor):
 
     def visitFuncCall(self, func_call: FuncCall, inspector: Inspector):
         # 3.4 Type Mismatch In Expression
-        func_decl = inspector.find_latest_name(func_call.name)
-
-        if type_of(func_decl) is not FuncDecl:
-            raise Undeclared(Function(), func_call.name)
+        func_decl = inspector.find_latest_name_of_type(func_call.name, [FuncDecl], Undeclared(Function(), func_call.name))
 
         # Parameters must match
         if len(func_decl.params) != len(func_call.args):

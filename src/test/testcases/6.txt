@@ -1,5 +1,5 @@
 
-        foo: function void(out x: int){}
+        foo: function void(out x: integer){}
         main: function void()
         {
             foo(2);

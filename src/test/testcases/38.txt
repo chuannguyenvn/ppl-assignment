@@ -1,6 +1,6 @@
 
         a: integer = 1;
-        foo: function void (integer b) inherit a {}
-        a: function string (inherit string c) {}
+        foo: function void (b: integer) inherit a {}
+        a: function string (inherit c: string) {}
         main: function void () {}
         

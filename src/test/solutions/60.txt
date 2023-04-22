@@ -1,1 +1,1 @@
-Type mismatch in expression: UnExpr(-, FuncCall(foo, []))
+Type mismatch in Variable Declaration: VarDecl(c, IntegerType, FuncCall(foo, []))

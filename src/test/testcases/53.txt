@@ -3,7 +3,7 @@
         foo: function string(foo: integer)
         {
             a: integer = foo;
-            b: string = foo();
+            b: string = foo(a);
             c: auto;
         }
         
