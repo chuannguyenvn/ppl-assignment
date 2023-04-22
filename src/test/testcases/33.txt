@@ -4,5 +4,6 @@
         {
             foo();
             a: boolean = foo();
+            end: auto;
         }
         

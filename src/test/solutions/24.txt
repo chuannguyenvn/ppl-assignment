@@ -1,1 +1,1 @@
-Type mismatch in statement: StringLit(Hi)
+Undeclared Function: bar
