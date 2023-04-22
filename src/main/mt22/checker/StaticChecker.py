@@ -52,10 +52,8 @@ def infer(lhs, rhs, exception):
         raise exception
 
 
-class TypeUncertainty:
-    def __init__(self, decls, types):
-        self.decls = decls
-        self.types = types
+class FloatOrInteger:
+    pass
 
 
 class ScopeMarker:
@@ -222,9 +220,6 @@ class StaticChecker(Visitor):
         if inspector.is_first_pass:
             inspector.check_redeclared(func_decl, Function())
 
-            if func_decl.inherit:
-                inspector.find_latest_name_of_type(func_decl.inherit, [FuncDecl], Undeclared(Function(), func_decl.inherit))
-
             inspector.add_symbol(func_decl)
 
             if func_decl.name == 'super' or func_decl.name == 'preventDefault':
@@ -241,7 +236,7 @@ class StaticChecker(Visitor):
         inspector.push_scope(func_decl)
 
         if func_decl.inherit:
-            parent_func_decl = inspector.find_latest_name(func_decl.inherit)
+            parent_func_decl = inspector.find_latest_name_of_type(func_decl.inherit, [FuncDecl], Undeclared(Function(), func_decl.inherit))
 
             # 3.3 Invalid Variable/Parameter declaration
             param_names = list(map(lambda p: p.name, func_decl.params))

@@ -1,1 +1,1 @@
-Undeclared Function: bar
+Type mismatch in statement: CallStmt(super, StringLit(Hi))

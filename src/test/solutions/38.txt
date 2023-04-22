@@ -1,1 +1,1 @@
-Undeclared Function: a
+Redeclared Variable: a
