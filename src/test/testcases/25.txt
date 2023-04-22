@@ -1,7 +1,9 @@
 
-            b: integer;
-            f1: function void() {
-                c: integer;
-                a: integer = b + c;
-            }
+        a: float = foo(1, 2) + 1.5;
+        foo: function auto(a: integer, b: integer)
+        {
+            return a + b;
+        }
+        b: float = foo(1, 2);
+        main: function void(){}
         

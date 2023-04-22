@@ -1,4 +1,5 @@
 
-            a : array[2] of boolean = {1, 2};
-            main: function void() {}
+        foo: function auto () {}
+        foo: function auto (a: integer, b: integer ) inherit bar {}
+        main: function void() {}
         

@@ -1,6 +1,13 @@
 
-            A: integer = 5;
-            B: boolean = true || false;
-            C: string = "abc" :: "def";
-            D: float = 5.0 + A;
+        a: function void (p : array [1] of integer) {}
+        foo: function auto(){}
+        bar: function auto(){}
+        goo: function auto(){}
+        gar: function auto(){}
+        main: function void()
+        {
+            a({1});
+            b: boolean = foo() == bar();
+            c: float = goo() + gar();
+        }
         

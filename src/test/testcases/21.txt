@@ -1,21 +1,6 @@
 
-            b: integer = 5;
-            c: integer = 6;
-            a: integer = b + c;
-
-            f1: function void() {
-                a: integer = 7;
-                {
-                    a: boolean = b == c;
-                    {
-                        a: float = 1.0 + b;
-                        {
-                            a: string = "abc";
-                            {
-                                printString(a);
-                            }
-                        }
-                    }
-                }
-            }
+        main: function void()
+        {
+            a: auto = 1.5 < 2;
+        }
         

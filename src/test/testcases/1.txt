@@ -1,1 +1,17 @@
-main1: function void() {}
+
+        foo: function void(a: float)
+        {
+            a  = 1;
+        }
+
+        bar: function void(a: auto, b: integer)
+        {
+            a = a + b;
+        }
+
+        main: function void()
+        {
+            foo(1);
+            end: auto;
+        }
+        

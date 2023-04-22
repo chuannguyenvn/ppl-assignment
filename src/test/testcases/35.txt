@@ -1,4 +1,7 @@
 
-            a : array[2, 2] of integer = {{1, 2}, {3, 4, 5}};
-            main: function void() {}
+        x: function void (a: auto) {}
+        main: function void()
+        {
+            x(1, 2);
+        }
         

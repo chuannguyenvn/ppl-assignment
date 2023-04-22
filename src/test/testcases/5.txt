@@ -1,1 +1,7 @@
-main: function auto() {}
+
+        main: function void()
+        {
+            return 1;
+            end: auto;
+        }
+        

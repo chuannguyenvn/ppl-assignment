@@ -1,1 +1,1 @@
-Type mismatch in Variable Declaration: VarDecl(b, BooleanType, IntegerLit(7))
+Undeclared Identifier: x

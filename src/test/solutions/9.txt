@@ -1,1 +1,1 @@
-Type mismatch in Variable Declaration: VarDecl(a, IntegerType, BinExpr(::, StringLit(int), StringLit(float)))
+Type mismatch in expression: BinExpr(!=, IntegerLit(1), BooleanLit(True))

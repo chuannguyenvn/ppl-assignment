@@ -1,5 +1,7 @@
 
-            A: integer = 5;
-            main: function void(a: integer, b: float, c: boolean) {}
-            main: function void() {}
+        foo: function void(out x: integer){}
+        main: function void()
+        {
+            foo(2);
+        }
         

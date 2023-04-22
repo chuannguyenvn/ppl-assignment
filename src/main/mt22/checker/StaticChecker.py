@@ -154,14 +154,17 @@ class StaticChecker(Visitor):
 
         # Parameters must match
         if len(func_decl.params) != len(params):
-            if func_decl.name == 'super':
-                raise TypeMismatchInExpression(params)
+            if func_decl.name == 'super' or func_decl.name == 'preventDefault':
+                if len(func_decl.params) > len(params):
+                    raise TypeMismatchInExpression(None)
+                else:
+                    raise TypeMismatchInExpression(params[len(func_decl.params)])
             else:
                 raise exception
 
         for i in range(len(params)):
             arg = self.visit(params[i], inspector)
-            if func_decl.name == 'super':
+            if func_decl.name == 'super' or func_decl.name == 'preventDefault':
                 infer(func_decl.params[i], arg, TypeMismatchInExpression(params[i]))
             else:
                 infer(func_decl.params[i], arg, exception)

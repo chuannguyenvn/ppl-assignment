@@ -1,5 +1,7 @@
 
-            f1: function void() {
-                a: string = "int" :: "float";
-            }
+        main: function void()
+        {
+            x = 5;
+        }
+        x: auto = 1;
         

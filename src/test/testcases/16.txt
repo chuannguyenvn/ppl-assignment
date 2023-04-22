@@ -1,8 +1,8 @@
 
-            f1: function void() {
-                a: integer = 2 * 3 + 8 % 5 - 7 / 7;
-                b: boolean = (2 == 3) && !(true) || (3 != 8);
-                c: float = 2 * 3.5 + 8 % 5 - 7 / 7;
-                d: string = ("abc" :: "def") :: "xyz";
-            }
+        foo1: function auto(){}
+        foo2: function auto(){}
+        a: array [2] of integer = { foo1(), foo2() };
+        b: integer = foo1();
+        c: integer = foo2();
+        main: function void(){}
         

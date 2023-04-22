@@ -1,9 +1,13 @@
 
-            b: integer;
-            foo: function void() {
-                c: integer = 5;
-            }
-            main: function void() {
-                a: integer = b + c;
-            }
+        foo: function integer(inherit x: integer) inherit bar
+        {
+            super(2);
+        }
+
+        bar: function integer(inherit y: integer) inherit foo2
+        {
+            super("Hi");
+        }
+
+        foo2: function integer(inherit z: float){}
         
