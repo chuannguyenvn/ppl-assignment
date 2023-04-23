@@ -1,10 +1,6 @@
 
-            main:function void(){
-                if(readBoolean() == true) return;
-                else{
-                    x:auto = true;
-                }
-                x:auto = 5;
-                x:float = 1;
+            foo: function string(){return "zam";}
+            main: function void(){
+                v: string = foo();
             }
         

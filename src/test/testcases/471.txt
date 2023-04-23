@@ -1,8 +1,6 @@
 
-            main:function void(){
-                x,y,z:integer = 1,"string", true;
-                arr:array[2] of integer = {x,y,z};
-                return;
-                return str;
+            foo: function void(a: integer, b: integer){}
+            main: function void(){
+                foo(3, 4);
             }
         

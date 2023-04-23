@@ -1,13 +1,6 @@
 
-            arr:array[2,2] of integer;
-            x:auto = 5;
-            main:function void(){
-                if(true) arr[0,1] = 2;
+            main: function void(){
                 return;
-            }
-            foo:function integer(){
-                do{break;} while(x); 
-                arr[0, arr[0,0]] = arr[12,12];
-                return;
+                return "di";
             }
         

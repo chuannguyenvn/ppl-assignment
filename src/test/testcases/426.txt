@@ -1,8 +1,4 @@
 
-            x:string;
-            main: function void(){
-                x:integer = readFloat() + readInteger() + readString() + readBoolean();
-                t:string = y::"abc";
-            }
-            y:auto = ((x::x)::x)::"abc";
+            man: function void(out sk: string)inherit foo{ }
+            main: function void(){}
         

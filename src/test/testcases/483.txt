@@ -1,10 +1,8 @@
 
-            main:function void(){
-                i:integer = 1;
-                for(i=0, i<10, i+1){
-                    if(i<=10) printInteger(i);
-                    else break;
-                }
-                if(i>=10) continue;
+            main: function void(){
+                if(1 < 2)
+                    return;
+                else
+                    return 100;
             }
         

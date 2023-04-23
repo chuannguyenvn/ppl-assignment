@@ -1,13 +1,4 @@
 
-            main:function void() inherit foo3{
-                super(13,1.0,"abc",1.0);
-                writeFloat(y);
-                foo3(1,2,3);
-            }
-            foo:function integer(inherit x:integer, inherit y:float, inherit t:string, f:float) inherit foo2{
-                return 0;
-            }
-            foo2:function float(inherit f:float){
-                return 2.0;
-            }
+            V: function integer(x: integer, y: string){}
+            main: function void() inherit V{ super(1,2);  }
         

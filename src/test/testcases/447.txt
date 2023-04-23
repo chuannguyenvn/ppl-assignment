@@ -1,5 +1,6 @@
 
-            main:function void(){
-                arr:auto = {};
+            bar: function void(){
+                x, y: auto;
+                z: auto = x + 1;
             }
         

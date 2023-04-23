@@ -1,1 +1,1 @@
-Type mismatch in statement: AssignStmt(Id(i), BooleanLit(True))
+Type mismatch in statement: AssignStmt(ArrayCell(v, [IntegerLit(0), IntegerLit(0)]), IntegerLit(1000))

@@ -1,4 +1,4 @@
 
-        super: function integer(){}
-        main: function void(){}
+            a : array[2, 2] of integer = {{1, "c"}, {3, "a", "d"}};
+            main: function void() {}
         

@@ -1,16 +1,7 @@
 
-            main:function void(){
-                if(readBoolean() == true){
-                    x:integer = 5;
-                    x = x + x + x;
-                    return;
-                    y,z:string = 1,2;
-                }
-                else{
-                    t:string = "abc"::"abc";
-                    break;
-                }
-                x:auto = 5;
-                x:float = 1;
+            foo: function auto(){}
+            main: function void(){
+                a: auto = foo();
+                foo();
             }
         

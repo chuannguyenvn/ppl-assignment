@@ -1,1 +1,1 @@
-Type mismatch in expression: StringLit(123)
+Type mismatch in statement: ReturnStmt(StringLit(zam))

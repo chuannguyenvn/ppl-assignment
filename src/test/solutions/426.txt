@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(+, BinExpr(+, FuncCall(readFloat, []), FuncCall(readInteger, [])), FuncCall(readString, []))
+Undeclared Function: foo

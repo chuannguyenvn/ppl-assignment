@@ -1,9 +1,7 @@
 
-             main:function void(){
-                arr:array[2,2] of integer = {foo(),foo()};
-                x:float = foo() + 1;
-            }
-            foo:function auto(){
-                return {1,2};
+            main: function void(){
+                x, y: auto = x, y;
+                z: integer = (x + 1)+y;
+                y = 100.0;
             }
         

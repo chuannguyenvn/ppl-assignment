@@ -1,6 +1,10 @@
 
-            main:function void() inherit foo{
-                return;
+            foo: function integer(){}
+            main: function void(){
+                if(1 < 2)
+                    return;
+                else
+                    foo();
+                return 100;
             }
-            foo:auto = 5;
         

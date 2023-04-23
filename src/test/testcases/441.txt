@@ -1,17 +1,6 @@
 
-            x:integer = 3/3;
-            t:float = 2 * 6;
-            main:function void() inherit foo{
-                super(12, t);
-                x:auto = foo(1, y, x);
-                foo2();
-                arr:array[2,2] of integer = {{1,2}, {1,2}};
-                t:float = foo(12, x, arr[1,2]);
-                t = foo(12, 1.0, 1);
-                t = foo(1,1,1);
+            main: function void(){
+                V: auto = 22;
+                a: integer = V+48.6;
             }
-            foo:function float(x:integer, inherit out y:float, inherit out z:integer){
-                return x + 1.2;
-            }
-            foo2: function void(){}
         

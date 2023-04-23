@@ -1,1 +1,1 @@
-Type mismatch in expression: StringLit(Hi)
+Undeclared Identifier: c

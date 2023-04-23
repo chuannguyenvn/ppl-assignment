@@ -1,11 +1,6 @@
 
-            x:string = "abc";
-            main:function void(){
-                x:auto = 5;
-                for(x=0,x<10,x+1) if(x<3) x = x+1; else continue;
-                do{break;}while(true);
-                while(true) continue;
-                if(x+2 <= x) return;
-                return 1;
+            main: function void(){
+                a: float = v;
+                v: integer = 3;
             }
         

@@ -1,11 +1,7 @@
 
-            x:string;
             main: function void(){
-                z:auto = !true && false;
-                printBoolean(z);
-                x:auto = -2 / (readInteger() - 1);
-                printFloat(x);
-                readInteger(1);
+                V, v, R, Htd, OW, Lq, M: integer;
+                for ( V = - v, false, 1000 + i) 
+                    main();     
             }
-            y:auto = ((x::x)::x)::"abc";
         

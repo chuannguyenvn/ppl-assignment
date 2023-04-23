@@ -1,7 +1,10 @@
 
-        main: function void() {}
-        foo: function void (b: auto, c: auto)
-        {
-	        a: string = b + c;
-        }
+            main: function void() {}
+            foo: function integer(a: integer) {
+                return 123;
+            }
+            goo: function integer() inherit foo {
+                super(1);
+                super(2);
+            }
         

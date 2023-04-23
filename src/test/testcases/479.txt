@@ -1,12 +1,4 @@
 
-            arr:array[2,2] of integer;
-            x:auto = 5;
-            main:function void(){
-                if(x) arr[0,1] = 2;
-                return;
-            }
-            foo:function integer(){
-                while(x) arr[0, arr[0,0]] = arr[12,12];
-                return;
-            }
+            main: function void(a: float, b: float){a = "1000";}
+            main: function void(){}
         

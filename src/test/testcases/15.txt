@@ -1,12 +1,4 @@
 
-        foo: function auto(){}
-        bar: function auto(){}
-        goo: function auto(){}
-        main: function void()
-        {
-            a: auto = foo() + bar();
-            b: integer = foo(); // ?
-            c: auto = -goo();
-            d: integer = goo(); // ?
-        }
+            A: integer = 5;
+            main1: function void(a: integer, b: float, c: boolean) {}
         

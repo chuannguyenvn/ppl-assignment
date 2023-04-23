@@ -1,10 +1,8 @@
 
-            foo:function integer(x:string){
-                return 1;
-            }
-            main:function void(){
-                foo:string;
-                x:auto = foo("abc");
-                x = foo;
+            foo: function void(a: float, b: float){}
+            main: function void(){
+                x: auto = x;
+                foo(x, x+2);
+                x = 3.3;
             }
         

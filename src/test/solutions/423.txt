@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(::, FuncCall(foo, [IntegerLit(1)]), StringLit(abc))
+Type mismatch in statement: AssignStmt(Id(V), UnExpr(-, Id(v)))

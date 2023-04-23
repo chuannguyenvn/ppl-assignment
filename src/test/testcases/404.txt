@@ -1,8 +1,1 @@
-
-            main:function void(){
-                x:integer;
-                y:float;
-                z:auto = x+y*3/z;
-                return z;
-            }
-        
+main: function integer(mem: string){}

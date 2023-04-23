@@ -1,1 +1,1 @@
-Type mismatch in expression: BooleanLit(True)
+Type mismatch in statement: CallStmt(V, )

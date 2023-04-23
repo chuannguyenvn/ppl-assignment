@@ -1,10 +1,14 @@
 
-            x:string;
-            y:float = 2 + 2;
-            main:function void(){
-                x:integer = 5;
-                z:auto = x + y;
+            mai: string = "boo";
+            main: function void(){}
+            man: function integer(inherit dun: float){
+                keke: integer = 239;
+                if(keke < 565){
+                    surigame: string = mai::"dumdum";
+                }
+                {
+                    tes: auto = 34;
+                    main();
+                }
             }
-            t:string = x::"abc";
-            e:float = y + z;
         

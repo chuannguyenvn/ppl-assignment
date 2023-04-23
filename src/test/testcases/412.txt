@@ -1,8 +1,3 @@
 
-            foo:function integer(inherit x:integer, inherit y:float, inherit t:string) inherit foo2{
-                super(1.2);
-            }
-            foo2:function float(inherit f:float){
-                return f + 2;
-            }
+            main: function void(out k: integer, k: string){super();}
         

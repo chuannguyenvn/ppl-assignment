@@ -1,5 +1,5 @@
 
-            main:function void(){
-                arr:array[0] of integer = {1,2};
+            main: function void(){
+                v: string = 1000;
             }
         

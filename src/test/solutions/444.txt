@@ -1,1 +1,1 @@
-Type mismatch in statement: ReturnStmt(ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), IntegerLit(2)])]))
+[]

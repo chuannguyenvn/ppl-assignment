@@ -1,8 +1,6 @@
 
-            x:string;
             main: function void(){
-                x:integer = readInteger()/3 - x*4;
-                t:string = y::"abc";
+                x = 43;
+                x: integer;
             }
-            y:auto = ((x::x)::x)::"abc";
         

@@ -1,1 +1,1 @@
-Redeclared Function: super
+Illegal array literal: ArrayLit([ArrayLit([IntegerLit(1), StringLit(c)]), ArrayLit([IntegerLit(3), StringLit(a), StringLit(d)])])

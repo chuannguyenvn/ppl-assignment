@@ -1,1 +1,1 @@
-Illegal array literal: ArrayLit([ArrayLit([FuncCall(foo, []), FuncCall(foo, [])]), ArrayLit([FuncCall(foo, []), FuncCall(foo, [])])])
+Type mismatch in statement: AssignStmt(Id(x), FloatLit(100.0))

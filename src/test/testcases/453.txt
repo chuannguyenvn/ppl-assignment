@@ -1,9 +1,6 @@
 
-            main:function void(){
-                arr:array[111,222,333] of integer = foo();
-                x:integer = arr[12, 219 + 2, arr[34, 56, 111]] + 2;
-                arr2:auto = arr[110];
-                printInteger(arr2);
+            mam: function void(b: integer){
+                x: boolean = 2 != true;
             }
-            foo:function array[111,222,333] of integer(){}
+            main: function void(){}
         

@@ -1,1 +1,1 @@
-Invalid Variable: c
+Type mismatch in statement: ReturnStmt(Id(a))

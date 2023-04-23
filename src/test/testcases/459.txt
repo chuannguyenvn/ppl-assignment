@@ -1,9 +1,5 @@
 
-            main:function void(){
-                main:auto = 5;
-                main = main + 12;
-                printInteger(main);
-                printFloat(main);
-                return main;
+            main: function void(){
+                v: array[2, 2] of float = {{1.2, 3}, {1.0, 3.543}};
             }
         

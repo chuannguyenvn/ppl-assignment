@@ -1,1 +1,1 @@
-Type mismatch in statement: ReturnStmt(Id(z))
+Type mismatch in Variable Declaration: VarDecl(x, IntegerType, FloatLit(100.3))

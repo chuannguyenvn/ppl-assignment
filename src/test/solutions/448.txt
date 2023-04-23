@@ -1,1 +1,1 @@
-Illegal array literal: ArrayLit([ArrayLit([]), ArrayLit([])])
+Type mismatch in statement: AssignStmt(Id(x), FloatLit(24.3))

@@ -65,12 +65,13 @@ class Inspector:
     def __init__(self):
         self.scope_stack = [ScopeMarker()]
         self.is_first_pass = True
+        self.override_auto = None
         self.possible_types = None
         self.lhs_type = None
         self.lhs_exception = None
-        self.only_return = False
 
     def reset_states(self):
+        self.override_auto = None
         self.possible_types = None
         self.lhs_type = None
         self.lhs_exception = None
@@ -149,31 +150,21 @@ class StaticChecker(Visitor):
 
     def call_func(self, function_name, params, inspector, exception):
         # 3.4 Type Mismatch In Expression
-        func_decl = inspector.find_latest_name(function_name)
-
-        if type_of(func_decl) is not FuncDecl:
-            raise exception
+        func_decl = inspector.find_latest_name_of_type(function_name, [FuncDecl], Undeclared(Function(), function_name))
 
         # Parameters must match
         if len(func_decl.params) != len(params):
-            if func_decl.name == 'super' or func_decl.name == 'preventDefault':
-                if len(func_decl.params) > len(params):
-                    raise TypeMismatchInExpression(None)
-                else:
-                    raise TypeMismatchInExpression(params[len(func_decl.params)])
+            if func_decl.name == 'super':
+                raise TypeMismatchInExpression(params)
             else:
                 raise exception
 
         for i in range(len(params)):
             arg = self.visit(params[i], inspector)
-            if func_decl.name == 'super' or func_decl.name == 'preventDefault':
+            if func_decl.name == 'super':
                 infer(func_decl.params[i], arg, TypeMismatchInExpression(params[i]))
             else:
                 infer(func_decl.params[i], arg, exception)
-
-        inspector.only_return = True
-        self.visit(func_decl.body, inspector)
-        inspector.only_return = False
 
         return func_decl
 
@@ -181,7 +172,7 @@ class StaticChecker(Visitor):
         self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('printInteger', VoidType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readFloat', FloatType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('printFloat', VoidType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('writeFloat', VoidType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readBoolean', BooleanType(), [], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('printBoolean', VoidType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readString', StringType(), [], None, BlockStmt([])), inspector)
@@ -244,11 +235,11 @@ class StaticChecker(Visitor):
             if func_decl.name == 'super' or func_decl.name == 'preventDefault':
                 raise Redeclared(Function(), func_decl.name)
 
-            parent_param_names = []
+            param_names = []
             for param in func_decl.params:
-                if param.name in parent_param_names:
+                if param.name in param_names:
                     raise Redeclared(Parameter(), param.name)
-                parent_param_names.append(param.name)
+                param_names.append(param.name)
 
             return
 
@@ -257,11 +248,11 @@ class StaticChecker(Visitor):
         if func_decl.inherit:
             parent_func_decl = inspector.find_latest_name_of_type(func_decl.inherit, [FuncDecl], Undeclared(Function(), func_decl.inherit))
 
-            # # 3.3 Invalid Variable/Parameter declaration
-            # parent_param_names = list(map(lambda p: p.name, parent_func_decl.params))
-            # for param in func_decl.params:
-            #     if param.inherit:
-            #         inspector.add_symbol(param)
+            # 3.3 Invalid Variable/Parameter declaration
+            param_names = list(map(lambda p: p.name, func_decl.params))
+            for parent_param in parent_func_decl.params:
+                if parent_param.inherit and parent_param.name in param_names:
+                    raise Invalid(Parameter(), parent_param.name)
 
             # 2.3 Inheritance features
             inspector.add_symbol(self.visit(FuncDecl('super', parent_func_decl.return_type, parent_func_decl.params, None, BlockStmt([])), inspector))
@@ -284,9 +275,6 @@ class StaticChecker(Visitor):
     def visitBlockStmt(self, block_stmt: BlockStmt, inspector: Inspector):
         inspector.push_scope()
         for i in range(len(block_stmt.body)):
-            if inspector.only_return and type_of(block_stmt.body[i]) is not ReturnStmt:
-                continue
-
             if type_of(inspector.get_latest_marker().owner) is FuncDecl:
                 name = inspector.get_latest_marker().owner
                 if type_of(block_stmt.body[i]) is CallStmt:
@@ -296,7 +284,6 @@ class StaticChecker(Visitor):
                     if block_stmt.body[i].name == 'super' or block_stmt.body[i].name == 'preventDefault':
                         if i != 0:
                             raise InvalidStatementInFunction(name)
-                        
             self.visit(block_stmt.body[i], inspector)
         inspector.pop_scope()
 
@@ -307,7 +294,7 @@ class StaticChecker(Visitor):
         rhs = self.visit(assign_stmt.rhs, inspector)
 
         # If LHS is not an identifier or array subscripting expr
-        if type_of(lhs) not in [VarDecl, ParamDecl] and not isinstance(lhs, Type):
+        if type_of(lhs) not in [VarDecl, ParamDecl]:
             raise TypeMismatchInStatement(assign_stmt)
 
         # LHS can't be of type void or array
@@ -375,12 +362,11 @@ class StaticChecker(Visitor):
         inspector.push_scope(do_while_stmt)
 
         # 3.5 Type Mismatch In Statement
-
-        self.visit(do_while_stmt.stmt, inspector)
-
         # Conditional expression must be boolean
         cond = self.visit(do_while_stmt.cond, inspector)
         infer(cond, BooleanType(), TypeMismatchInStatement(do_while_stmt))
+
+        self.visit(do_while_stmt.stmt, inspector)
 
         inspector.pop_scope(do_while_stmt)
 

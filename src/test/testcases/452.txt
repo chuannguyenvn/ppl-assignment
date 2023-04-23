@@ -1,10 +1,7 @@
 
-            main:function void(){
-                arr:array[3,2] of integer = {{1,2}, {1,2}, {1, foo()}};
-                x:integer = foo() + 2;
-                arr2:array[2] of integer = foo();
+            mam: function void(b: auto){
+                mam(100);
+                b = "string";
             }
-            foo:function auto(){
-                return 0;
-            }
+            main: function void(){}
         

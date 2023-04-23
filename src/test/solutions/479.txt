@@ -1,1 +1,1 @@
-Type mismatch in statement: IfStmt(Id(x), AssignStmt(ArrayCell(arr, [IntegerLit(0), IntegerLit(1)]), IntegerLit(2)))
+Redeclared Function: main

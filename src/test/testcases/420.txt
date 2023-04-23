@@ -1,12 +1,7 @@
 
-            foo:function auto(x:integer){
-                return "abc";
+            a: function void (b: integer) inherit a { super(1); }
+            foo: function void(){
+                a: integer = 1000;
             }
-            main:function void(){
-                x:integer = foo1(foo(12)) + 1;
-                t:string = foo(12)::"abc";
-            }
-            foo1:function integer(x:integer){
-                return x+1;
-            }
+            a: function string (inherit c: string) {}
         

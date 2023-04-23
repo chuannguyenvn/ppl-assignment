@@ -1,14 +1,5 @@
 
-            main:function void(){
-                if(true){
-                    i:integer;
-                    for(i=0,i<10,i+1) if(true) break; else continue;
-                    {
-                        while(true){
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
+            foo: function integer(inherit k: integer){}
+            man: function void(out k: string)inherit foo{ }
+            main: function void(){}
         

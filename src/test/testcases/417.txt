@@ -1,10 +1,6 @@
 
-            foo:function auto(x:integer){
-                return;
+            mamn: function void(out man: string){ 
+                man: integer;
             }
-            main:function void(){
-             foo(12);
-             x:string = foo(12)::"abc";
-             y:integer = foo(1) + 1;
-            }
+            main: function void(){}
         

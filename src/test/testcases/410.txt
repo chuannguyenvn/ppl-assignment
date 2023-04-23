@@ -1,12 +1,7 @@
 
-            main:function void() inherit foo{
-                preventDefault();
-                printInteger(x);
-                printFloat(y);
-                printString(t);
-                z:array[5] of integer = {1,2,3,4,5.0};
+            man: function void(out k: string)inherit foo{
+                super(12);
             }
-            foo:function integer(inherit x:integer, inherit y:float, inherit t:string){
-                return x/3;
-            }
+            foo: function integer(inherit c: integer){}
+            main: function void(){}
         

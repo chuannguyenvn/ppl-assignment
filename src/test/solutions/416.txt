@@ -1,1 +1,1 @@
-Type mismatch in statement: ReturnStmt(StringLit(abc))
+Redeclared Function: main

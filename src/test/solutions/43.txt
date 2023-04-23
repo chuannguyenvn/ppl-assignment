@@ -1,1 +1,1 @@
-Invalid Variable: end
+Type mismatch in expression: IntegerLit(2)

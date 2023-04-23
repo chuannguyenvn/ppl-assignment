@@ -1,7 +1,9 @@
-
-        main: function void()
-        {
-            a: integer;
-            a = 5.4;
-        }
+main: function void(a: integer, b: integer) {}
+            main2: function boolean() {
+                return true;
+            }
+            A: float = 5;
+            main1: function void() {
+                A: integer = 5;
+            }
         

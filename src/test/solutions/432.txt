@@ -1,1 +1,1 @@
-Undeclared Identifier: y
+Type mismatch in Variable Declaration: VarDecl(a, StringType, FuncCall(V, []))

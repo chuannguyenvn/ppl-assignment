@@ -1,5 +1,10 @@
 
-        main: function void() {}
-        x: array [1,2,3] of integer;
-        y: auto = x[2 < 3];
+            foo: function integer() {
+                a: integer = 5;
+                while (a < 10) {      
+                    if(a == 8) {
+                        return 0;
+                    }
+                }
+            }
         

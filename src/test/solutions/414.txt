@@ -1,1 +1,1 @@
-No entry point
+Type mismatch in expression: [<AST.IntegerLit object at 0x000001F1C0151BB0>, <AST.StringLit object at 0x000001F1C0151DC0>]

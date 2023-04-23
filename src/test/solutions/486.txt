@@ -1,1 +1,1 @@
-Undeclared Identifier: x
+Type mismatch in Variable Declaration: VarDecl(M, IntegerType, UnExpr(!, FuncCall(readBoolean, [])))

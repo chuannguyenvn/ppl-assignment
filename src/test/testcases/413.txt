@@ -1,7 +1,3 @@
 
-            x:string;
-            main:function void(x:string, t:string){
-                t = x::t;
-                return;
-            }
+            main: function void(out k: integer, a: string){super();}
         

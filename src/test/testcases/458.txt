@@ -1,6 +1,5 @@
 
-            foo:function integer(){
-                return 1;
+            main: function void(){
+                v: array[2, 2] of float = {{1.2, 3.5}, {1.0, 3.543}};
             }
-            foo:string;
         

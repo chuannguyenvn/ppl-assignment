@@ -1,8 +1,7 @@
 
-            main:function void(){
-                a:array[0,0] of integer = a[10];
-                return;
-                return 1;
-                x:auto;
+            mam: function void(b: string){
+                v: array[2,2] of integer = {{1,2},{3,4}};
+                x: integer = v[0,0,0];
             }
+            main: function void(){}
         

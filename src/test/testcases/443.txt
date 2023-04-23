@@ -1,17 +1,7 @@
 
-            x:integer = 3/3;
-            t:float = 2 * 6;
-            main:function void(){
-                y:float = foo(12, t, x) / 2.3;
-                arr:auto = {{{1,2,3},{1,2,3}},{{1,2,3},{1,2,3}},{{1,2,3},{1,2,3}}};
-                x:float = foo(arr[0,0,0]*arr[1,1,1]%arr[2,1,2]-arr[1,1,arr[1,1,2]], foo(arr[0,1,1],2.0,3), 3);
-                arr2:auto = arr[2,1];
-                x = foo(arr2[2], 2.0, arr2[0]);
-                arr3:auto = arr2;
-                arr4:auto = arr3[0];
-                x = arr4[1];
-            }
-            foo:function float(x:integer, y:float, z:integer){
-                return x + 1.2;
+            main: function void(){
+                V: auto = V;
+                a: integer = V+33;
+                V = 3.3;
             }
         

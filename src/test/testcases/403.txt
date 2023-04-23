@@ -1,8 +1,5 @@
 
-            main:function void(){
-                x:integer;
-                y:float;
-                z:auto = x+y*3/x;
-                return z;
+            main: function void(){
+                x, y: integer = 100.3, 20;
             }
         

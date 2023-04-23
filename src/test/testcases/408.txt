@@ -1,11 +1,9 @@
 
-            main:function void() inherit foo{
-                super(1,1.0,1);
-                printInteger(x);
-                printInteger(y);
-                printString(t);
+            man: function void(out k: string)inherit foo{
+                super(1);
+                d = "bro";
             }
-            foo:function integer(inherit x:integer, inherit y:float, inherit t:string){
-                return x/3;
-            }
+            foo: function integer(inherit c: integer)inherit bar{}
+            bar: function void(inherit d: string){}
+            main: function void(){}
         

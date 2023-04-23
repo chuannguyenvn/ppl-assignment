@@ -1,7 +1,6 @@
 
-            x:string = "abc";
-            main:function void(){
-                x= "abc"::"abc";
+            main: function void(){
+                y: auto = y:
+                x: auto = y != 1; 
             }
-            x:integer = 10;
         

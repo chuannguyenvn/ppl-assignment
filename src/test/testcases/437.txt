@@ -1,6 +1,5 @@
 
-            main:function void(){
-                super(1,2,3);
-                return;
+            main: function void(){
+                a: boolean = 1 == false;
             }
         

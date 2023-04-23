@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(&&, UnExpr(!, UnExpr(!, UnExpr(!, BooleanLit(True)))), UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(3)))))
+Undeclared Identifier: x

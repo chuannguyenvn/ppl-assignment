@@ -1,13 +1,7 @@
 
-            main:function void() inherit foo{
-                super("abc", true);
-                z = z::z;
-                t = false;
-                x:integer = 5;
-                y:string;
+            foo: function void(a: auto, b: float){
+                a = b;
+                a = 1000.6;
             }
-            foo:function auto(inherit z:string, inherit t:boolean) inherit foo2{
-                preventDefault();
-            }
-            foo2:function auto(inherit x:integer, inherit y:float, inherit x:integer){}
+            main: function void(){}
         

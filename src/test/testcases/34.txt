@@ -1,7 +1,4 @@
 
-        x: function void (a: auto) {}
-        main: function void()
-        {
-            x();
-        }
+            a : array[2, 2, 2] of integer = {{{1,2}, {3, 4}}, {{5.0, 6.1}, {7.8, 9.9}}};
+            main: function void() {}
         

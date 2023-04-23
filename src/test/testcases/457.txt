@@ -1,6 +1,5 @@
 
-            foo:string;
-            foo:function integer(){
-                return 1;
+            main: function void(){
+                v: array[2] of float = {1.2, 2};
             }
         

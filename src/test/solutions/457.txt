@@ -1,1 +1,1 @@
-Redeclared Variable: foo
+Illegal array literal: ArrayLit([FloatLit(1.2), IntegerLit(2)])

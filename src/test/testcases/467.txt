@@ -1,10 +1,4 @@
 
-            main:function void(){
-                a:array[2] of integer;
-                x:integer = a["123"];
-                if(readBoolean() == true) return;
-                else return;
-                x:auto = 5;
-                x:float = 1;
-            }
+            foo: function integer(){return "zam";}
+            main: function void(){}
         
