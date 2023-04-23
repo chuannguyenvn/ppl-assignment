@@ -1,1 +1,1 @@
-Type mismatch in expression: [<AST.IntegerLit object at 0x000001A28D19B160>, <AST.StringLit object at 0x000001A28D19B850>]
+Type mismatch in expression: StringLit(dum)

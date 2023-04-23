@@ -1,1 +1,1 @@
-Type mismatch in expression: [<AST.IntegerLit object at 0x000001A28D2D5D90>, <AST.IntegerLit object at 0x000001A28D2D56A0>, <AST.IntegerLit object at 0x000001A28D2D5700>]
+Type mismatch in expression: IntegerLit(3)

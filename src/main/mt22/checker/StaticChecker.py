@@ -166,7 +166,10 @@ class StaticChecker(Visitor):
         # Parameters must match
         if len(func_decl.params) != len(params):
             if func_decl.name == 'super':
-                raise TypeMismatchInExpression(params)
+                if len(func_decl.params) > len(params):
+                    raise TypeMismatchInExpression(None)
+                else:
+                    raise TypeMismatchInExpression(params[len(func_decl.params)])
             else:
                 raise exception
 
