@@ -1,4 +1,6 @@
 
     main: function void(){}
-    foo: function void(a: string, main: boolean){}
+    foo: function void(a: string, main: boolean){
+    a = 1;
+    }
     

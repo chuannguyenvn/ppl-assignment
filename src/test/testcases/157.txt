@@ -9,5 +9,6 @@
                     while (a % b == 0)
                         for (a = 0, true, 1)
                             return;
+                            end: auto;
     }
     

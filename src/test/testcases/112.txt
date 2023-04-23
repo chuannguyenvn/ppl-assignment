@@ -1,7 +1,5 @@
 
-                f1: function auto(b: float, c: auto) {
-                    do {
-                        x: integer = "abc";
-                    } while (x + 1 == 2);
-                }
-            
+    a: auto = 1;
+    b: integer = 2;
+    c: integer = a - b;
+    

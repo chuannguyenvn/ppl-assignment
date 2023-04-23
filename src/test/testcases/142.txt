@@ -4,5 +4,7 @@
     main: function void(){
         if (a)
             foo();
+            
+        end: auto;
     }
     

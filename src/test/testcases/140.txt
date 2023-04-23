@@ -1,6 +1,6 @@
 
-    main: function void(){
+    foo: function void(){
         if (true)
-            main();
+            foo();
     }
     

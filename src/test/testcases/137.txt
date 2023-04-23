@@ -2,5 +2,5 @@
     main: function void(){}
     foo: function void(a: string){}
     a: string;
-    foo(a);
+    end: auto;
     

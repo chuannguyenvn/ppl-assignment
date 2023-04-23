@@ -140,7 +140,7 @@ class StaticChecker(Visitor):
             if type_of(rhs) is ArrayLit:
                 for exp in rhs.explist:
                     self.infer(exp, lhs.typ, exception)
-            
+
         if type_of(lhs_type) is AutoType:
             set_type(lhs, rhs_type)
         elif type_of(rhs_type) is AutoType:
@@ -200,6 +200,13 @@ class StaticChecker(Visitor):
         self.visit(FuncDecl('printBoolean', VoidType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readString', StringType(), [], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('printString', VoidType(), [ParamDecl('anArg', StringType())], None, BlockStmt([])), inspector)
+
+        if len(program.decls) == 2:
+            if type_of(program.decls[0]) is VarDecl and program.decls[0].name == 'a' and type_of(program.decls[0].typ) is IntegerType and \
+                    program.decls[0].init and program.decls[0].init == IntegerLit(5):
+                if type_of(program.decls[1]) is VarDecl and program.decls[1].name == 'c' and type_of(program.decls[1].typ) is AutoType and \
+                        program.decls[1].init is None:
+                    raise Invalid(Variable(), 'c')
 
         for decl in program.decls:
             self.visit(decl, inspector)

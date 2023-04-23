@@ -3,5 +3,7 @@
     main: function void(){
         if (false)
             foo();
+            
+        end: auto;
     }
     

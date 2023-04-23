@@ -2,7 +2,9 @@
     foo: function boolean(){}
     main: function void(){
         do
-            foo();
+          {  foo();}
         while (foo());
+        
+        end: auto;
     }
     

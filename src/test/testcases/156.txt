@@ -8,5 +8,6 @@
             {
                 a: string = "lmao";
             }
+            end: auto;
     }
     

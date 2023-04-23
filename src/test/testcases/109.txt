@@ -1,4 +1,4 @@
 
     a: integer = "lmao";
-    main: function void(){}
+    main: function auto(){}
     

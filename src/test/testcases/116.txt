@@ -2,5 +2,4 @@
     a: auto = -1.1;
     b: float = 2.2;
     c: auto = a / b;
-    main: function void(){}
     

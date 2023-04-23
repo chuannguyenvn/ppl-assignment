@@ -4,5 +4,7 @@
         a: integer;
         for (a = 1, a < 10, a + 1)
             continue;
+            
+        end: auto;
     }
     

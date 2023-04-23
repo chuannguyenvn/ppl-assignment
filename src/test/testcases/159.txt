@@ -9,5 +9,6 @@
                 main();
                 c: auto = foo(a);
             }
+        end: auto;
     }
     

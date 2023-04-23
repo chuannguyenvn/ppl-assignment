@@ -3,4 +3,5 @@
     main: function void(){
     a: string;
     }
+    end: auto;
     

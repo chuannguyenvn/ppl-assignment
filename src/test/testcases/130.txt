@@ -2,4 +2,5 @@
     main: function void(){}
     foo: function string(a: string){}
     a: auto = foo(a);
+    end: auto;
     

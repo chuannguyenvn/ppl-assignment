@@ -1,4 +1,5 @@
 
     main: function void(){}
     a: auto = main();
+    end: auto;
     

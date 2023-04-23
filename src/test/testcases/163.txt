@@ -3,5 +3,5 @@
     foo: function void(a: float){}
     a: auto = 1 + 2;
     b: auto = a + 1.2;
-    foo(b);
+    end: auto;
     

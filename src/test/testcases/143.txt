@@ -3,5 +3,7 @@
     main: function void(){
         while (true || false)
             foo();
+            
+        end: auto;
     }
     

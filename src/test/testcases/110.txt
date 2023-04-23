@@ -1,4 +1,5 @@
 
     a: auto = 1;
     main: function void(){}
+    main: function void(){}
     
