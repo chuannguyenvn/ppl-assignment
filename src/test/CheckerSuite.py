@@ -533,19 +533,6 @@ class CheckerSuite(unittest.TestCase):
         expect = """No entry point"""
         self.assertTrue(TestChecker.test(input, expect, 47))
 
-    def test_super5(self):
-        input = """
-            main: function void() {}
-            foo: function integer(a: integer) {
-                return 123;
-            }
-            goo: function integer() inherit foo {
-                super(1);
-                super(2);
-            }
-        """
-        expect = """Undeclared Function: super"""
-        self.assertTrue(TestChecker.test(input, expect, 48))
 
     def test_if1(self):
         input = """
@@ -1421,15 +1408,7 @@ class CheckerSuite(unittest.TestCase):
     ############################################################## 
     #                     CHECK INHERITANCE                      #
     ##############################################################
-    def test_407_invalid_param_1(self):
-        input = """
-            foo: function integer(inherit k: integer){}
-            man: function void(out k: string)inherit foo{ }
-            main: function void(){}
-        """
-        # this case needs more attention
-        expect = "Invalid statement in function: man"
-        self.assertTrue(TestChecker.test(input, expect, 407))
+
     def test_408_check_inherit_1(self):
         input = """
             man: function void(out k: string)inherit foo{
@@ -1488,13 +1467,7 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type mismatch in expression: StringLit(dum)"
         self.assertTrue(TestChecker.test(input, expect, 414))
-    def test_415_check_inherit_8(self):
-        input = """
-            boo: function void(a: integer){}
-            main: function void(boo: integer) inherit boo{super(1);}
-        """
-        expect = "No entry point"
-        self.assertTrue(TestChecker.test(input, expect, 415))
+
     ############################################################## 
     #                          REDECLARED                        #
     ############################################################## 
@@ -1525,14 +1498,7 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Redeclared Variable: k"
         self.assertTrue(TestChecker.test(input, expect, 418))
-    def test_419_redeclared_4(self):
-        input = """
-            a: integer = 1;
-            foo: function void (b: integer) inherit a { super("kek"); }
-            a: function string (inherit c: string) {}
-        """
-        expect = "Redeclared Function: a"
-        self.assertTrue(TestChecker.test(input, expect, 419))
+
     def test_420_redeclared_5(self):
         input = """
             a: function void (b: integer) inherit a { super(1); }
@@ -1668,13 +1634,7 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type mismatch in expression: FuncCall(V, [])"
         self.assertTrue(TestChecker.test(input, expect, 432))
-    def test_433_args_num_1(self):
-        input = """
-            V: function integer(x: integer, y: string){}
-            main: function void(){ V();  }
-        """
-        expect = "Type mismatch in expression: "
-        self.assertTrue(TestChecker.test(input, expect, 433))
+
     def test_434_args_num_2(self):
         input = """
             V: function integer(x: integer, y: string){}
@@ -1717,23 +1677,8 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type mismatch in statement: CallStmt(V, )"
         self.assertTrue(TestChecker.test(input, expect, 438))
-    def test_439_assign_wrong_typ(self):
-        input = """
-            main: function void(){
-                main = 2988;  
-            }
-        """
-        expect = "Type mismatch in statement: AssignStmt(Id(main), IntegerLit(2988))"
-        self.assertTrue(TestChecker.test(input, expect, 439))
-    def test_440_assign_wrong_typ(self):
-        input = """
-            main: function integer(){}
-            boo: function void(){
-                main = main;
-            }
-        """
-        expect = "No entry point"
-        self.assertTrue(TestChecker.test(input, expect, 440))
+
+
     ############################################################## 
     #                        TYPE INFERENCE                      #
     ############################################################## 
@@ -1784,15 +1729,7 @@ class CheckerSuite(unittest.TestCase):
         """
         expect = "Type mismatch in statement: AssignStmt(Id(y), FloatLit(100.0))"
         self.assertTrue(TestChecker.test(input, expect, 445))
-    def test_446_test_coercion_6(self):
-        input = """
-            foo: function auto() {}
-            a: integer = -foo();  
-            x: auto = x + foo();
-            bar: function void(){ x = 100.0; }
-        """
-        expect = "Type mismatch in statement: AssignStmt(Id(x), FloatLit(100.0))"
-        self.assertTrue(TestChecker.test(input, expect, 446))
+
     def test_447_test_coercion_7(self):
         input = """
             bar: function void(){

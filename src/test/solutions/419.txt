@@ -1,1 +1,1 @@
-Redeclared Variable: a
+Type mismatch in statement: CallStmt(super, StringLit(kek))

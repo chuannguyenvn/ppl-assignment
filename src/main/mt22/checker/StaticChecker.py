@@ -182,10 +182,9 @@ class StaticChecker(Visitor):
 
         if return_type and type_of(func_decl.return_type) is AutoType:
             func_decl.return_type = return_type
-
-        for line in func_decl.body.body:
-            if type_of(line) is ReturnStmt:
-                self.visit(line, inspector)
+            for line in func_decl.body.body:
+                if type_of(line) is ReturnStmt:
+                    self.visit(line, inspector)
 
         inspector.func_call_stack.pop()
 
