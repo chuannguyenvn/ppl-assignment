@@ -140,10 +140,7 @@ class StaticChecker(Visitor):
             if type_of(rhs) is ArrayLit:
                 for exp in rhs.explist:
                     self.infer(exp, lhs.typ, exception)
-
-        if type_of(lhs_type) is FuncCall or type_of(rhs_type) is FuncCall:
-            return
-
+            
         if type_of(lhs_type) is AutoType:
             set_type(lhs, rhs_type)
         elif type_of(rhs_type) is AutoType:
@@ -450,15 +447,23 @@ class StaticChecker(Visitor):
 
     def visitBinExpr(self, bin_expr: BinExpr, inspector: Inspector):
         if type_of(bin_expr.left) is FuncCall:
-            left = bin_expr.left
-            left_type = get_type(inspector.find_latest_name_of_type(bin_expr.left.name, [FuncDecl], Undeclared(Function(), bin_expr.left.name)))
+            left = inspector.find_latest_name(bin_expr.left.name)
+            if left is None:
+                raise Undeclared(Function(), bin_expr.left.name)
+            if type_of(left) is not FuncDecl:
+                raise TypeMismatchInExpression(bin_expr)
+            left_type = get_type(left)
         else:
             left = self.visit(bin_expr.left, inspector)
             left_type = get_type(left)
 
-        if type_of(bin_expr.left) is FuncCall:
-            right = bin_expr.right
-            right_type = get_type(inspector.find_latest_name_of_type(bin_expr.right.name, [FuncDecl], Undeclared(Function(), bin_expr.right.name)))
+        if type_of(bin_expr.right) is FuncCall:
+            right = inspector.find_latest_name(bin_expr.right.name)
+            if right is None:
+                raise Undeclared(Function(), bin_expr.right.name)
+            if type_of(right) is not FuncDecl:
+                raise TypeMismatchInExpression(bin_expr)
+            right_type = get_type(right)
         else:
             right = self.visit(bin_expr.right, inspector)
             right_type = get_type(right)
