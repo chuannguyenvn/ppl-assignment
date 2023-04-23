@@ -155,7 +155,11 @@ class StaticChecker(Visitor):
 
     def call_func(self, function_name, params, inspector, exception, return_type=None):
         # 3.4 Type Mismatch In Expression
-        func_decl = inspector.find_latest_name_of_type(function_name, [FuncDecl], Undeclared(Function(), function_name))
+        func_decl = inspector.find_latest_name(function_name)
+        if func_decl is None:
+            raise Undeclared(Function(), function_name)
+        if type_of(func_decl) is not FuncDecl:
+            raise exception
 
         inspector.func_call_stack.append(func_decl)
 
@@ -336,7 +340,7 @@ class StaticChecker(Visitor):
         rhs = self.visit(assign_stmt.rhs, inspector)
 
         # If LHS is not an identifier or array subscripting expr
-        if type_of(lhs) not in [VarDecl, ParamDecl]:
+        if type_of(lhs) not in [VarDecl, ParamDecl] and type_of(assign_stmt.lhs) is not ArrayCell:
             raise TypeMismatchInStatement(assign_stmt)
 
         # LHS can't be of type void or array
