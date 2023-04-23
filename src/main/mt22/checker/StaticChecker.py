@@ -284,7 +284,23 @@ class StaticChecker(Visitor):
             self.visit(param, inspector)
             inspector.add_symbol(param)
 
-        self.visit(func_decl.body, inspector)
+        visited_return = False
+        for i in range(len(func_decl.body.body)):
+            if type_of(func_decl.body.body[i]) is CallStmt:
+                if i != 0:
+                    if func_decl.body.body[i].name == 'super' or func_decl.body.body[i].name == 'preventDefault':
+                        raise InvalidStatementInFunction(func_decl.name)
+                if func_decl.body.body[i].name == 'super' or func_decl.body.body[i].name == 'preventDefault':
+                    if i != 0:
+                        raise InvalidStatementInFunction(func_decl.name)
+            elif type_of(func_decl.body.body[i]) is ReturnStmt:
+                if visited_return:
+                    continue
+                visited_return = True
+
+            self.visit(func_decl.body.body[i], inspector)
+
+        # self.visit(func_decl.body, inspector)
 
         inspector.pop_scope(func_decl)
 
@@ -297,15 +313,6 @@ class StaticChecker(Visitor):
     def visitBlockStmt(self, block_stmt: BlockStmt, inspector: Inspector):
         inspector.push_scope()
         for i in range(len(block_stmt.body)):
-            if type_of(inspector.get_latest_marker().owner) is FuncDecl:
-                name = inspector.get_latest_marker().owner
-                if type_of(block_stmt.body[i]) is CallStmt:
-                    if i != 0:
-                        if block_stmt.body[i].name == 'super' or block_stmt.body[i].name == 'preventDefault':
-                            raise InvalidStatementInFunction(name)
-                    if block_stmt.body[i].name == 'super' or block_stmt.body[i].name == 'preventDefault':
-                        if i != 0:
-                            raise InvalidStatementInFunction(name)
             self.visit(block_stmt.body[i], inspector)
         inspector.pop_scope()
 
@@ -509,17 +516,17 @@ class StaticChecker(Visitor):
 
     def visitUnExpr(self, un_expr: UnExpr, inspector: Inspector):
         val = self.visit(un_expr.val, inspector)
-        val_type = type_of(get_type(val))
+        val_type = get_type(val)
 
         if un_expr.op == '-':
-            if val_type is AutoType:
+            if type_of(val_type) is AutoType:
                 if type_of(inspector.lhs_type) in [FloatType, IntegerType, AutoType]:
                     self.infer(inspector.lhs_type, val, TypeMismatchInExpression(un_expr))
                     inspector.possible_types = [FloatType, IntegerType, AutoType]
                     return inspector.lhs_type
                 else:
                     raise inspector.lhs_exception
-            elif val_type not in [IntegerType, FloatType]:
+            elif type_of(val_type) not in [IntegerType, FloatType]:
                 raise TypeMismatchInExpression(un_expr)
             else:
                 return val_type

@@ -1,1 +1,1 @@
-Type mismatch in statement: AssignStmt(Id(V), UnExpr(-, Id(v)))
+Undeclared Identifier: i
