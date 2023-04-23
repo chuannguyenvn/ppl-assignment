@@ -19,6 +19,7 @@ def get_type(symbol):
         return symbol.typ
     if type_of(symbol) is FuncDecl:
         return symbol.return_type
+    
     return symbol
 
 
@@ -141,6 +142,9 @@ class StaticChecker(Visitor):
                 for exp in rhs.explist:
                     self.infer(exp, lhs.typ, exception)
 
+        if type_of(lhs_type) is FuncCall or type_of(rhs_type) is FuncCall:
+            return
+
         if type_of(lhs_type) is AutoType:
             set_type(lhs, rhs_type)
         elif type_of(rhs_type) is AutoType:
@@ -155,6 +159,10 @@ class StaticChecker(Visitor):
         func_decl = inspector.find_latest_name_of_type(function_name, [FuncDecl], Undeclared(Function(), function_name))
 
         inspector.func_call_stack.append(func_decl)
+
+        if func_decl.name == 'preventDefault':
+            if len(params) > 0:
+                raise TypeMismatchInExpression(params[0])
 
         # Parameters must match
         if len(func_decl.params) != len(params):
@@ -401,7 +409,7 @@ class StaticChecker(Visitor):
             func_decl = inspector.func_call_stack[-1]
         else:
             func_decl = inspector.get_latest_marker(FuncDecl).owner
-            
+
         expr = self.visit(return_stmt.expr, inspector)
 
         self.infer(func_decl, expr, TypeMismatchInStatement(return_stmt))

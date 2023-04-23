@@ -1,1 +1,1 @@
-Type mismatch in statement: CallStmt(preventDefault, IntegerLit(1), IntegerLit(2))
+Type mismatch in expression: IntegerLit(1)
