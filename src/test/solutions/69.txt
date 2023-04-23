@@ -1,1 +1,1 @@
-Type mismatch in expression: BinExpr(+, FuncCall(foo2, []), FuncCall(foo3, [IntegerLit(5)]))
+No entry point

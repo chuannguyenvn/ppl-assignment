@@ -19,7 +19,6 @@ def get_type(symbol):
         return symbol.typ
     if type_of(symbol) is FuncDecl:
         return symbol.return_type
-    
     return symbol
 
 
@@ -423,10 +422,20 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, inspector: Inspector):
-        left = self.visit(bin_expr.left, inspector) if type_of(bin_expr.left) is not FuncCall else bin_expr.left
-        right = self.visit(bin_expr.right, inspector) if type_of(bin_expr.right) is not FuncCall else bin_expr.right
-        left_type = get_type(left)
-        right_type = get_type(right)
+        if type_of(bin_expr.left) is FuncCall:
+            left = bin_expr.left
+            left_type = get_type(inspector.find_latest_name_of_type(bin_expr.left.name, [FuncDecl], Undeclared(Function(), bin_expr.left.name)))
+        else:
+            left = self.visit(bin_expr.left, inspector)
+            left_type = get_type(left)
+
+        if type_of(bin_expr.left) is FuncCall:
+            right = bin_expr.right
+            right_type = get_type(inspector.find_latest_name_of_type(bin_expr.right.name, [FuncDecl], Undeclared(Function(), bin_expr.right.name)))
+        else:
+            right = self.visit(bin_expr.right, inspector)
+            right_type = get_type(right)
+
         return_type = None
 
         if bin_expr.op in ['+', '-', '*', '/']:
@@ -484,11 +493,11 @@ class StaticChecker(Visitor):
                 self.infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
             return_type = BooleanType()
 
-        inspector.func_return_type = type_of(left_type)
+        inspector.func_return_type = left_type
         if type_of(bin_expr.left) is FuncCall:
             self.visit(bin_expr.left, inspector)
 
-        inspector.func_return_type = type_of(right_type)
+        inspector.func_return_type = right_type
         if type_of(bin_expr.right) is FuncCall:
             self.visit(bin_expr.right, inspector)
 
