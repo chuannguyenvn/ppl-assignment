@@ -1,1 +1,1 @@
-Undeclared Function: super
+Invalid statement in function: main

@@ -1362,7 +1362,7 @@ class CheckerSuite(unittest.TestCase):
     def test_402_test_vardecl_2(self):
         input = """
             main: function void(){
-                y: auto = y- 1:
+                y: auto = y- 1;
                 x: auto = y != 1;
                 z: auto = -y; 
             }
@@ -1754,7 +1754,7 @@ class CheckerSuite(unittest.TestCase):
     def test_449_test_arrlit_infer_2(self):
         input = """
             main: function void(){
-                v: auto = {1,2}
+                v: auto = {1,2};
                 v = 492;
             }
         """

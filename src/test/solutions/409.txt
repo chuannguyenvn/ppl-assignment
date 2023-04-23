@@ -1,1 +1,1 @@
-Undeclared Identifier: c
+Invalid statement in function: man

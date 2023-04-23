@@ -194,7 +194,7 @@ class StaticChecker(Visitor):
         self.visit(FuncDecl('readInteger', IntegerType(), [], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('printInteger', VoidType(), [ParamDecl('anArg', IntegerType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readFloat', FloatType(), [], None, BlockStmt([])), inspector)
-        self.visit(FuncDecl('writeFloat', VoidType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
+        self.visit(FuncDecl('printFloat', VoidType(), [ParamDecl('anArg', FloatType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readBoolean', BooleanType(), [], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('printBoolean', VoidType(), [ParamDecl('anArg', BooleanType())], None, BlockStmt([])), inspector)
         self.visit(FuncDecl('readString', StringType(), [], None, BlockStmt([])), inspector)
@@ -267,14 +267,17 @@ class StaticChecker(Visitor):
 
         inspector.push_scope(func_decl)
 
+        parent_func_decl = None
         if func_decl.inherit:
             parent_func_decl = inspector.find_latest_name_of_type(func_decl.inherit, [FuncDecl], Undeclared(Function(), func_decl.inherit))
 
             # 3.3 Invalid Variable/Parameter declaration
             param_names = list(map(lambda p: p.name, func_decl.params))
             for parent_param in parent_func_decl.params:
-                if parent_param.inherit and parent_param.name in param_names:
-                    raise Invalid(Parameter(), parent_param.name)
+                if parent_param.inherit:
+                    if parent_param.name in param_names:
+                        raise Invalid(Parameter(), parent_param.name)
+                    inspector.add_symbol(parent_param)
 
             # 2.3 Inheritance features
             inspector.add_symbol(self.visit(FuncDecl('super', parent_func_decl.return_type, parent_func_decl.params, None, BlockStmt([])), inspector))
@@ -287,20 +290,30 @@ class StaticChecker(Visitor):
         visited_return = False
         for i in range(len(func_decl.body.body)):
             if type_of(func_decl.body.body[i]) is CallStmt:
-                if i != 0:
+                if parent_func_decl:
+                    if i == 0:
+                        if len(parent_func_decl.params) > 0:
+                            if not func_decl.body.body[i].name == 'super' and not func_decl.body.body[i].name == 'preventDefault':
+                                raise InvalidStatementInFunction(func_decl.name)
+                    else:
+                        if func_decl.body.body[i].name == 'super' or func_decl.body.body[i].name == 'preventDefault':
+                            raise InvalidStatementInFunction(func_decl.name)
+                else:
                     if func_decl.body.body[i].name == 'super' or func_decl.body.body[i].name == 'preventDefault':
-                        raise InvalidStatementInFunction(func_decl.name)
-                if func_decl.body.body[i].name == 'super' or func_decl.body.body[i].name == 'preventDefault':
-                    if i != 0:
                         raise InvalidStatementInFunction(func_decl.name)
             elif type_of(func_decl.body.body[i]) is ReturnStmt:
                 if visited_return:
                     continue
                 visited_return = True
+            else:
+                if parent_func_decl:
+                    if i == 0:
+                        if len(parent_func_decl.params) > 0:
+                            if (type_of(func_decl.body.body[i]) is not CallStmt) or (
+                                    func_decl.body.body[i].name != 'super' and not func_decl.body.body[i].name != 'preventDefault'):
+                                raise InvalidStatementInFunction(func_decl.name)
 
             self.visit(func_decl.body.body[i], inspector)
-
-        # self.visit(func_decl.body, inspector)
 
         inspector.pop_scope(func_decl)
 
@@ -392,10 +405,11 @@ class StaticChecker(Visitor):
 
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
-        cond = self.visit(do_while_stmt.cond, inspector)
-        self.infer(cond, BooleanType(), TypeMismatchInStatement(do_while_stmt))
 
         self.visit(do_while_stmt.stmt, inspector)
+
+        cond = self.visit(do_while_stmt.cond, inspector)
+        self.infer(cond, BooleanType(), TypeMismatchInStatement(do_while_stmt))
 
         inspector.pop_scope(do_while_stmt)
 
@@ -461,12 +475,12 @@ class StaticChecker(Visitor):
                 else:
                     raise inspector.lhs_exception
 
-            elif type_of(right_type) is AutoType:
-                self.infer(left, right, TypeMismatchInExpression(bin_expr))
-                return_type = left_type
             elif type_of(left_type) is AutoType:
                 self.infer(right, left, TypeMismatchInExpression(bin_expr))
                 return_type = right_type
+            elif type_of(right_type) is AutoType:
+                self.infer(left, right, TypeMismatchInExpression(bin_expr))
+                return_type = left_type
             elif type_of(left_type) is IntegerType and type_of(right_type) is IntegerType:
                 return_type = IntegerType()
             else:
@@ -484,12 +498,12 @@ class StaticChecker(Visitor):
             self.infer(StringType(), right, TypeMismatchInExpression(bin_expr))
             return_type = StringType()
         if bin_expr.op in ['==', '!=']:
-            if IntegerType in [type_of(left_type), type_of(right_type)]:
-                self.infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
-                self.infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
-            if BooleanType in [type_of(left_type), type_of(right_type)]:
-                self.infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
-                self.infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
+            if type_of(left_type) not in [IntegerType, BooleanType, AutoType] or type_of(right_type) not in [IntegerType, BooleanType, AutoType]:
+                raise TypeMismatchInExpression(bin_expr)
+            elif type_of(left_type) is AutoType:
+                self.infer(right, left, TypeMismatchInExpression(bin_expr))
+            elif type_of(right_type) is AutoType:
+                self.infer(left, right, TypeMismatchInExpression(bin_expr))
             return_type = BooleanType()
         if bin_expr.op in ['<', '>', '<=', '>=']:
             if type_of(left_type) not in [IntegerType, FloatType, AutoType] or type_of(right_type) not in [IntegerType, FloatType, AutoType]:
