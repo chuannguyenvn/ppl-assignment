@@ -1,0 +1,10 @@
+
+            main:function void() inherit foo{
+                preventDefault();
+                printFloat(f);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string) inherit foo2{}
+            foo2:function float(inherit f:float){
+                return f + 2;
+            }
+        

@@ -1,0 +1,8 @@
+
+            main:function void(){
+                x,y,z:auto = 1,"string", true;
+                arr:array[2] of integer = {x,y,z};
+                return;
+                return str;
+            }
+        

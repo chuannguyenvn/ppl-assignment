@@ -1,0 +1,12 @@
+
+            arr:array[2,2] of integer;
+            x:auto = true;
+            main:function void(){
+                if(x) arr[0,1] = 2;
+                return;
+            }
+            foo:function integer(){
+                while(x) arr[0, arr[0,0]] = arr[12,12];
+                return;
+            }
+        

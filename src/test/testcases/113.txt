@@ -1,5 +1,7 @@
 
-    a: auto = 1;
-    a: integer = 2;
-    main: function void(){}
-    
+                f1: function auto(b: float, c: auto) {
+                    do {
+                        x: integer = "abc";
+                    } while (x + 1);
+                }
+            

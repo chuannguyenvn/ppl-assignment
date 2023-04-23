@@ -1,0 +1,19 @@
+
+            x:string;
+            main: function void(){
+                z:auto = !true && false;
+                printBoolean(z);
+                x:auto = -2 / (readInteger() - 1);
+                return;
+            }
+            y:auto = ((x::x)::x)::"abc";
+            foo:function integer(x:string, y:float){
+                bool:auto = foo1((4+12/7)==(3%10-12));
+                x:integer = 5;
+                return x + 7;
+            }
+            foo1:function boolean(bool:boolean){
+                bool = true || !false;
+                return bool;
+            }
+        

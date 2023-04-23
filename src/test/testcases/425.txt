@@ -1,0 +1,8 @@
+
+            x:string;
+            main: function void(){
+                x:integer = 5;
+                t:string = y::"abc";
+            }
+            y:auto = ((x::x)::x)::"abc";
+        

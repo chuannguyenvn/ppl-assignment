@@ -1,0 +1,12 @@
+
+            main:function void() inherit foo{
+                super(13,1.0,true,1.0);
+                printFloat(y);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string, f:float) inherit foo2{
+                return 0;
+            }
+            foo2:function float(){
+                return 2.0;
+            }
+        

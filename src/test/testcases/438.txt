@@ -1,0 +1,11 @@
+
+            main:function void() inherit foo{
+                super(12);
+                x:auto = foo(1);
+                return;
+            }
+            foo:function float(x:integer){
+                preventDefault();
+                return x + 1.2;
+            }
+        

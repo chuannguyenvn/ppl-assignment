@@ -1,0 +1,6 @@
+
+            x:integer;
+            main:function integer(){
+                return 0;
+            }
+        

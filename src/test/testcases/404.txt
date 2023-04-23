@@ -1,0 +1,8 @@
+
+            main:function void(){
+                x:integer;
+                y:float;
+                z:auto = x+y*3/z;
+                return z;
+            }
+        

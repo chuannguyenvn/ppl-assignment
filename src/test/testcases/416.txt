@@ -1,0 +1,9 @@
+
+            foo:function auto(x:integer){
+                return "abc";
+            }
+            main:function void(){
+                x:string = foo(15)::"abc";
+                y:float = foo(1) + 1;
+            }
+        

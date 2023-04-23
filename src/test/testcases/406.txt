@@ -1,0 +1,10 @@
+
+            x:string;
+            y:float = 2 + 2;
+            main:function void(){
+                x:integer = 5;
+                z:auto = x + y;
+            }
+            t:string = x::"abc";
+            e:float = y + z;
+        

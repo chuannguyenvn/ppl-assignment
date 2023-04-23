@@ -1,0 +1,8 @@
+
+            main:function void(){
+                a:array[0,0] of integer = a[10];
+                return;
+                return 1;
+                x:auto;
+            }
+        

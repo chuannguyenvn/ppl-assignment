@@ -1,0 +1,9 @@
+
+            main:function void(){
+                arr:array[111,222,333] of integer = foo();
+                x:integer = arr[12, 219 + 2, arr[34, 56, 111]] + 2;
+                arr2:auto = arr[110];
+                printInteger(arr2);
+            }
+            foo:function array[111,222,333] of integer(){}
+        

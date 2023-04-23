@@ -1,0 +1,6 @@
+
+            foo:string;
+            foo:function integer(){
+                return 1;
+            }
+        

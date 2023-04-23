@@ -1,0 +1,7 @@
+
+             x:string;
+            main: function void(){
+                z:auto = (!!!true && ---3);
+            }
+            y:auto = ((x::x)::x)::"abc";
+        

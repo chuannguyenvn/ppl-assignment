@@ -1,0 +1,13 @@
+
+            main:function void(){
+                i:integer;
+                do{
+                    i = 1;
+                    break;
+                    i = true;
+                    return;
+                    return 1;
+                }while(true);
+                if(i>5) continue;
+            }
+        

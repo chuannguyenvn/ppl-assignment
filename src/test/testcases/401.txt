@@ -1,0 +1,7 @@
+
+            x:string = "abc";
+            main:function void(){
+                x= "abc"::"abc";
+            }
+            x:integer = 10;
+        

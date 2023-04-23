@@ -1,0 +1,9 @@
+
+            foo:function auto(x:integer){
+                return;
+            }
+            main:function void(){
+                x:integer;
+                x = foo(1);
+            }
+        

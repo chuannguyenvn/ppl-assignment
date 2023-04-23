@@ -1,0 +1,15 @@
+
+            foo: function auto(a:auto, b:auto){
+                return 1;
+            }
+            main:function void(){
+                x:integer = foo(1, 2);
+                y:string = foo2("abc", "abc");
+                z:auto = x + 1;
+                y = y::y;
+                y = foo("abc", "abc");
+            }
+            foo2: function auto(a:auto, b:auto){
+                y:string = b :: "abc";
+            }
+        

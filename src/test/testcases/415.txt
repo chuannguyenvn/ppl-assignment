@@ -1,0 +1,29 @@
+
+            x:integer;
+            y:float = x+1;
+            main:function void(){
+                x:string;
+                {
+                    x:boolean = true;
+                    {
+                        x:float = y + 1;
+                        {
+                            y:string;
+                            {
+                                y = y::"abc";
+                            }
+                            x = x*2;
+                        }
+                        z:auto = 5;
+                    }
+                    if(x==true){
+                        return;
+                    }
+                    else{
+                        continue;
+                    }
+                }
+                x=x::x;
+            }
+            z:auto=x;
+        

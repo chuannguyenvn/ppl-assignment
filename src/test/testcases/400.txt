@@ -1,0 +1,12 @@
+
+            main:function void(){
+                arr:array[2] of integer;
+                arr[1] = 1;
+            }
+            foo:function auto (a:auto){
+                arr:array[2] of integer;
+                arr[a] = 1;
+                a = 12;
+                a = "abc";
+            }
+        

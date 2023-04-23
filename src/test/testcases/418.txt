@@ -1,0 +1,13 @@
+
+            foo:function auto(x:integer){
+                x = x + 1;
+                return;
+            }
+            main:function void(){
+                foo(foo1(foo1(foo1(12))));
+                x:integer = foo1(foo(foo(12))) + 1;
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
+        

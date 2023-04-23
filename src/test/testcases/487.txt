@@ -1,0 +1,11 @@
+
+            main:function void() inherit foo{
+                preventDefault();
+                z: integer = foo(1,2,3) + 1;
+                x = "abc";
+                y = true;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        

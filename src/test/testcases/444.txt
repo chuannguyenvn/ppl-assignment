@@ -1,0 +1,9 @@
+
+            main:function void(){
+                arr:array[2,2] of integer = foo();
+                x:float = foo() + 1;
+            }
+            foo:function auto(){
+                return {{1,2},{1,2}};
+            }
+        

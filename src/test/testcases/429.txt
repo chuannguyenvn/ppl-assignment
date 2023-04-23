@@ -1,0 +1,11 @@
+
+            x:string;
+            main: function void(){
+                z:auto = !true && false;
+                printBoolean(z);
+                x:auto = -2 / (readInteger() - 1);
+                printFloat(x);
+                readInteger(1);
+            }
+            y:auto = ((x::x)::x)::"abc";
+        

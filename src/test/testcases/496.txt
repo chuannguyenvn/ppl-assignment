@@ -1,0 +1,26 @@
+
+            x:auto = true;
+            y:float = 1 + 1;
+            main:function void(){
+                x:integer = 5;
+                {
+                    x:string = "abc";
+                    printString(x);
+                }
+                x = x + 1;
+                {
+                    i:integer;
+                    for(i=0,i<10,i+1){
+                        x=x+1;
+                        if(x>100){
+                            x=x*2;
+                            continue;
+                        }
+                        else{
+                            x:string = x::x;
+                            printString(x);
+                        }
+                    }
+                }
+            }
+        

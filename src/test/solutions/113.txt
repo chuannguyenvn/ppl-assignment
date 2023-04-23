@@ -1,1 +1,1 @@
-Redeclared Variable: a
+Type mismatch in Variable Declaration: VarDecl(x, IntegerType, StringLit(abc))

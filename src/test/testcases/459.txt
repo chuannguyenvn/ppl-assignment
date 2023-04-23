@@ -1,0 +1,9 @@
+
+            main:function void(){
+                main:auto = 5;
+                main = main + 12;
+                printInteger(main);
+                printFloat(main);
+                return main;
+            }
+        

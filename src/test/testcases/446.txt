@@ -1,0 +1,10 @@
+
+            main:function void(){
+                arr:array[2,2] of integer = {{foo(),foo()},{foo(),foo()}};
+                x:float = foo();
+                t:boolean = !(-foo());
+            }
+            foo:function auto(){
+                return 1;
+            }
+        

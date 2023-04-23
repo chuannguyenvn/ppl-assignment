@@ -1,0 +1,12 @@
+
+            foo:function auto(x:integer){
+                return;
+            }
+            main:function void(){
+                foo(12);
+                x:string = foo(1);
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
+        

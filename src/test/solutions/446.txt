@@ -1,0 +1,1 @@
+Illegal array literal: ArrayLit([ArrayLit([FuncCall(foo, []), FuncCall(foo, [])]), ArrayLit([FuncCall(foo, []), FuncCall(foo, [])])])

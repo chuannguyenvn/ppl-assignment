@@ -1,0 +1,9 @@
+
+            main:function void(){
+                foo(5);
+                x:string = foo(5);
+            }
+            foo:function auto(x:auto){
+                return x;
+            }
+        

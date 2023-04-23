@@ -1,0 +1,9 @@
+
+            main:function void() inherit foo{
+                super(1,2,3);
+                y = y::z;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        

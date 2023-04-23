@@ -1,0 +1,1 @@
+Type mismatch in statement: WhileStmt(Id(x), AssignStmt(ArrayCell(arr, [IntegerLit(0), ArrayCell(arr, [IntegerLit(0), IntegerLit(0)])]), ArrayCell(arr, [IntegerLit(12), IntegerLit(12)])))

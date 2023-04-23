@@ -1,0 +1,12 @@
+
+            main:function void(){
+                arr:array[3,2] of integer = {{1,2}, {1,2}, foo()};
+                arr2:array[2] of integer = foo();
+                arr2[0] = 12 + 3;
+                foo();
+                foo(1,2);
+            }
+            foo:function auto(){
+                return {1,2};
+            }
+        

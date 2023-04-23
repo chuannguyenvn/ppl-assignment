@@ -1,0 +1,14 @@
+
+            main:function void(){
+                if(true){
+                    i:integer;
+                    for(i=0,i<10,i+1) if(true) break; else continue;
+                    {
+                        while(true){
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        

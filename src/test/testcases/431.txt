@@ -1,0 +1,18 @@
+
+            x:string;
+            main: function void(){
+                z:auto = !true && false;
+                printBoolean(z);
+                x:auto = -2 / (readInteger() - 1);
+                return;
+            }
+            y:auto = ((x::x)::x)::"abc";
+            foo:function integer(x:string, y:float){
+                t:integer = 5;
+                return t + 7;
+            }
+            foo:function boolean(bool:boolean){
+                bool = true || !false;
+                return bool;
+            }
+        

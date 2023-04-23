@@ -2,765 +2,1537 @@ import unittest
 from TestUtils import TestChecker
 from AST import *
 
-
 class CheckerSuite(unittest.TestCase):
-
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8051
-    def test_001(self):
+    def test_400(self):
         input = """
-        foo: function void(a: float)
-        {
-            a  = 1;
-        }
-
-        bar: function void(a: auto, b: integer)
-        {
-            a = a + b;
-        }
-
-        main: function void()
-        {
-            foo(1);
-            end: auto;
-        }
+            main:function void(){
+                arr:array[2] of integer;
+                arr[1] = 1;
+            }
+            foo:function auto (a:auto){
+                arr:array[2] of integer;
+                arr[a] = 1;
+                a = 12;
+                a = "abc";
+            }
         """
-        expect = """Invalid Variable: end"""
-        self.assertTrue(TestChecker.test(input, expect, 1))
+        expect = "Type mismatch in statement: AssignStmt(Id(a), StringLit(abc))"
+        self.assertTrue(TestChecker.test(input, expect, 400))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8066
-    def test_002(self):
+    def test_401(self):
         input = """
-        main: function void()
-        {
-            a: auto = 1.0 != 1.0;
-        }
+            x:string = "abc";
+            main:function void(){
+                x= "abc"::"abc";
+            }
+            x:integer = 10;
         """
-        expect = """Type mismatch in expression: BinExpr(!=, FloatLit(1.0), FloatLit(1.0))"""
-        self.assertTrue(TestChecker.test(input, expect, 2))
+        expect = "Redeclared Variable: x"
+        self.assertTrue(TestChecker.test(input, expect, 401))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8057 (1)
-    def test_003(self):
+    def test_402(self):
         input = """
-        main: function void()
-        {
-            a: integer = 5.4;
-        }
+            x:float = 5 + 1.3;
+            main:function void(){
+                return x+1;
+            }
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, IntegerType, FloatLit(5.4))"""
-        self.assertTrue(TestChecker.test(input, expect, 3))
+        expect = "Type mismatch in statement: ReturnStmt(BinExpr(+, Id(x), IntegerLit(1)))"
+        self.assertTrue(TestChecker.test(input, expect, 402))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8057 (2)
-    def test_004(self):
+    def test_403(self):
         input = """
-        main: function void()
-        {
-            a: integer;
-            a = 5.4;
-        }
+            main:function void(){
+                x:integer;
+                y:float;
+                z:auto = x+y*3/x;
+                return z;
+            }
         """
-        expect = """Type mismatch in statement: AssignStmt(Id(a), FloatLit(5.4))"""
-        self.assertTrue(TestChecker.test(input, expect, 4))
+        expect = "Type mismatch in statement: ReturnStmt(Id(z))"
+        self.assertTrue(TestChecker.test(input, expect, 403))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8083
-    def test_005(self):
+    def test_404(self):
         input = """
-        main: function void()
-        {
-            return 1;
-            end: auto;
-        }
+            main:function void(){
+                x:integer;
+                y:float;
+                z:auto = x+y*3/z;
+                return z;
+            }
         """
-        expect = """Invalid Variable: end"""
-        self.assertTrue(TestChecker.test(input, expect, 5))
+        expect = "Undeclared Identifier: z"
+        self.assertTrue(TestChecker.test(input, expect, 404))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7989
-    def test_006(self):
+    def test_405(self):
         input = """
-        foo: function void(out x: integer){}
-        main: function void()
-        {
-            foo(2);
-        }
+            x:string;
+            y:float = 2 + 2;
+            main:function void(){
+                x:integer = 5;
+                z:auto = x + y;
+                t:string = x::"abc";
+            }
         """
-        expect = """Type mismatch in ?"""
-        self.assertTrue(TestChecker.test(input, expect, 6))
+        expect = "Type mismatch in expression: BinExpr(::, Id(x), StringLit(abc))"
+        self.assertTrue(TestChecker.test(input, expect, 405))
 
-    def test_007(self):
+    def test_406(self):
         input = """
-        foo: function void(out x: integer){}
-        main: function void()
-        {
-            foo(2);
-        }
+            x:string;
+            y:float = 2 + 2;
+            main:function void(){
+                x:integer = 5;
+                z:auto = x + y;
+            }
+            t:string = x::"abc";
+            e:float = y + z;
         """
-        expect = """Type mismatch in ?"""
-        self.assertTrue(TestChecker.test(input, expect, 7))
+        expect = "Undeclared Identifier: z"
+        self.assertTrue(TestChecker.test(input, expect, 406))
 
-    # TODO: https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7991
-    def test_008(self):
+    def test_407(self):
         input = """
-                    main: function void() {
-                        a: integer = 1 + "float";
+            main:function void(){
+                if(true){
+                    i:integer;
+                    for(i=0,i<10,i+1) if(true) break; else continue;
+                    {
+                        while(true){
+                            break;
+                        }
                     }
-                """
-        expect = """Type mismatch in expression: BinExpr(+, IntegerLit(1), StringLit(float))"""
-        self.assertTrue(TestChecker.test(input, expect, 8))
-
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8047
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9221
-    def test_009(self):
-        input = """
-        main: function void()
-        {
-            a: auto = 2 + 3.4;
-            b: auto = 1 != true;
-        }
-        """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 9))
-
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7988 (1)
-    def test_010(self):
-        input = """
-        y: auto = foo();
-        foo: function integer(){}
-        main: function void()
-        {
-            x = 5;
-            x: integer;
-        }
-        """
-        expect = """Undeclared Identifier: x"""
-        self.assertTrue(TestChecker.test(input, expect, 10))
-
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7988 (2)
-    def test_011(self):
-        input = """
-        x: auto = foo();
-        foo: function integer(){}
-        main: function void()
-        {
-            {
-                x = 5;
+                    break;
+                }
             }
-            x: integer;
-        }
         """
-        expect = """Undeclared Identifier: x"""
-        self.assertTrue(TestChecker.test(input, expect, 11))
+        expect = "Must in loop: BreakStmt()"
+        self.assertTrue(TestChecker.test(input, expect, 407))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7988 (3)
-    def test_012(self):
+    def test_408(self):
         input = """
-        x: auto = foo();
-        foo: function integer(){}
-        main: function void()
-        {
-            {
-                x: integer;
+            main:function void() inherit foo{
+                super(1,1.0,1);
+                printInteger(x);
+                printInteger(y);
+                printString(t);
             }
-            x = 5;
-        }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string){
+                return x/3;
+            }
         """
-        expect = """Undeclared Identifier: x"""
-        self.assertTrue(TestChecker.test(input, expect, 12))
+        expect = "Type mismatch in expression: IntegerLit(1)"
+        self.assertTrue(TestChecker.test(input, expect, 408))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8110
-    def test_013(self):
+    def test_409(self):
         input = """
-        main: function void()
-        {
-            x = 5;
-        }
-        x: auto = 1;
+            main:function void() inherit foo{
+                preventDefault();
+                printInteger(x);
+                printFloat(y);
+                printString(t);
+                x:array[5] of integer = {1,2,3,4,5};
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string){
+                return x/3;
+            }
         """
-        expect = """Undeclared Identifier: x"""
-        self.assertTrue(TestChecker.test(input, expect, 13))
+        expect = "Undeclared Identifier: x"
+        self.assertTrue(TestChecker.test(input, expect, 409))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8149 (1)
-    def test_014(self):
+    def test_410(self):
         input = """
-        a: function void (p : array [1] of integer) {}
-        foo: function auto(){}
-        bar: function auto(){}
-        goo: function auto(){}
-        gar: function auto(){}
-        main: function void()
-        {
-            a({1});
-            b: boolean = foo() == bar();
-            c: float = goo() + gar();
-        }
+            main:function void() inherit foo{
+                preventDefault();
+                printInteger(x);
+                printFloat(y);
+                printString(t);
+                z:array[5] of integer = {1,2,3,4,5.0};
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string){
+                return x/3;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 14))
+        expect = "Undeclared Identifier: x"
+        self.assertTrue(TestChecker.test(input, expect, 410))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8149 (2)
-    def test_015(self):
+    def test_411(self):
         input = """
-        foo: function auto(){}
-        bar: function auto(){}
-        goo: function auto(){}
-        main: function void()
-        {
-            a: auto = foo() + bar();
-            b: integer = foo(); // ?
-            c: auto = -goo();
-            d: integer = goo(); // ?
-        }
+            main:function void() inherit foo{
+                preventDefault();
+                printFloat(f);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string) inherit foo2{}
+            foo2:function float(inherit f:float){
+                return f + 2;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 15))
+        expect = "Undeclared Identifier: f"
+        self.assertTrue(TestChecker.test(input, expect, 411))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8610
-    def test_016(self):
+    def test_412(self):
         input = """
-        foo1: function auto(){}
-        foo2: function auto(){}
-        a: array [2] of integer = { foo1(), foo2() };
-        b: integer = foo1();
-        c: integer = foo2();
-        main: function void(){}
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string) inherit foo2{
+                super(1.2);
+            }
+            foo2:function float(inherit f:float){
+                return f + 2;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 16))
+        expect = "No entry point"
+        self.assertTrue(TestChecker.test(input, expect, 412))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8106
-    def test_017(self):
+    def test_413(self):
         input = """
-        foo: function void(a: auto) {}
-        bar: function void(a: auto) inherit foo {}
-        main: function void(){}
+            x:string;
+            main:function void(x:string, t:string){
+                t = x::t;
+                return;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 17))
+        expect = "No entry point"
+        self.assertTrue(TestChecker.test(input, expect, 413))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=7977
-    def test_018(self):
+    def test_414(self):
         input = """
-        foo: function void(a: auto)
-        {
-            return 1;
-        }
-        main: function void(){}
+            x:integer;
+            main:function integer(){
+                return 0;
+            }
         """
-        expect = """Type mismatch in statement: ReturnStmt(IntegerLit(1))"""  # Hay k có lỗi do k duyệt body, tại hàm k đc gọi?
-        self.assertTrue(TestChecker.test(input, expect, 18))
+        expect = "No entry point"
+        self.assertTrue(TestChecker.test(input, expect, 414))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8098
-    def test_019(self):
+    def test_415(self):
         input = """
-        main: function void()
-        {
-            // a: auto = {}; -> Not in testcases
-            // a: array [0] of integer; -> Not in testcases
-            a: array [5] of integer = {1, 2, 3};
-        }
+            x:integer;
+            y:float = x+1;
+            main:function void(){
+                x:string;
+                {
+                    x:boolean = true;
+                    {
+                        x:float = y + 1;
+                        {
+                            y:string;
+                            {
+                                y = y::"abc";
+                            }
+                            x = x*2;
+                        }
+                        z:auto = 5;
+                    }
+                    if(x==true){
+                        return;
+                    }
+                    else{
+                        continue;
+                    }
+                }
+                x=x::x;
+            }
+            z:auto=x;
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, ArrayType([5], IntegerType), ArrayLit([IntegerLit(1), IntegerLit(2), IntegerLit(3)]))"""
-        self.assertTrue(TestChecker.test(input, expect, 19))
+        expect = "Must in loop: ContinueStmt()"
+        self.assertTrue(TestChecker.test(input, expect, 415))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8087
-    def test_020(self):
+    def test_416(self):
         input = """
-        main: function void()
-        {
-            // a: auto = {}; -> Not in testcases
-            // a: array [0] of integer; -> Not in testcases
-            a: array [5] of integer = {1, 2, 3};
-        }
+            foo:function auto(x:integer){
+                return "abc";
+            }
+            main:function void(){
+                x:string = foo(15)::"abc";
+                y:float = foo(1) + 1;
+            }
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, ArrayType([5], IntegerType), ArrayLit([IntegerLit(1), IntegerLit(2), IntegerLit(3)]))"""
-        self.assertTrue(TestChecker.test(input, expect, 20))
+        expect = "Type mismatch in expression: BinExpr(+, FuncCall(foo, [IntegerLit(1)]), IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 416))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8399
-    def test_021(self):
+    def test_417(self):
         input = """
-        main: function void()
-        {
-            a: auto = 1.5 < 2;
-        }
+            foo:function auto(x:integer){
+                return;
+            }
+            main:function void(){
+             foo(12);
+             x:string = foo(12)::"abc";
+             y:integer = foo(1) + 1;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 21))
+        expect = "Type mismatch in expression: FuncCall(foo, [IntegerLit(12)])"
+        self.assertTrue(TestChecker.test(input, expect, 417))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8317
-    def test_022(self):
+    def test_418(self):
         input = """
-        foo: integer = 2;
-        foo: function void () {}
-        main: function void() {}
+            foo:function auto(x:integer){
+                x = x + 1;
+                return;
+            }
+            main:function void(){
+                foo(foo1(foo1(foo1(12))));
+                x:integer = foo1(foo(foo(12))) + 1;
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
         """
-        expect = """Redeclared Variable: foo"""
-        self.assertTrue(TestChecker.test(input, expect, 22))
+        expect = "Type mismatch in expression: FuncCall(foo, [FuncCall(foo, [IntegerLit(12)])])"
+        self.assertTrue(TestChecker.test(input, expect, 418))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8170
-    def test_023(self):
+    def test_419(self):
         input = """
-        foo: function auto() { return 10; }
-        foo2: function void() { a: string = foo(); }
-        main: function void() {}
+            foo:function auto(x:integer){
+                return x;
+            }
+            main:function void(){
+                x:integer = foo1(foo(12)) + 1;
+                t:string = foo(12)::"abc";
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, StringType, FuncCall(foo, []))"""
-        self.assertTrue(TestChecker.test(input, expect, 23))
+        expect = "Type mismatch in expression: BinExpr(::, FuncCall(foo, [IntegerLit(12)]), StringLit(abc))"
+        self.assertTrue(TestChecker.test(input, expect, 419))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8642
-    def test_024(self):
+    def test_420(self):
         input = """
-        foo: function integer(inherit x: integer) inherit bar
-        {
-            super(2);
-        }
-
-        bar: function integer(inherit y: integer) inherit foo2
-        {
-            super("Hi");
-        }
-
-        foo2: function integer(inherit z: float){}
+            foo:function auto(x:integer){
+                return "abc";
+            }
+            main:function void(){
+                x:integer = foo1(foo(12)) + 1;
+                t:string = foo(12)::"abc";
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
         """
-        expect = """Type mismatch in expression: StringLit(Hi)"""
-        self.assertTrue(TestChecker.test(input, expect, 24))
+        expect = "Type mismatch in expression: FuncCall(foo1, [FuncCall(foo, [IntegerLit(12)])])"
+        self.assertTrue(TestChecker.test(input, expect, 420))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8646
-    def test_025(self):
+    def test_421(self):
         input = """
-        a: float = foo(1, 2) + 1.5;
-        foo: function auto(a: integer, b: integer)
-        {
-            return a + b;
-        }
-        b: float = foo(1, 2);
-        main: function void(){}
+            foo:function auto(x:integer){
+                return;
+            }
+            main:function void(){
+                foo(12);
+                x:string = foo(1);
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 25))
+        expect = "Type mismatch in expression: FuncCall(foo, [IntegerLit(1)])"
+        self.assertTrue(TestChecker.test(input, expect, 421))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8657
-    def test_026(self):
+    def test_422(self):
         input = """
-        a: integer = 2.3; //1
-        b: auto; //2
-        foo: function void(a: integer, b: float) {} //3
-        bar: function void() inherit foo {} //4
-        a: function void() {} //5
-        main: function void(){}
+            foo:function auto(x:integer){
+                if (x>1) return "abc"::"abc";
+                else return foo(3) + 1;
+            }
+            main:function void(){
+                x:float = 2 + foo();
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
         """
-        expect = """Invalid Variable: b"""  # "trong khi duyệt sơ bộ mình không cần phải check Redeclared"
-        self.assertTrue(TestChecker.test(input, expect, 26))
+        expect = "Type mismatch in expression: BinExpr(+, FuncCall(foo, [IntegerLit(3)]), IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 422))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8660
-    def test_027(self):
+    def test_423(self):
         input = """
-        x, y: integer = 1, foo(1, 2, 3);
-        x, y: string;
-        foo: function integer (x: integer, y: integer, x: integer){}
-        main: function void(){}
+            foo:function auto(x:integer){
+                if (x>1) return foo(2) - 2.0e-4;
+                else return 1 + 1;
+            }
+            main:function void(){
+                x:float = 234_567_891 + foo(12);
+                x = foo(1)::"abc";
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
         """
-        expect = """Redeclared Variable: x"""
-        self.assertTrue(TestChecker.test(input, expect, 27))
+        expect = "Type mismatch in expression: BinExpr(::, FuncCall(foo, [IntegerLit(1)]), StringLit(abc))"
+        self.assertTrue(TestChecker.test(input, expect, 423))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8679
-    def test_028(self):
+    def test_424(self):
         input = """
-        x: function void() {}
-        main: function void() inherit x
-        {
-            super();
-        }
+            foo:function auto(x:integer){
+                return x % 10;
+            }
+            main:function void(){
+                x:integer = foo1(foo(foo1(12)));
+                y:boolean = (foo(1) + foo1(2)) >= 10;
+                printBoolean(y || true);
+                x = readInteger() + 1;
+                y = readBoolean();
+                z: auto = readFloat() + x;
+                x = z;
+            }
+            foo1:function auto(x:integer){
+                return x+1;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 28))
+        expect = "Type mismatch in statement: AssignStmt(Id(x), Id(z))"
+        self.assertTrue(TestChecker.test(input, expect, 424))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8703
-    def test_029(self):
+    def test_425(self):
         input = """
-        x: auto = {4,5,6};
-        y: auto = x[1,2];
-        main: function void() {}
+            x:string;
+            main: function void(){
+                x:integer = 5;
+                t:string = y::"abc";
+            }
+            y:auto = ((x::x)::x)::"abc";
         """
-        expect = """Type mismatch in expression: ArrayCell(x, [IntegerLit(1), IntegerLit(2)])"""
-        self.assertTrue(TestChecker.test(input, expect, 29))
+        expect = "Undeclared Identifier: y"
+        self.assertTrue(TestChecker.test(input, expect, 425))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8839
-    def test_030(self):
+    def test_426(self):
         input = """
-        a: auto = 1;
-        main: function void()
-        {
-            b: auto = a();
-        }
+            x:string;
+            main: function void(){
+                x:integer = readFloat() + readInteger() + readString() + readBoolean();
+                t:string = y::"abc";
+            }
+            y:auto = ((x::x)::x)::"abc";
         """
-        expect = """Undeclared Function: a"""
-        self.assertTrue(TestChecker.test(input, expect, 30))
+        expect = "Type mismatch in expression: BinExpr(+, BinExpr(+, FuncCall(readFloat, []), FuncCall(readInteger, [])), FuncCall(readString, []))"
+        self.assertTrue(TestChecker.test(input, expect, 426))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8913
-    def test_031(self):
+    def test_427(self):
         input = """
-        a: array [1, 1] of boolean;
-        foo: function auto(){}
-        main: function void()
-        {
-            a[foo(), 1+4] = 222;
-            b: integer = foo();
-            end: auto;
-        }
+            x:string;
+            main: function void(){
+                x:integer = readInteger()/3 - x*4;
+                t:string = y::"abc";
+            }
+            y:auto = ((x::x)::x)::"abc";
         """
-        expect = """Invalid Variable: end"""
-        self.assertTrue(TestChecker.test(input, expect, 31))
+        expect = "Type mismatch in expression: BinExpr(*, Id(x), IntegerLit(4))"
+        self.assertTrue(TestChecker.test(input, expect, 427))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8943
-    def test_032(self):
+    def test_428(self):
         input = """
-        foo: function integer(){}
-        a: auto = foo;
-        main: function void()
-        {
-            a[foo(), 1 + 4] = 222;
-            b: integer = foo();
-        }
+             x:string;
+            main: function void(){
+                z:auto = (!!!true && ---3);
+            }
+            y:auto = ((x::x)::x)::"abc";
         """
-        expect = """Undeclared Identifier: foo"""
-        self.assertTrue(TestChecker.test(input, expect, 32))
+        expect = "Type mismatch in expression: BinExpr(&&, UnExpr(!, UnExpr(!, UnExpr(!, BooleanLit(True)))), UnExpr(-, UnExpr(-, UnExpr(-, IntegerLit(3)))))"
+        self.assertTrue(TestChecker.test(input, expect, 428))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8936
-    def test_033(self):
+    def test_429(self):
         input = """
-        foo: function auto(){}
-        main: function void()
-        {
-            foo();
-            a: boolean = foo();
-            end: auto;
-        }
+            x:string;
+            main: function void(){
+                z:auto = !true && false;
+                printBoolean(z);
+                x:auto = -2 / (readInteger() - 1);
+                printFloat(x);
+                readInteger(1);
+            }
+            y:auto = ((x::x)::x)::"abc";
         """
-        expect = """Invalid Variable: end"""
-        self.assertTrue(TestChecker.test(input, expect, 33))
+        expect = "Type mismatch in statement: CallStmt(readInteger, IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 429))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8813 (1)
-    def test_034(self):
+    def test_430(self):
         input = """
-        x: function void (a: auto) {}
-        main: function void()
-        {
-            x();
-        }
+            x:string;
+            main: function void(){
+                z:auto = !true && false;
+                printBoolean(z);
+                x:auto = -2 / (readInteger() - 1);
+                return;
+            }
+            y:auto = ((x::x)::x)::"abc";
+            foo:function integer(x:string, y:float){
+                bool:auto = foo1((4+12/7)==(3%10-12));
+                x:integer = 5;
+                return x + 7;
+            }
+            foo1:function boolean(bool:boolean){
+                bool = true || !false;
+                return bool;
+            }
         """
-        expect = """Type mismatch in statement: CallStmt(x, )"""
-        self.assertTrue(TestChecker.test(input, expect, 34))
+        expect = "Redeclared Variable: x"
+        self.assertTrue(TestChecker.test(input, expect, 430))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8813 (2)
-    def test_035(self):
+    def test_431(self):
         input = """
-        x: function void (a: auto) {}
-        main: function void()
-        {
-            x(1, 2);
-        }
+            x:string;
+            main: function void(){
+                z:auto = !true && false;
+                printBoolean(z);
+                x:auto = -2 / (readInteger() - 1);
+                return;
+            }
+            y:auto = ((x::x)::x)::"abc";
+            foo:function integer(x:string, y:float){
+                t:integer = 5;
+                return t + 7;
+            }
+            foo:function boolean(bool:boolean){
+                bool = true || !false;
+                return bool;
+            }
         """
-        expect = """Type mismatch in statement: CallStmt(x, IntegerLit(1), IntegerLit(2))"""
-        self.assertTrue(TestChecker.test(input, expect, 35))
+        expect = "Redeclared Function: foo"
+        self.assertTrue(TestChecker.test(input, expect, 431))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9108
-    def test_036(self):
+    def test_432(self):
         input = """
-        super: function integer(){}
-        main: function void(){}
+            main:function void() inherit foo{
+                super(13,1.0,"string",1.0);
+                printFloat(y);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string, f:float) inherit foo2{
+                super();
+                return 0;
+            }
+            foo2:function float(){
+                super();
+                return 2.0;
+            }
         """
-        expect = """Redeclared Function: super"""
-        self.assertTrue(TestChecker.test(input, expect, 36))
+        expect = "Invalid statement in function: foo2"
+        self.assertTrue(TestChecker.test(input, expect, 432))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9055
-    def test_037(self):
+    def test_433(self):
         input = """
-        foo: function auto () {}
-        foo: function auto (a: integer, b: integer ) inherit bar {}
-        main: function void() {}
+            main:function void() inherit foo{
+                super(13,1.0,true,1.0);
+                printFloat(y);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string, f:float) inherit foo2{
+                return 0;
+            }
+            foo2:function float(){
+                return 2.0;
+            }
         """
-        expect = """Redeclared Function: foo"""
-        self.assertTrue(TestChecker.test(input, expect, 37))
+        expect = "Type mismatch in expression: BooleanLit(True)"
+        self.assertTrue(TestChecker.test(input, expect, 433))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9057
-    def test_038(self):
+    def test_434(self):
         input = """
-        a: integer = 1;
-        foo: function void (b: integer) inherit a {}
-        a: function string (inherit c: string) {}
-        main: function void () {}
+            main:function void() inherit foo{
+                super(13,1.0,"abc",1.0);
+                printFloat(y);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string, f:float) inherit foo2{
+                return 0;
+            }
+            foo2:function float(inherit f:float){
+                return 2.0;
+            }
         """
-        expect = """Redeclared Function: a"""
-        self.assertTrue(TestChecker.test(input, expect, 38))
+        expect = "Invalid Parameter: f"
+        self.assertTrue(TestChecker.test(input, expect, 434))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9107
-    def test_039(self):
+    def test_435(self):
         input = """
-        a: string = 12 :: "str";
-        main: function void() {}
+            main:function void() inherit foo3{
+                super(13,1.0,"abc",1.0);
+                writeFloat(y);
+                foo3(1,2,3);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string, f:float) inherit foo2{
+                return 0;
+            }
+            foo2:function float(inherit f:float){
+                return 2.0;
+            }
         """
-        expect = """Type mismatch in expression: BinExpr(::, IntegerLit(12), StringLit(str))"""
-        self.assertTrue(TestChecker.test(input, expect, 39))
+        expect = "Undeclared Function: foo3"
+        self.assertTrue(TestChecker.test(input, expect, 435))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9036
-    def test_040(self):
+    def test_436(self):
         input = """
-        foo: function integer(a: string){}
-        main: function void()
-        {
-            a: integer = foo();
-        }
+            main:function void() inherit foo{
+                super(13,1.0,"abc");
+                printFloat(y);
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string) inherit foo2{
+                preventDefault();
+                super((y+f)/2.3);
+                super(12);
+                return 0;
+            }
+            foo2:function float(inherit f:float){
+                return 2.0;
+            }
         """
-        expect = """Type mismatch in expression: FuncCall(foo, [])"""
-        self.assertTrue(TestChecker.test(input, expect, 40))
+        expect = "Invalid statement in function: foo"
+        self.assertTrue(TestChecker.test(input, expect, 436))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9113
-    def test_041(self):
+    def test_437(self):
         input = """
-        ?
+            main:function void(){
+                super(1,2,3);
+                return;
+            }
         """
-        expect = """ ? """
-        self.assertTrue(TestChecker.test(input, expect, 41))
+        expect = "Invalid statement in function: main"
+        self.assertTrue(TestChecker.test(input, expect, 437))
 
-    # CONFLICTING
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9117
-    def test_042(self):
+    def test_438(self):
         input = """
-        foo: function auto()
-        {
-            return 1;
-            return true;
-        }
-        main: function void()
-        {
-            a: boolean = foo();
-        }
+            main:function void() inherit foo{
+                super(12);
+                x:auto = foo(1);
+                return;
+            }
+            foo:function float(x:integer){
+                preventDefault();
+                return x + 1.2;
+            }
         """
-        expect = """Type mismatch in statement: ReturnStmt(IntegerLit(1))"""
-        self.assertTrue(TestChecker.test(input, expect, 42))
+        expect = "Invalid statement in function: foo"
+        self.assertTrue(TestChecker.test(input, expect, 438))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9120
-    def test_043(self):
+    def test_439(self):
         input = """
-        main: function void() {}
-        a: float = foo(1, 2) + 1.5;
-        foo: function auto(a: integer, b: integer)
-        {
-            return a + b;
-            end: auto;
-        }
+            main:function void() inherit foo{
+                super(12);
+                x:auto = foo(1);
+                foo2();
+                arr:array[2,2] of integer = {{1,2}, {1,2}};
+                arr[1,2,3] = 1;
+            }
+            foo:function float(x:integer){
+                return x + 1.2;
+            }
+            foo2: function void(){}
         """
-        expect = """Invalid Variable: end"""
-        self.assertTrue(TestChecker.test(input, expect, 43))
+        expect = "Type mismatch in expression: ArrayCell(arr, [IntegerLit(1), IntegerLit(2), IntegerLit(3)])"
+        self.assertTrue(TestChecker.test(input, expect, 439))
 
-    # CONFLICTING
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9122
-    def test_044(self):
+    def test_440(self):
         input = """
-        main: function void() {}
-        foo: function auto(a: string, b: string)
-        {
-            return a::b;
-        }
-        a: float = foo("hello", "Hi");
+            main:function void() inherit foo{
+                super(12, 2.2, 3, 4);
+                x:auto = foo(1, y, z);
+                foo2();
+                arr:array[2,2] of integer = {{1,2}, {1,2}};
+                t:float = foo(12, y, arr[1,2]);
+                foo(12, y, arr[1,2]);
+            }
+            foo:function float(x:integer, inherit out y:float, inherit out z:integer){
+                return x + 1.2;
+            }
+            foo2: function void(){}
         """
-        expect = """Type mismatch in statement: Return(???)"""
-        self.assertTrue(TestChecker.test(input, expect, 44))
+        expect = "Type mismatch in expression: IntegerLit(4)"
+        self.assertTrue(TestChecker.test(input, expect, 440))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8969 (1)
-    def test_045(self):
+    def test_441(self):
         input = """
-        main: function void() {}
-        foo: function void (inherit a: integer, a: float) inherit bar {}
+            x:integer = 3/3;
+            t:float = 2 * 6;
+            main:function void() inherit foo{
+                super(12, t);
+                x:auto = foo(1, y, x);
+                foo2();
+                arr:array[2,2] of integer = {{1,2}, {1,2}};
+                t:float = foo(12, x, arr[1,2]);
+                t = foo(12, 1.0, 1);
+                t = foo(1,1,1);
+            }
+            foo:function float(x:integer, inherit out y:float, inherit out z:integer){
+                return x + 1.2;
+            }
+            foo2: function void(){}
         """
-        expect = """Undeclared Function: bar"""
-        self.assertTrue(TestChecker.test(input, expect, 45))
+        expect = "Type mismatch in expression: "
+        self.assertTrue(TestChecker.test(input, expect, 441))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=8969 (2)
-    def test_046(self):
+    def test_442(self):
         input = """
-        main: function void() {}
-        bar: function void (inherit a: integer) {}
-        foo: function void (a: integer) inherit bar
-        {
-            preventDefault();
-            end: auto;
-        }
+            x:integer = 3/3;
+            t:float = 2 * 6;
+            main:function void(){
+                y:float = foo(12, t, x) / 2.3;
+                arr:array[2,2] of integer = {{1,2}, {1,2,3}};
+            }
+            foo:function float(x:integer, inherit out y:float, inherit out z:integer){
+                return x + 1.2;
+            }
         """
-        expect = """Invalid Variable: end"""
-        self.assertTrue(TestChecker.test(input, expect, 46))
+        expect = "Illegal array literal: ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), IntegerLit(2), IntegerLit(3)])])"
+        self.assertTrue(TestChecker.test(input, expect, 442))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9208
-    def test_047(self):
+    def test_443(self):
         input = """
-        main: function void() {}
-        foo: function void(inherit a: auto)
-        {
-            a: auto = 1;
-        }
+            x:integer = 3/3;
+            t:float = 2 * 6;
+            main:function void(){
+                y:float = foo(12, t, x) / 2.3;
+                arr:auto = {{{1,2,3},{1,2,3}},{{1,2,3},{1,2,3}},{{1,2,3},{1,2,3}}};
+                x:float = foo(arr[0,0,0]*arr[1,1,1]%arr[2,1,2]-arr[1,1,arr[1,1,2]], foo(arr[0,1,1],2.0,3), 3);
+                arr2:auto = arr[2,1];
+                x = foo(arr2[2], 2.0, arr2[0]);
+                arr3:auto = arr2;
+                arr4:auto = arr3[0];
+                x = arr4[1];
+            }
+            foo:function float(x:integer, y:float, z:integer){
+                return x + 1.2;
+            }
         """
-        expect = """[]"""
-        self.assertTrue(TestChecker.test(input, expect, 47))
+        expect = "Type mismatch in expression: ArrayCell(arr4, [IntegerLit(1)])"
+        self.assertTrue(TestChecker.test(input, expect, 443))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9291 (1)
-    def test_048(self):
+    def test_444(self):
         input = """
-        main: function void() {}
-        foo: function void (b: auto, c: auto)
-        {
-	        a: string = b + c;
-        }
+            main:function void(){
+                arr:array[2,2] of integer = foo();
+                x:float = foo() + 1;
+            }
+            foo:function auto(){
+                return {{1,2},{1,2}};
+            }
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, StringType, BinExpr(+, Id(b), Id(c)))"""
-        self.assertTrue(TestChecker.test(input, expect, 48))
+        expect = "Type mismatch in expression: BinExpr(+, FuncCall(foo, []), IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 444))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9291 (2)
-    def test_049(self):
+    def test_445(self):
         input = """
-        main: function void() {}
-        inc : function void (out n : integer, n: float) inherit foo
-        {
-            super(0.1, 1);
-            n: string = 124;
-        }
-        foo : function auto (inherit n: float, b: integer){}
+             main:function void(){
+                arr:array[2,2] of integer = {foo(),foo()};
+                x:float = foo() + 1;
+            }
+            foo:function auto(){
+                return {1,2};
+            }
         """
-        expect = """Redeclared Parameter: n"""
-        self.assertTrue(TestChecker.test(input, expect, 49))
+        expect = "Type mismatch in expression: BinExpr(+, FuncCall(foo, []), IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 445))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9146 (wrong)
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9315
-    def test_050(self):
+    def test_446(self):
         input = """
-        a: auto;
+            main:function void(){
+                arr:array[2,2] of integer = {{foo(),foo()},{foo(),foo()}};
+                x:float = foo();
+                t:boolean = !(-foo());
+            }
+            foo:function auto(){
+                return 1;
+            }
         """
-        expect = """Invalid Variable: a"""
-        self.assertTrue(TestChecker.test(input, expect, 50))
+        expect = "Type mismatch in expression: UnExpr(!, UnExpr(-, FuncCall(foo, [])))"
+        self.assertTrue(TestChecker.test(input, expect, 446))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9047
-    def test_051(self):
+    def test_447(self):
         input = """
-        main: function void()
-        {
-            x: auto = x + 10;
-            y: integer = x;
-            z: auto = z + z;
-            w: string = z;
-            t: string = z;
-            u: integer = z;
-        }
+            main:function void(){
+                arr:auto = {};
+            }
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(u, IntegerType, Id(z))"""
-        self.assertTrue(TestChecker.test(input, expect, 51))
+        expect = "Type mismatch in expression: ArrayLit([])"
+        self.assertTrue(TestChecker.test(input, expect, 447))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9190
-    def test_052(self):
+    def test_448(self):
         input = """
-        main: function void()
-        {
-            a: integer;
-            for (a = 1, 1, a + 1) {}
-        }
+            main:function void(){
+                arr:array[2] of integer = {{},{}};
+            }
         """
-        expect = """Type mismatch in statement: ForStmt(AssignStmt(Id(a), IntegerLit(1)), IntegerLit(1), BinExpr(+, Id(a), IntegerLit(1)), BlockStmt([]))"""
-        self.assertTrue(TestChecker.test(input, expect, 52))
+        expect = "Type mismatch in expression: ArrayLit([])"
+        self.assertTrue(TestChecker.test(input, expect, 448))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9192
-    def test_053(self):
+    def test_449(self):
         input = """
-        main: function void() {}
-        foo: function string(foo: integer)
-        {
-            a: integer = foo;
-            b: string = foo(a);
-            c: auto;
-        }
+            main:function void(){
+                arr:array[3] of integer = {1,2,{}};
+            }
         """
-        expect = """Invalid Variable: c"""
-        self.assertTrue(TestChecker.test(input, expect, 53))
+        expect = "Type mismatch in expression: ArrayLit([])"
+        self.assertTrue(TestChecker.test(input, expect, 449))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9354
-    def test_054(self):
+    def test_450(self):
         input = """
-        main: function void()
-        {
-            a = b;
-        }
+            main:function void(){
+                arr:array[0] of integer = {1,2};
+            }
         """
-        expect = """Undeclared Identifier: a"""
-        self.assertTrue(TestChecker.test(input, expect, 54))
+        expect = "Type mismatch in Variable Declaration: VarDecl(arr, ArrayType([0], IntegerType), ArrayLit([IntegerLit(1), IntegerLit(2)]))"
+        self.assertTrue(TestChecker.test(input, expect, 450))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9346
-    def test_055(self):
+    def test_451(self):
         input = """
-        main: function void() {}
-        M: function void (a: integer) inherit N {}
-        N: function void (inherit a: integer) {}
+            main:function void(){
+                arr:array[3,2] of integer = {{1,2}, {1,2}, foo()};
+                arr2:array[2] of integer = foo();
+                arr2[0] = 12 + 3;
+                foo();
+                foo(1,2);
+            }
+            foo:function auto(){
+                return {1,2};
+            }
         """
-        expect = """Invalid Parameter: a"""
-        self.assertTrue(TestChecker.test(input, expect, 55))
+        expect = "Type mismatch in statement: CallStmt(foo, IntegerLit(1), IntegerLit(2))"
+        self.assertTrue(TestChecker.test(input, expect, 451))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9202
-    def test_056(self):
+    def test_452(self):
         input = """
-        main: function void() {}
-        x: array [1,2,3] of integer;
-        y: auto = x[2 < 3];
+            main:function void(){
+                arr:array[3,2] of integer = {{1,2}, {1,2}, {1, foo()}};
+                x:integer = foo() + 2;
+                arr2:array[2] of integer = foo();
+            }
+            foo:function auto(){
+                return 0;
+            }
         """
-        expect = """Type mismatch in expression: BinExpr(<, IntegerLit(2), IntegerLit(3))"""
-        self.assertTrue(TestChecker.test(input, expect, 56))
+        expect = "Type mismatch in Variable Declaration: VarDecl(arr2, ArrayType([2], IntegerType), FuncCall(foo, []))"
+        self.assertTrue(TestChecker.test(input, expect, 452))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9352
-    def test_057(self):
+    def test_453(self):
         input = """
-        main: function void() {}
-        a: array[2] of integer = { {1}, {2} };
+            main:function void(){
+                arr:array[111,222,333] of integer = foo();
+                x:integer = arr[12, 219 + 2, arr[34, 56, 111]] + 2;
+                arr2:auto = arr[110];
+                printInteger(arr2);
+            }
+            foo:function array[111,222,333] of integer(){}
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(a, ArrayType([2], IntegerType), ArrayLit([ArrayLit([IntegerLit(1)]), ArrayLit([IntegerLit(2)])]))"""
-        self.assertTrue(TestChecker.test(input, expect, 57))
+        expect = "Type mismatch in statement: CallStmt(printInteger, Id(arr2))"
+        self.assertTrue(TestChecker.test(input, expect, 453))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9239
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9258
-    def test_058(self):
+    def test_454(self):
         input = """
-        main: function void() {}
-        a: array [2, 3, 2] of integer = {{{1, 2}, {1, 2}}, {{1, 2}, {1, "2"}, {1, 2}}};
+            main:function void(){
+                arr:array[111,222,333] of integer = foo();
+                x:integer = arr[12, 219 + 2, arr[34, 56, 111]] + 2;
+                arr2:auto = arr[110];
+            }
+            foo:function array[111,222,333] of integer(){}
+            foo2:function integer(a:auto, b:auto){
+                x:integer = a + 1;
+                y:string = a::b;
+                return x;
+            }
         """
-        expect = """Illegal array literal: ArrayLit([ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), IntegerLit(2)])]), ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), StringLit(2)]), ArrayLit([IntegerLit(1), IntegerLit(2)])])])"""
-        self.assertTrue(TestChecker.test(input, expect, 58))
+        expect = "Type mismatch in expression: BinExpr(::, Id(a), Id(b))"
+        self.assertTrue(TestChecker.test(input, expect, 454))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9258
-    def test_059(self):
+    def test_455(self):
         input = """
-        main: function void() {}
-        a: auto = { {1 , 2}, { 1,1.5} };
+            main:function void(){
+                arr:array[111,222,333] of integer = foo();
+                x:integer = arr[12, 219 + 2, arr[34, 56, 111]] + 2;
+                arr2:auto = arr[110];
+                foo2(12, 12.0);
+            }
+            foo:function array[111,222,333] of integer(){}
+            foo2:function integer(a:auto, b:auto){
+                x:integer = a + 1;
+                y:string = "abc"::b;
+                return x;
+            }
         """
-        expect = """Illegal array literal: ArrayLit([ArrayLit([IntegerLit(1), IntegerLit(2)]), ArrayLit([IntegerLit(1), FloatLit(1.5)])])"""
-        self.assertTrue(TestChecker.test(input, expect, 59))
+        expect = "Type mismatch in expression: BinExpr(::, StringLit(abc), Id(b))"
+        self.assertTrue(TestChecker.test(input, expect, 455))
 
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9390
-    def test_060(self):
+    def test_456(self):
         input = """
-        main: function void() {}
-        foo: function auto() {}
-        a: float = -foo();
-        b: float = foo();
-        c: integer = foo();
+            main:function void(){
+                arr:array[111,222,333] of integer = foo();
+                x:integer = arr[12, 219 + 2, arr[34, 56, 111]] + 2;
+                arr2:auto = arr[110];
+            }
+            foo:function array[111,222,333] of integer(){}
+            foo2:function integer(a:auto, b:auto){
+                x:integer = 1;
+                x = x + a + b;
+                y:string = "abc"::b;
+                return x;
+            }
         """
-        expect = """Type mismatch in Variable Declaration: VarDecl(c, IntegerType, FuncCall(foo, []))"""
-        self.assertTrue(TestChecker.test(input, expect, 60))
+        expect = "Type mismatch in expression: BinExpr(::, StringLit(abc), Id(b))"
+        self.assertTrue(TestChecker.test(input, expect, 456))
 
-    # CONFLICTING
-    # https://e-learning.hcmut.edu.vn/mod/forum/discuss.php?d=9395
-    def test_061(self):
+    def test_457(self):
         input = """
-        test1 : function string(y : auto)
-        {
-            y = 2;
-            return;
-        }
-        main: function void()
-        {
-            test1(true);
-        }
+            foo:string;
+            foo:function integer(){
+                return 1;
+            }
         """
-        expect = """Type mismatch in statement: Assign(Id(y), IntegerLit(2))"""
-        self.assertTrue(TestChecker.test(input, expect, 61))
+        expect = "Redeclared Function: foo"
+        self.assertTrue(TestChecker.test(input, expect, 457))
+
+    def test_458(self):
+        input = """
+            foo:function integer(){
+                return 1;
+            }
+            foo:string;
+        """
+        expect = "Redeclared Variable: foo"
+        self.assertTrue(TestChecker.test(input, expect, 458))
+
+    def test_459(self):
+        input = """
+            main:function void(){
+                main:auto = 5;
+                main = main + 12;
+                printInteger(main);
+                printFloat(main);
+                return main;
+            }
+        """
+        expect = "Type mismatch in statement: ReturnStmt(Id(main))"
+        self.assertTrue(TestChecker.test(input, expect, 459))
+
+    def test_460(self):
+        input = """
+            y:array[2,2] of integer = {{},{}};
+            x:integer = "abc";
+        """
+        expect = "Type mismatch in expression: ArrayLit([])"
+        self.assertTrue(TestChecker.test(input, expect, 460))
+
+    def test_461(self):
+        input = """
+            foo: function auto(a:auto, b:auto){
+                x:integer = a + 1;
+                return x + 1;
+            }
+            main:function void(){
+                x:integer = foo(1, 2);
+                y:string = foo2("abc", "abc");
+                z:auto = x + 1;
+                y = y::y;
+                y = foo(1, "abc");
+            }
+            foo2: function auto(a:auto, b:auto){
+                y:string = b :: "abc";
+            }
+        """
+        expect = "Type mismatch in expression: FuncCall(foo, [IntegerLit(1), StringLit(abc)])"
+        self.assertTrue(TestChecker.test(input, expect, 461))
+
+    def test_462(self):
+        input = """
+            foo: function auto(a:auto, b:auto){
+                return 1;
+            }
+            main:function void(){
+                x:integer = foo(1, 2);
+                y:string = foo2("abc", "abc");
+                z:auto = x + 1;
+                y = y::y;
+                y = foo("abc", "abc");
+            }
+            foo2: function auto(a:auto, b:auto){
+                y:string = b :: "abc";
+            }
+        """
+        expect = "Type mismatch in expression: FuncCall(foo, [StringLit(abc), StringLit(abc)])"
+        self.assertTrue(TestChecker.test(input, expect, 462))
+
+    def test_463(self):
+        input = """
+            main:function void(){
+                a:array[0,0] of integer = a[10];
+                return;
+                return 1;
+                x:auto;
+            }
+        """
+        expect = "Undeclared Identifier: a"
+        self.assertTrue(TestChecker.test(input, expect, 463))
+
+    def test_464(self):
+        input = """
+            main:function void(){
+                i:integer;
+                do{
+                    i = 1;
+                    break;
+                    i = true;
+                    return;
+                    return 1;
+                }while(true);
+                if(i>5) continue;
+            }
+        """
+        expect = "Type mismatch in statement: AssignStmt(Id(i), BooleanLit(True))"
+        self.assertTrue(TestChecker.test(input, expect, 464))
+
+    def test_465(self):
+        input = """
+            main:function void(){
+                if(readBoolean() == true){
+                    x:auto = true;
+                }
+                else return;
+                if(true) break;
+            }
+        """
+        expect = "Must in loop: BreakStmt()"
+        self.assertTrue(TestChecker.test(input, expect, 465))
+
+    def test_466(self):
+        input = """
+            main:function void(){
+                if(readBoolean() == true) return;
+                else{
+                    x:auto = true;
+                }
+                x:auto = 5;
+                x:float = 1;
+            }
+        """
+        expect = "Redeclared Variable: x"
+        self.assertTrue(TestChecker.test(input, expect, 466))
+
+    def test_467(self):
+        input = """
+            main:function void(){
+                a:array[2] of integer;
+                x:integer = a["123"];
+                if(readBoolean() == true) return;
+                else return;
+                x:auto = 5;
+                x:float = 1;
+            }
+        """
+        expect = "Type mismatch in expression: ArrayCell(a, [StringLit(123)])"
+        self.assertTrue(TestChecker.test(input, expect, 467))
+
+    def test_468(self):
+        input = """
+            main:function void(){
+                if(readBoolean() == true){
+                    x:integer = 5;
+                    x = x + x + x;
+                    return;
+                    y,z:string = 1,2;
+                }
+                else{
+                    t:string = "abc"::"abc";
+                    break;
+                }
+                x:auto = 5;
+                x:float = 1;
+            }
+        """
+        expect = "Type mismatch in Variable Declaration: VarDecl(y, StringType, IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 468))
+
+    def test_469(self):
+        input = """
+            main:function void(){
+                if(readBoolean() == true){
+                    x:integer = 5;
+                    x = x + x + x;
+                }
+                else{
+                    t:string = "abc"::"abc";
+                    return;
+                    break;
+                }
+                x:auto = 5;
+                x:float = 1;
+            }
+        """
+        expect = "Must in loop: BreakStmt()"
+        self.assertTrue(TestChecker.test(input, expect, 469))
+
+    def test_470(self):
+        input = """
+            main:function void(){
+                x,y,z:auto = 1,"string", true;
+                arr:array[2] of integer = {x,y,z};
+                return;
+                return str;
+            }
+        """
+        expect = "Illegal array literal: ArrayLit([Id(x), Id(y), Id(z)])"
+        self.assertTrue(TestChecker.test(input, expect, 470))
+
+    def test_471(self):
+        input = """
+            main:function void(){
+                x,y,z:integer = 1,"string", true;
+                arr:array[2] of integer = {x,y,z};
+                return;
+                return str;
+            }
+        """
+        expect = "Type mismatch in Variable Declaration: VarDecl(y, IntegerType, StringLit(string))"
+        self.assertTrue(TestChecker.test(input, expect, 471))
+
+    def test_472(self):
+        input = """
+            foo:function integer(x:string){
+                return 1;
+            }
+            main:function void(){
+                foo:string;
+                x:auto = foo("abc");
+                x = foo;
+            }
+        """
+        expect = "Type mismatch in statement: AssignStmt(Id(x), Id(foo))"
+        self.assertTrue(TestChecker.test(input, expect, 472))
+
+    def test_473(self):
+        input = """
+            main:function void() inherit foo{
+                super("abc", true);
+                z = z::z;
+                t = false;
+                x:integer = 5;
+                {
+                    z:auto = "abc";
+                }
+                z = "abc";
+                z = 1;
+            }
+            foo:function auto(inherit z:string, inherit t:boolean) inherit foo2{
+                
+            }
+            foo2:function auto(inherit x:integer, inherit y:float){}
+        """
+        expect = "Type mismatch in statement: AssignStmt(Id(z), IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 473))
+
+    def test_474(self):
+        input = """
+            main:function void() inherit foo{
+                super("abc", true);
+                z = z::z;
+                t = false;
+                x:integer = 5;
+                y:string;
+            }
+            foo:function auto(inherit z:string, inherit t:boolean) inherit foo2{
+                preventDefault();
+            }
+            foo2:function auto(inherit x:integer, inherit y:float, inherit x:integer){}
+        """
+        expect = "Redeclared Parameter: x"
+        self.assertTrue(TestChecker.test(input, expect, 474))
+
+    def test_475(self):
+        input = """
+            x:string = "abc";
+            main:function void(){
+                x:auto = 5;
+                for(x=0,x<10,x+1) if(x<3) x = x+1; else continue;
+                do{break;}while(true);
+                while(true) continue;
+                if(x+2 <= x) return;
+                return 1;
+            }
+        """
+        expect = "Type mismatch in statement: ReturnStmt(IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 475))
+
+    def test_476(self):
+        input = """
+            x:string;
+            y:float = 1 + 1%2;
+            main:function void(){
+                x:integer = 5;
+                {
+                    x:boolean = true;
+                    while(x){
+                        x:auto = 1.0;
+                    }
+                    if(x) x = x + 1;
+                }
+            }
+        """
+        expect = "Type mismatch in expression: BinExpr(+, Id(x), IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 476))
+
+    def test_477(self):
+        input = """
+            main:function void(){
+                foo(5);
+                x:string = foo(5);
+            }
+            foo:function auto(x:auto){
+                return x;
+            }
+        """
+        expect = "Type mismatch in statement: ReturnStmt(Id(x))"
+        self.assertTrue(TestChecker.test(input, expect, 477))
+
+    def test_478(self):
+        input = """
+            arr:array[2,2] of integer;
+            x:auto = true;
+            main:function void(){
+                if(x) arr[0,1] = 2;
+                return;
+            }
+            foo:function integer(){
+                while(x) arr[0, arr[0,0]] = arr[12,12];
+                return;
+            }
+        """
+        expect = "Type mismatch in statement: ReturnStmt()"
+        self.assertTrue(TestChecker.test(input, expect, 478))
+
+    def test_479(self):
+        input = """
+            arr:array[2,2] of integer;
+            x:auto = 5;
+            main:function void(){
+                if(x) arr[0,1] = 2;
+                return;
+            }
+            foo:function integer(){
+                while(x) arr[0, arr[0,0]] = arr[12,12];
+                return;
+            }
+        """
+        expect = "Type mismatch in statement: IfStmt(Id(x), AssignStmt(ArrayCell(arr, [IntegerLit(0), IntegerLit(1)]), IntegerLit(2)))"
+        self.assertTrue(TestChecker.test(input, expect, 479))
+
+    def test_480(self):
+        input = """
+            arr:array[2,2] of integer;
+            x:auto = 5;
+            main:function void(){
+                if(true) arr[0,1] = 2;
+                return;
+            }
+            foo:function integer(){
+                while(x) arr[0, arr[0,0]] = arr[12,12];
+                return;
+            }
+        """
+        expect = "Type mismatch in statement: WhileStmt(Id(x), AssignStmt(ArrayCell(arr, [IntegerLit(0), ArrayCell(arr, [IntegerLit(0), IntegerLit(0)])]), ArrayCell(arr, [IntegerLit(12), IntegerLit(12)])))"
+        self.assertTrue(TestChecker.test(input, expect, 480))
+
+    def test_481(self):
+        input = """
+            arr:array[2,2] of integer;
+            x:auto = 5;
+            main:function void(){
+                if(true) arr[0,1] = 2;
+                for(x=0, x+1, x+1) break;
+                return;
+            }
+            foo:function integer(){
+                while(x) arr[0, arr[0,0]] = arr[12,12];
+                return;
+            }
+        """
+        expect = "Type mismatch in statement: ForStmt(AssignStmt(Id(x), IntegerLit(0)), BinExpr(+, Id(x), IntegerLit(1)), BinExpr(+, Id(x), IntegerLit(1)), BreakStmt())"
+        self.assertTrue(TestChecker.test(input, expect, 481))
+
+    def test_482(self):
+        input = """
+            arr:array[2,2] of integer;
+            x:auto = 5;
+            main:function void(){
+                if(true) arr[0,1] = 2;
+                return;
+            }
+            foo:function integer(){
+                do{break;} while(x); 
+                arr[0, arr[0,0]] = arr[12,12];
+                return;
+            }
+        """
+        expect = "Type mismatch in statement: DoWhileStmt(Id(x), BlockStmt([BreakStmt()]))"
+        self.assertTrue(TestChecker.test(input, expect, 482))
+
+    def test_483(self):
+        input = """
+            main:function void(){
+                i:integer = 1;
+                for(i=0, i<10, i+1){
+                    if(i<=10) printInteger(i);
+                    else break;
+                }
+                if(i>=10) continue;
+            }
+        """
+        expect = "Must in loop: ContinueStmt()"
+        self.assertTrue(TestChecker.test(input, expect, 483))
+
+    def test_484(self):
+        input = """
+            main:function void() inherit foo{
+                return;
+            }
+            foo:auto = 5;
+        """
+        expect = "Undeclared Function: foo"
+        self.assertTrue(TestChecker.test(input, expect, 484))
+
+    def test_485(self):
+        input = """
+            main:function void() inherit foo{
+                super(1,2,3);
+                y = y::z;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Undeclared Identifier: z"
+        self.assertTrue(TestChecker.test(input, expect, 485))
+
+    def test_486(self):
+        input = """
+            main:function void() inherit foo{
+                preventDefault();
+                x = "abc";
+                y = true;
+                z: integer = foo(1,2,3) + 1;
+                x = x+1;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Undeclared Identifier: x"
+        self.assertTrue(TestChecker.test(input, expect, 486))
+
+    def test_487(self):
+        input = """
+            main:function void() inherit foo{
+                preventDefault();
+                z: integer = foo(1,2,3) + 1;
+                x = "abc";
+                y = true;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Undeclared Identifier: x"
+        self.assertTrue(TestChecker.test(input, expect, 487))
+
+    def test_488(self):
+        input = """
+            main:function void() inherit foo{
+                preventDefault();
+                foo(1.0,2.0,3.0);
+                z: integer = foo(1,2,3) + 1;
+                x = "abc";
+                y = true;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Type mismatch in statement: ReturnStmt(BinExpr(+, BinExpr(+, Id(x), Id(y)), Id(z)))"
+        self.assertTrue(TestChecker.test(input, expect, 488))
+
+    def test_489(self):
+        input = """
+            main:function void() inherit foo{
+                preventDefault();
+                foo(1.0,2.0,3.0);
+                z: integer = foo(1,2,3) + 1.0;
+                x = "abc";
+                y = true;
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Type mismatch in Variable Declaration: VarDecl(z, IntegerType, BinExpr(+, FuncCall(foo, [IntegerLit(1), IntegerLit(2), IntegerLit(3)]), FloatLit(1.0)))"
+        self.assertTrue(TestChecker.test(input, expect, 489))
+
+    def test_490(self):
+        input = """
+            main:function void() inherit foo{
+                preventDefault();
+                foo(1.0,2.0,3.0);
+                foo();
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Type mismatch in statement: CallStmt(foo, )"
+        self.assertTrue(TestChecker.test(input, expect, 490))
+
+    def test_491(self):
+        input = """
+            main:function void() inherit foo{
+                preventDefault();
+                foo(1.0,2.0,3.0);
+                foo(1,2,3.0);
+                foo(1);
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "Type mismatch in statement: CallStmt(foo, IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 491))
+
+    def test_492(self):
+        input = """
+            main:function void(y:integer) inherit foo{
+                preventDefault();
+                foo(1.0,2.0,3.0);
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "No entry point"
+        self.assertTrue(TestChecker.test(input, expect, 492))
+
+    def test_493(self):
+        input = """
+            main:function auto() inherit foo{
+                preventDefault();
+                foo(1.0,2.0,3.0);
+                main();
+            }
+            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
+                return x + y + z; 
+            }
+        """
+        expect = "No entry point"
+        self.assertTrue(TestChecker.test(input, expect, 493))
+
+    def test_494(self):
+        input = """
+            main:function void(){
+                i:integer = 0;
+                for(i=1, i<=10, i+1){
+                    if(i>10) break;
+                    else continue;
+                }
+                x:auto = x + x;
+                return;
+                return 1;
+            }
+        """
+        expect = "Undeclared Identifier: x"
+        self.assertTrue(TestChecker.test(input, expect, 494))
+
+    def test_495(self):
+        input = """
+             main:function void(){
+                i:integer = 0;
+                for(i=1, i<=10, i+1){
+                    if(i>10) break;
+                    else continue;
+                }
+                return;
+                return 1;
+            }
+        """
+        expect = "Type mismatch in statement: ReturnStmt(IntegerLit(1))"
+        self.assertTrue(TestChecker.test(input, expect, 495))
+
+    def test_496(self):
+        input = """
+            x:auto = true;
+            y:float = 1 + 1;
+            main:function void(){
+                x:integer = 5;
+                {
+                    x:string = "abc";
+                    printString(x);
+                }
+                x = x + 1;
+                {
+                    i:integer;
+                    for(i=0,i<10,i+1){
+                        x=x+1;
+                        if(x>100){
+                            x=x*2;
+                            continue;
+                        }
+                        else{
+                            x:string = x::x;
+                            printString(x);
+                        }
+                    }
+                }
+            }
+        """
+        expect = "Type mismatch in expression: BinExpr(::, Id(x), Id(x))"
+        self.assertTrue(TestChecker.test(input, expect, 496))
+
+    def test_497(self):
+        input = """
+            x:auto = true;
+            y:float = 1 + 1;
+            main:function void(){
+                x:integer = 5;
+                {
+                    x:string = "abc";
+                    printString(x);
+                }
+                x = x + 1;
+                {
+                    i:integer;
+                    for(i=0,i<10,i+1){
+                        x=x+1;
+                        if(x>100){
+                            x=x*2;
+                            continue;
+                        }
+                        else{
+                            x:string = "abc"::"abc";
+                            printString(x);
+                            break;
+                        }
+                    }
+                }
+                i = i+1;
+            }
+        """
+        expect = "Undeclared Identifier: i"
+        self.assertTrue(TestChecker.test(input, expect, 497))
+
+    def test_498(self):
+        input = """
+            foo:function auto(x:integer){
+                return;
+            }
+            main:function void(){
+                x:integer;
+                x = foo(1);
+            }
+        """
+        expect = "Type mismatch in expression: FuncCall(foo, [IntegerLit(1)])"
+        self.assertTrue(TestChecker.test(input, expect, 498))
+
+    def test_499(self):
+        input = """
+            foo:function auto(x:integer){
+                x = foo(2);
+                return foo(1);
+            }
+            main:function auto(){
+                x:integer;
+                x = foo(1);
+                return;
+            }
+            foo2:function auto(x:integer){
+                return "abc";
+            }
+        """
+        expect = "No entry point"
+        self.assertTrue(TestChecker.test(input, expect, 499))

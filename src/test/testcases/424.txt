@@ -1,0 +1,17 @@
+
+            foo:function auto(x:integer){
+                return x % 10;
+            }
+            main:function void(){
+                x:integer = foo1(foo(foo1(12)));
+                y:boolean = (foo(1) + foo1(2)) >= 10;
+                printBoolean(y || true);
+                x = readInteger() + 1;
+                y = readBoolean();
+                z: auto = readFloat() + x;
+                x = z;
+            }
+            foo1:function auto(x:integer){
+                return x+1;
+            }
+        

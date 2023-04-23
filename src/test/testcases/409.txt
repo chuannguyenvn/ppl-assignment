@@ -1,0 +1,12 @@
+
+            main:function void() inherit foo{
+                preventDefault();
+                printInteger(x);
+                printFloat(y);
+                printString(t);
+                x:array[5] of integer = {1,2,3,4,5};
+            }
+            foo:function integer(inherit x:integer, inherit y:float, inherit t:string){
+                return x/3;
+            }
+        

@@ -1,0 +1,13 @@
+
+            foo:function auto(x:integer){
+                if (x>1) return foo(2) - 2.0e-4;
+                else return 1 + 1;
+            }
+            main:function void(){
+                x:float = 234_567_891 + foo(12);
+                x = foo(1)::"abc";
+            }
+            foo1:function integer(x:integer){
+                return x+1;
+            }
+        

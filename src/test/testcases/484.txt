@@ -1,0 +1,6 @@
+
+            main:function void() inherit foo{
+                return;
+            }
+            foo:auto = 5;
+        

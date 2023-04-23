@@ -1,0 +1,7 @@
+
+            x:string;
+            main:function void(x:string, t:string){
+                t = x::t;
+                return;
+            }
+        

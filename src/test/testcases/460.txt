@@ -1,0 +1,4 @@
+
+            y:array[2,2] of integer = {{},{}};
+            x:integer = "abc";
+        

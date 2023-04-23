@@ -1,0 +1,9 @@
+
+            main:function void(){
+                if(readBoolean() == true){
+                    x:auto = true;
+                }
+                else return;
+                if(true) break;
+            }
+        
