@@ -29,29 +29,6 @@ def set_type(symbol, typ):
         symbol.return_type = typ
 
 
-def infer(lhs, rhs, exception):
-    lhs_type = get_type(lhs)
-    rhs_type = get_type(rhs)
-
-    if type_of(lhs_type) is ArrayType or type_of(rhs_type) is ArrayType:
-        if type_of(lhs) is ArrayLit:
-            for exp in lhs.explist:
-                infer(exp, rhs.typ, exception)
-
-        if type_of(rhs) is ArrayLit:
-            for exp in rhs.explist:
-                infer(exp, lhs.typ, exception)
-
-    if type_of(lhs_type) is AutoType:
-        set_type(lhs, rhs_type)
-    elif type_of(rhs_type) is AutoType:
-        set_type(rhs, lhs_type)
-    elif type_of(lhs_type) is FloatType and type_of(rhs_type) is IntegerType:
-        pass
-    elif not is_same_type(lhs_type, rhs_type):
-        raise exception
-
-
 class FloatOrInteger:
     pass
 
@@ -69,12 +46,15 @@ class Inspector:
         self.possible_types = None
         self.lhs_type = None
         self.lhs_exception = None
+        self.func_return_type = None
+        self.func_call_stack = []
 
     def reset_states(self):
         self.override_auto = None
         self.possible_types = None
         self.lhs_type = None
         self.lhs_exception = None
+        self.func_return_type = None
 
     def add_symbol(self, o):
         self.scope_stack.append(o)
@@ -148,9 +128,33 @@ class StaticChecker(Visitor):
     def check(self):
         return self.visit(self.ast, Inspector())
 
-    def call_func(self, function_name, params, inspector, exception):
+    def infer(self, lhs, rhs, exception):
+        lhs_type = get_type(lhs)
+        rhs_type = get_type(rhs)
+
+        if type_of(lhs_type) is ArrayType or type_of(rhs_type) is ArrayType:
+            if type_of(lhs) is ArrayLit:
+                for exp in lhs.explist:
+                    self.infer(exp, rhs.typ, exception)
+
+            if type_of(rhs) is ArrayLit:
+                for exp in rhs.explist:
+                    self.infer(exp, lhs.typ, exception)
+
+        if type_of(lhs_type) is AutoType:
+            set_type(lhs, rhs_type)
+        elif type_of(rhs_type) is AutoType:
+            set_type(rhs, lhs_type)
+        elif type_of(lhs_type) is FloatType and type_of(rhs_type) is IntegerType:
+            pass
+        elif not is_same_type(lhs_type, rhs_type):
+            raise exception
+
+    def call_func(self, function_name, params, inspector, exception, return_type=None):
         # 3.4 Type Mismatch In Expression
         func_decl = inspector.find_latest_name_of_type(function_name, [FuncDecl], Undeclared(Function(), function_name))
+
+        inspector.func_call_stack.append(func_decl)
 
         # Parameters must match
         if len(func_decl.params) != len(params):
@@ -162,9 +166,18 @@ class StaticChecker(Visitor):
         for i in range(len(params)):
             arg = self.visit(params[i], inspector)
             if func_decl.name == 'super':
-                infer(func_decl.params[i], arg, TypeMismatchInExpression(params[i]))
+                self.infer(func_decl.params[i], arg, TypeMismatchInExpression(params[i]))
             else:
-                infer(func_decl.params[i], arg, exception)
+                self.infer(func_decl.params[i], arg, exception)
+
+        if return_type and type_of(func_decl.return_type) is AutoType:
+            func_decl.return_type = return_type
+
+        for line in func_decl.body.body:
+            if type_of(line) is ReturnStmt:
+                self.visit(line, inspector)
+
+        inspector.func_call_stack.pop()
 
         return func_decl
 
@@ -213,7 +226,7 @@ class StaticChecker(Visitor):
             init = self.visit(var_decl.init, inspector)
             if inspector.possible_types and type_of(init) not in inspector.possible_types:
                 raise TypeMismatchInVarDecl(var_decl)
-            infer(var_decl, init, TypeMismatchInVarDecl(var_decl))
+            self.infer(var_decl, init, TypeMismatchInVarDecl(var_decl))
 
             inspector.reset_states()
 
@@ -302,7 +315,7 @@ class StaticChecker(Visitor):
             raise TypeMismatchInStatement(assign_stmt)
 
         # Can't infer type: won't happen
-        infer(lhs, rhs, TypeMismatchInStatement(assign_stmt))
+        self.infer(lhs, rhs, TypeMismatchInStatement(assign_stmt))
 
         return assign_stmt
 
@@ -311,7 +324,7 @@ class StaticChecker(Visitor):
         # Conditional expression must be boolean
 
         cond = self.visit(if_stmt.cond, inspector)
-        infer(cond, BooleanType(), TypeMismatchInStatement(if_stmt))
+        self.infer(cond, BooleanType(), TypeMismatchInStatement(if_stmt))
 
         self.visit(if_stmt.tstmt, inspector)
         if if_stmt.fstmt is not None:
@@ -352,7 +365,7 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
         cond = self.visit(while_stmt.cond, inspector)
-        infer(cond, BooleanType(), TypeMismatchInStatement(while_stmt))
+        self.infer(cond, BooleanType(), TypeMismatchInStatement(while_stmt))
 
         self.visit(while_stmt.stmt, inspector)
 
@@ -364,7 +377,7 @@ class StaticChecker(Visitor):
         # 3.5 Type Mismatch In Statement
         # Conditional expression must be boolean
         cond = self.visit(do_while_stmt.cond, inspector)
-        infer(cond, BooleanType(), TypeMismatchInStatement(do_while_stmt))
+        self.infer(cond, BooleanType(), TypeMismatchInStatement(do_while_stmt))
 
         self.visit(do_while_stmt.stmt, inspector)
 
@@ -384,10 +397,14 @@ class StaticChecker(Visitor):
         if return_stmt.expr is None:
             return
 
-        latest_func_decl = inspector.get_latest_marker(FuncDecl).owner
+        if len(inspector.func_call_stack) > 0:
+            func_decl = inspector.func_call_stack[-1]
+        else:
+            func_decl = inspector.get_latest_marker(FuncDecl).owner
+            
         expr = self.visit(return_stmt.expr, inspector)
 
-        infer(latest_func_decl, expr, TypeMismatchInStatement(return_stmt))
+        self.infer(func_decl, expr, TypeMismatchInStatement(return_stmt))
         return return_stmt
 
     def visitCallStmt(self, call_stmt: CallStmt, inspector: Inspector):
@@ -398,10 +415,11 @@ class StaticChecker(Visitor):
     # region Expressions
 
     def visitBinExpr(self, bin_expr: BinExpr, inspector: Inspector):
-        left = self.visit(bin_expr.left, inspector)
-        right = self.visit(bin_expr.right, inspector)
+        left = self.visit(bin_expr.left, inspector) if type_of(bin_expr.left) is not FuncCall else bin_expr.left
+        right = self.visit(bin_expr.right, inspector) if type_of(bin_expr.right) is not FuncCall else bin_expr.right
         left_type = get_type(left)
         right_type = get_type(right)
+        return_type = None
 
         if bin_expr.op in ['+', '-', '*', '/']:
             if type_of(left_type) not in [IntegerType, FloatType, AutoType] or type_of(right_type) not in [IntegerType, FloatType, AutoType]:
@@ -410,53 +428,65 @@ class StaticChecker(Visitor):
             # Uncertain
             if type_of(left_type) is AutoType and type_of(right_type) is AutoType:
                 if type_of(inspector.lhs_type) in [FloatType, IntegerType, AutoType]:
-                    infer(inspector.lhs_type, left, TypeMismatchInExpression(bin_expr))
-                    infer(inspector.lhs_type, right, TypeMismatchInExpression(bin_expr))
+                    self.infer(inspector.lhs_type, left, TypeMismatchInExpression(bin_expr))
+                    self.infer(inspector.lhs_type, right, TypeMismatchInExpression(bin_expr))
                     inspector.possible_types = [FloatType, IntegerType, AutoType]
-                    return inspector.lhs_type
+                    return_type = inspector.lhs_type
                 else:
                     raise inspector.lhs_exception
 
-            if type_of(right_type) is AutoType:
-                infer(left, right, TypeMismatchInExpression(bin_expr))
-                return left_type
+            elif type_of(right_type) is AutoType:
+                self.infer(left, right, TypeMismatchInExpression(bin_expr))
+                return_type = left_type
             elif type_of(left_type) is AutoType:
-                infer(right, left, TypeMismatchInExpression(bin_expr))
-                return right_type
+                self.infer(right, left, TypeMismatchInExpression(bin_expr))
+                return_type = right_type
             elif type_of(left_type) is IntegerType and type_of(right_type) is IntegerType:
-                return IntegerType()
+                return_type = IntegerType()
             else:
-                return FloatType()
+                return_type = FloatType()
         if bin_expr.op == '%':
-            infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
-            infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
-            return IntegerType()
+            self.infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
+            self.infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
+            return_type = IntegerType()
         if bin_expr.op in ['&&', '||']:
-            infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
-            infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
-            return BooleanType()
+            self.infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
+            self.infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
+            return_type = BooleanType()
         if bin_expr.op == '::':
-            infer(StringType(), left, TypeMismatchInExpression(bin_expr))
-            infer(StringType(), right, TypeMismatchInExpression(bin_expr))
-            return StringType()
+            self.infer(StringType(), left, TypeMismatchInExpression(bin_expr))
+            self.infer(StringType(), right, TypeMismatchInExpression(bin_expr))
+            return_type = StringType()
         if bin_expr.op in ['==', '!=']:
             if IntegerType in [type_of(left_type), type_of(right_type)]:
-                infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
-                infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
+                self.infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
+                self.infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
             if BooleanType in [type_of(left_type), type_of(right_type)]:
-                infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
-                infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
-            return BooleanType()
+                self.infer(BooleanType(), left, TypeMismatchInExpression(bin_expr))
+                self.infer(BooleanType(), right, TypeMismatchInExpression(bin_expr))
+            return_type = BooleanType()
         if bin_expr.op in ['<', '>', '<=', '>=']:
             if type_of(left_type) not in [IntegerType, FloatType, AutoType] or type_of(right_type) not in [IntegerType, FloatType, AutoType]:
                 raise TypeMismatchInExpression(bin_expr)
             if FloatType in [type_of(left_type), type_of(right_type)]:
-                infer(FloatType(), left, TypeMismatchInExpression(bin_expr))
-                infer(FloatType(), right, TypeMismatchInExpression(bin_expr))
+                self.infer(FloatType(), left, TypeMismatchInExpression(bin_expr))
+                self.infer(FloatType(), right, TypeMismatchInExpression(bin_expr))
             else:
-                infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
-                infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
-            return BooleanType()
+                self.infer(IntegerType(), left, TypeMismatchInExpression(bin_expr))
+                self.infer(IntegerType(), right, TypeMismatchInExpression(bin_expr))
+            return_type = BooleanType()
+
+        inspector.func_return_type = type_of(left_type)
+        if type_of(bin_expr.left) is FuncCall:
+            self.visit(bin_expr.left, inspector)
+
+        inspector.func_return_type = type_of(right_type)
+        if type_of(bin_expr.right) is FuncCall:
+            self.visit(bin_expr.right, inspector)
+
+        inspector.func_return_type = None
+
+        return return_type
 
     def visitUnExpr(self, un_expr: UnExpr, inspector: Inspector):
         val = self.visit(un_expr.val, inspector)
@@ -465,7 +495,7 @@ class StaticChecker(Visitor):
         if un_expr.op == '-':
             if val_type is AutoType:
                 if type_of(inspector.lhs_type) in [FloatType, IntegerType, AutoType]:
-                    infer(inspector.lhs_type, val, TypeMismatchInExpression(un_expr))
+                    self.infer(inspector.lhs_type, val, TypeMismatchInExpression(un_expr))
                     inspector.possible_types = [FloatType, IntegerType, AutoType]
                     return inspector.lhs_type
                 else:
@@ -475,7 +505,7 @@ class StaticChecker(Visitor):
             else:
                 return val_type
         if un_expr.op == '!':
-            infer(BooleanType(), val, TypeMismatchInExpression(un_expr))
+            self.infer(BooleanType(), val, TypeMismatchInExpression(un_expr))
             return BooleanType()
 
     def visitId(self, id: Id, inspector: Inspector):
@@ -502,7 +532,7 @@ class StaticChecker(Visitor):
 
         # Any subscript is not an integer
         for expr in array_cell.cell:
-            infer(IntegerType(), self.visit(expr, inspector), TypeMismatchInExpression(expr))
+            self.infer(IntegerType(), self.visit(expr, inspector), TypeMismatchInExpression(expr))
 
         if len(array_cell.cell) == len(array_decl.typ.dimensions):
             return array_decl.typ.typ
@@ -547,7 +577,7 @@ class StaticChecker(Visitor):
 
         # If there's at least one concrete type, infer the AutoType variables
         for var in auto_variables:
-            infer(var, first_concrete_type, TypeMismatchInExpression(array_lit))
+            self.infer(var, first_concrete_type, TypeMismatchInExpression(array_lit))
 
         if type_of(first_concrete_type) is ArrayType:
             return ArrayType([len(array_lit.explist)] + first_concrete_type.dimensions, first_concrete_type.typ)
@@ -555,7 +585,7 @@ class StaticChecker(Visitor):
             return ArrayType([len(array_lit.explist)], first_concrete_type)
 
     def visitFuncCall(self, func_call: FuncCall, inspector: Inspector):
-        return self.call_func(func_call.name, func_call.args, inspector, TypeMismatchInExpression(func_call))
+        return self.call_func(func_call.name, func_call.args, inspector, TypeMismatchInExpression(func_call), inspector.func_return_type)
 
     # endregion
 
