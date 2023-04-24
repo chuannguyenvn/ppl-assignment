@@ -1,7 +1,4 @@
-
-            mam: function void(b: string){
-                v: array[2] of integer = {1,2};
-                x: integer = v[0];
+func: function integer(a: integer, b: boolean) {}
+            func2: function integer() inherit func{
+                a: integer = 13;
             }
-            main: function void(){}
-        

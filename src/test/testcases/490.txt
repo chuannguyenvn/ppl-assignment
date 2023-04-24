@@ -1,10 +1,5 @@
-
-            main:function void() inherit foo{
-                preventDefault();
-                foo(1.0,2.0,3.0);
-                foo();
+a: integer = func(1, 2);
+            func: function integer(a: auto, b: auto) { a = readInteger(); return b; }
+            func2: function integer() inherit func {
+                super(3, 5.2);
             }
-            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
-                return x + y + z; 
-            }
-        

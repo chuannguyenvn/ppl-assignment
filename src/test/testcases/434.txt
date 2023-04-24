@@ -1,4 +1,8 @@
-
-            V: function integer(x: integer, y: string){}
-            main: function void() inherit V{ super(1);  }
-        
+fun: function void() {
+            a: integer = 12;
+            if (a > 3) return; 
+            else {
+                a = a + 3;
+                printString("Hihihi");
+            }
+        }

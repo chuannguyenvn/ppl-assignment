@@ -1,12 +1,7 @@
-
-            main:function void(){
-                i:integer = 0;
-                for(i=1, i<=10, i+1){
-                    if(i>10) break;
-                    else continue;
-                }
-                x:auto = x + x;
-                return;
-                return 1;
+z: array[2, 3] of string = func({"Travis", "Kelce", "TE"});
+            func: function auto(b: auto) {
+                b[0] = "Patrick";
+                b[1] = "Mahomes";
+                b[2] =  "QB";
+                return {b, b};
             }
-        

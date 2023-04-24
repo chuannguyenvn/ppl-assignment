@@ -1,7 +1,22 @@
-
-            foo: function auto(){}
-            main: function void(){
-                a: auto = foo();
-                foo();
+func: function integer() {
+                q: integer = 1;
+                {
+                    q = 12;
+                    {
+                        if(q < 12) return 13;
+                        q = 15;
+                        {
+                            while(q < 17) q = q+1;
+                            q = 20;
+                            {
+                                q = 30;
+                                return q;
+                                q = p;
+                            }
+                            q = func();
+                        }
+                        q = notFun(1, 5, 2, "str");
+                    }
+                }
+                q: array[4] of string;
             }
-        

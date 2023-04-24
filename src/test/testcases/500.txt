@@ -1,0 +1,29 @@
+main: function void() {
+                N: integer = 1000;
+                check: array[1001] of boolean;
+
+                // Initialize [2...N] all being prime numbers
+                i: integer;
+                for (i = 2, i <= N, i+1) check[i] = true;
+
+
+                // Sieve of Eratosthenes 
+                for (i = 2, i <= N, i+1) {
+                    if (check[i] == true) {
+                        j: integer;
+                        for (j = 2 * i, j <= N, j + i) {
+                            check[j] = false;
+                        }
+                    }
+                }
+
+                // Print all prime numbers
+                i = 2;
+                while (i <= N) {
+                    if (check[i] == true) {
+                        printInteger(i);
+                    }
+                    i = i+1;
+                }
+            }
+        

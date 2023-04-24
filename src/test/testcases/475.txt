@@ -1,6 +1,3 @@
-
-            main: function void(){
-                a: float = v;
-                v: integer = 3;
-            }
-        
+a: auto = {1 == 2, 3e-2 < 18, true};
+            b: array[3] of boolean  = a;
+            c: array[3, 3] of boolean = {a, a, b};

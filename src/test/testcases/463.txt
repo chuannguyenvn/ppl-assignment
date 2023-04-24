@@ -1,7 +1,2 @@
-
-            mam: function void(b: string){
-                v: array[2,2] of integer = {{1,2},{3,4}};
-                x: integer = v[0,0,0];
-            }
-            main: function void(){}
-        
+func2: function void(b: float, c: string) inherit func { super(2, 2.0); }
+            func: function void(inherit a: integer, inherit a: float) {}

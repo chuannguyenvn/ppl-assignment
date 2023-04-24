@@ -1,7 +1,1 @@
-
-            main: function void(){
-                y: auto = y- 1;
-                x: auto = y != 1;
-                z: auto = -y; 
-            }
-        
+a: auto;

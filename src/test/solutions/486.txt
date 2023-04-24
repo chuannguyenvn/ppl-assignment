@@ -1,1 +1,1 @@
-Type mismatch in Variable Declaration: VarDecl(M, IntegerType, UnExpr(!, FuncCall(readBoolean, [])))
+Type mismatch in statement: ReturnStmt(BinExpr(::, StringLit(Mahomes), StringLit(SBLVII MVP)))

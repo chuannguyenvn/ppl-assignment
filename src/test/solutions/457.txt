@@ -1,1 +1,1 @@
-Illegal array literal: ArrayLit([FloatLit(1.2), IntegerLit(2)])
+Type mismatch in expression: IntegerLit(13)

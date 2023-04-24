@@ -1,6 +1,9 @@
-
-            C : function integer   ( ) inherit readFloat { 
-                super ( ) ;  
-                I  : integer   = jruU9 ( )    == ! lU     :: ZO   - LN    == x   * J       ;  
+main: function void() { 
+                a: array[2, 6] of integer;
+                a[1, 3] = foo() + 10;
+                b: float;
+                b = foo() + 1.5;
+                c: string;
+                c = foo();
             }
-        
+            foo: function auto() { }

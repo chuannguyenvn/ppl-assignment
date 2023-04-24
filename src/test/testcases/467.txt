@@ -1,4 +1,14 @@
-
-            foo: function integer(){return "zam";}
-            main: function void(){}
-        
+checkPrime: function boolean(n: integer) {
+                i: integer;
+                for(i = -n, i < n/2, i+1) {
+                    if(n > 0) {
+                        if (n % i == 0) {
+                            return false;
+                            a: integer = 13;
+                            a: float = 4;
+                        }
+                    }
+                }
+                return true;
+                i: float = 15.2;
+            }

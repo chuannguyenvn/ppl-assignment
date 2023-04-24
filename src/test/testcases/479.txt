@@ -1,4 +1,2 @@
-
-            main: function void(a: float, b: float){a = "1000";}
-            main: function void(){}
-        
+a: integer = foo();
+            foo: function auto() { return "string"; }

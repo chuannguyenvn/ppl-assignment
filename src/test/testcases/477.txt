@@ -1,6 +1,2 @@
-
-            main: function void(){
-                mam();
-            }
-            mam: function void(){}
-        
+foo: function auto() { }
+            a: integer = foo();

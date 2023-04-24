@@ -1,1 +1,1 @@
-Type mismatch in Variable Declaration: VarDecl(a, IntegerType, BinExpr(+, Id(V), FloatLit(48.6)))
+Type mismatch in statement: DoWhileStmt(BinExpr(+, Id(i), IntegerLit(10)), BlockStmt([AssignStmt(Id(i), BinExpr(+, Id(i), IntegerLit(1)))]))

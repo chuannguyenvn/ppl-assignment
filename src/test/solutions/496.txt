@@ -1,1 +1,1 @@
-[]
+Type mismatch in statement: AssignStmt(Id(cr7), FuncCall(func2, [IntegerLit(7)]))

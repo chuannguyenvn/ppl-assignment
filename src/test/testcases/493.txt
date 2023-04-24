@@ -1,10 +1,7 @@
-
-            main:function auto() inherit foo{
-                preventDefault();
-                foo(1.0,2.0,3.0);
-                main();
+func: function integer(inherit a: auto, b: auto) {}
+            func2: function integer(b: auto) inherit func {
+                super(3, 5.2);
+                b = "Bonjour";
             }
-            foo:function auto(inherit x:auto, inherit y:auto, z:auto){
-                return x + y + z; 
-            }
-        
+            a: integer = func2(readString());
+            b: integer = func(9 * 10.4, true);

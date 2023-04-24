@@ -1,5 +1,4 @@
-
-            main: function void(){
-                v: array[2] of float = {1.2, 2};
+func: function integer(a: integer, b: boolean) {}
+            func2: function integer() inherit func{
+                super(2, 13);
             }
-        

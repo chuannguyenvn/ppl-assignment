@@ -1,14 +1,5 @@
-
-            foo:function auto(x:integer){
-                x = foo(2);
-                return foo(1);
-            }
-            main:function auto(){
-                x:integer;
-                x = foo(1);
-                return;
-            }
-            foo2:function auto(x:integer){
-                return "abc";
+func: function string(b: auto) {
+                c: string = func(20);
+                b = "Almost" :: "there";
             }
         

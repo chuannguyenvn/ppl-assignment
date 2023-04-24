@@ -1,1 +1,1 @@
-Undeclared Identifier: i
+Type mismatch in statement: AssignStmt(Id(a), BooleanLit(True))

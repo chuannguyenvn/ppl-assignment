@@ -1,8 +1,2 @@
-
-            foo: function integer(inherit k: integer){}
-            man: function void(out sk: string)inherit foo{ 
-                super(1000);
-                k:string;
-            }
-            main: function void(){}
-        
+func: function void(inherit a: integer, b: float) {}
+            func2: function void(b: float, c: string) inherit func { super(2, 2.0); a: float = 2; }

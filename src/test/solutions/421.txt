@@ -1,1 +1,1 @@
-Redeclared Function: printFloat
+Type mismatch in expression: BinExpr(%, IntegerLit(2), FloatLit(0.03))

@@ -1,1 +1,1 @@
-Type mismatch in statement: ReturnStmt(IntegerLit(100))
+Type mismatch in Variable Declaration: VarDecl(b, ArrayType([6], FloatType), FuncCall(foo, []))

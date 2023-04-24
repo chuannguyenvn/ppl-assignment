@@ -1,7 +1,4 @@
-
-            main: function void(){
-                V: auto = V;
-                a: integer = V+33;
-                V = 3.3;
-            }
-        
+fun: function void() {
+            i: integer = 0;
+            if (i < 12) { break; }
+        }

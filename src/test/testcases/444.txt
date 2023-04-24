@@ -1,6 +1,4 @@
-
-            foo: function integer(a: float){return 1000;}
-            main: function void(){
-                foo(100);
-            }
-        
+fun: function void() {
+            i: integer = 0;
+            continue;
+        }

@@ -1,28 +1,8 @@
-
-            x:auto = true;
-            y:float = 1 + 1;
-            main:function void(){
-                x:integer = 5;
-                {
-                    x:string = "abc";
-                    printString(x);
-                }
-                x = x + 1;
-                {
-                    i:integer;
-                    for(i=0,i<10,i+1){
-                        x=x+1;
-                        if(x>100){
-                            x=x*2;
-                            continue;
-                        }
-                        else{
-                            x:string = "abc"::"abc";
-                            printString(x);
-                            break;
-                        }
-                    }
-                }
-                i = i+1;
+func: function string(b: auto) inherit func2 {
+                super(func2(10 * 29 - 2));
+                do { return b; } while(true);
             }
+            messi: integer = func2(10);
+            func2: function auto(inherit a: integer) { return 10; }
+            main: function void() { cr7: string; cr7 = func2(7); }
         

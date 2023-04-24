@@ -1,6 +1,4 @@
-
-            foo: function auto() {}
-            a: integer = -foo();  
-            x: auto = x + foo();
-            bar: function void(){ x = 100.0; }
-        
+a: integer = 2;
+            func: function integer() {
+                a(12);
+            }

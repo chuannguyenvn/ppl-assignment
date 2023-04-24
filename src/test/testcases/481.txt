@@ -1,7 +1,4 @@
-
-            main: function void(){
-                V, v, R, Htd, OW, Lq, M: integer;
-                for ( V = - v, R+Htd, 1000 + i) 
-                    main();     
+foo: function integer(a: integer) {}
+            func: function integer() {
+                a: float = foo(15) + foo(87) * 10;
             }
-        

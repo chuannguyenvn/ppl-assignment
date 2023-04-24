@@ -1,1 +1,1 @@
-Type mismatch in expression: ArrayCell(v, [IntegerLit(1)])
+Type mismatch in statement: ReturnStmt(BooleanLit(False))

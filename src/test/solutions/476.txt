@@ -1,1 +1,1 @@
-Undeclared Identifier: v
+Type mismatch in Variable Declaration: VarDecl(a, IntegerType, FuncCall(foo, []))

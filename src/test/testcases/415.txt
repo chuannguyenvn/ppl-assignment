@@ -1,4 +1,2 @@
-
-            boo: function void(a: integer){}
-            main: function void(boo: integer) inherit boo{super(1);}
-        
+func: function void(inherit a: integer) {}
+            func2: function void(a: float) inherit func {}

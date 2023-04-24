@@ -1,1 +1,1 @@
-Must in loop: BreakStmt()
+Type mismatch in Variable Declaration: VarDecl(a, IntegerType, BinExpr(==, IntegerLit(2), BinExpr(!=, UnExpr(!, BinExpr(<=, IntegerLit(3), FloatLit(10.2))), BooleanLit(True))))

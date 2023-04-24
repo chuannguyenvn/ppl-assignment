@@ -1,1 +1,1 @@
-Type mismatch in statement: AssignStmt(Id(v), IntegerLit(492))
+Undeclared Function: foo

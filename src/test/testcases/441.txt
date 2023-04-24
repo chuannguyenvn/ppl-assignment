@@ -1,6 +1,4 @@
-
-            main: function void(){
-                V: auto = 22;
-                a: integer = V+48.6;
-            }
-        
+fun: function void() {
+            i: integer = 0;
+            do { i = i + 1;} while (i + 10);
+        }

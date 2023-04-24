@@ -1,7 +1,2 @@
-
-            man: function void(out k: string)inherit foo{
-                c = 1000;
-            }
-            foo: function integer(inherit c: integer){}
-            main: function void(){}
-        
+foo: integer = 1_92;
+            foo: function integer() { return 1; }

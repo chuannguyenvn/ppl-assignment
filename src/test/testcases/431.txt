@@ -1,5 +1,2 @@
-
-            main: function void(){
-                o: integer = mam();
-            }
-        
+a: function integer() { return 2; }
+            func: function void() { a = 3; }

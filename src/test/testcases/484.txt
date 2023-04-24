@@ -1,10 +1,6 @@
-
-            foo: function integer(){}
-            main: function void(){
-                if(1 < 2)
-                    return;
-                else
-                    foo();
-                return 100;
+main: function void() { 
+                a: array[2, 6] of integer = {{1, 2, 3, 4, 5, 6}, foo()};
             }
-        
+            foo: function auto() { }
+            b: array[6] of float = foo();
+            c: array[3] of integer = foo();

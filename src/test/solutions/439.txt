@@ -1,1 +1,1 @@
-Undeclared Identifier: main
+Type mismatch in statement: WhileStmt(BinExpr(+, Id(i), IntegerLit(10)), BlockStmt([AssignStmt(Id(i), BinExpr(+, Id(i), IntegerLit(1)))]))

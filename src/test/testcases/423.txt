@@ -1,8 +1,1 @@
-
-            main: function void(){
-                V, v, R, Htd, OW, Lq, M: integer;
-                for ( V = - v, v < Htd, 1000) 
-                    main();     
-                break;
-            }
-        
+a: integer = 2 == (!(3 <= 10.2) != true);

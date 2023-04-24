@@ -1,3 +1,5 @@
 main: function integer() {
+            printFloat(1.0);
+            writeFloat(2.0);
             return 0;
         }

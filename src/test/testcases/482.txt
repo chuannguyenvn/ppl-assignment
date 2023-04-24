@@ -1,6 +1,6 @@
-
-            main: function void(){
-                return;
-                return "di";
+main: function void() { 
+                printString(foo());
+                printBoolean(foo2());
             }
-        
+            foo: function auto() { return "Kansas City Chiefs "; }
+            foo2: function auto() { return 18; }

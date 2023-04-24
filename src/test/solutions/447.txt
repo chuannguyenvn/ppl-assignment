@@ -1,1 +1,1 @@
-Invalid Variable: x
+Type mismatch in expression: FuncCall(foo, [])

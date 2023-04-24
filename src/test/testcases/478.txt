@@ -1,6 +1,2 @@
-
-            main: function void(){
-                x: integer = a;
-            }
-            a: integer = 1000;
-        
+main: function void() { foo(); }
+            foo: function auto() { return "string"; }

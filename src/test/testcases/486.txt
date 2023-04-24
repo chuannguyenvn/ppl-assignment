@@ -1,4 +1,4 @@
-
-            M  : integer   = ! readBoolean ( );  
-            V : function array [ 0 , 0 ] of float    ( inherit out IGv : auto    ) { }
-        
+foo: function auto() {
+                a: integer = foo();
+                return "Mahomes" :: "SBLVII MVP";
+        }

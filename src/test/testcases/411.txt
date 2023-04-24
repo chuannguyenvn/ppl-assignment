@@ -1,4 +1,1 @@
-
-            man: function void(out k: string)inherit foo{ }
-            main: function void(){}
-        
+foo: function integer() inherit hihi { return 1; }

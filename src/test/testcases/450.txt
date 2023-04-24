@@ -1,5 +1,4 @@
-
-            main: function void(){
-                v: string = 1000;
+foo: function string(a: integer) {}
+            func: function integer() {
+                a: string = foo();
             }
-        

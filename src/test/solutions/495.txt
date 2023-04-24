@@ -1,1 +1,1 @@
-Type mismatch in statement: ReturnStmt(IntegerLit(1))
+Type mismatch in expression: FuncCall(func, [BinExpr(/, IntegerLit(15), IntegerLit(10))])

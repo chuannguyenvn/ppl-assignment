@@ -1,1 +1,1 @@
-main: function integer(){}
+foo: function void(a: integer) { a: array[2] of integer; }

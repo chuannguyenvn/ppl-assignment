@@ -1,4 +1,7 @@
-
-            V: function integer(x: integer, y: string){}
-            main: function void() inherit V{ super(1,2);  }
-        
+fun: function void() {
+            i: float;
+            a: integer = 0;
+            for(i = 0, i < 10, i+1) {
+                a = a+10;
+            }
+        }

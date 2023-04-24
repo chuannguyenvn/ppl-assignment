@@ -1,6 +1,4 @@
-
-            mam: function void(b: string){
-                b = 100;
+foo: function string(a: float) {}
+            func: function integer() {
+                a: string = foo(1, true);
             }
-            main: function void(){}
-        

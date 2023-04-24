@@ -1,6 +1,5 @@
-
-            bar: function void(){
-                x, y: auto;
-                z: auto = x + 1;
+foo: function string() {}
+            func: function integer() {
+                foo: integer = 12;
+                a: string = foo();
             }
-        

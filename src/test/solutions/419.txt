@@ -1,1 +1,1 @@
-Type mismatch in statement: CallStmt(super, StringLit(kek))
+Type mismatch in Variable Declaration: VarDecl(a, IntegerType, BinExpr(+, IntegerLit(2), BinExpr(*, IntegerLit(2), FloatLit(3.0))))

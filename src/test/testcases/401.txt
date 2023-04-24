@@ -1,6 +1,2 @@
-
-            main: function void(){
-                y: auto = y;
-                x: auto = y != 1; 
-            }
-        
+a: integer = 2;
+            a: integer = 3;

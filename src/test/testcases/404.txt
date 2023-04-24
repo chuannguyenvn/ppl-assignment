@@ -1,1 +1,1 @@
-main: function integer(mem: string){}
+a: integer = b;

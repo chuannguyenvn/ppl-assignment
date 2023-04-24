@@ -1,7 +1,4 @@
-
-            mam: function void(b: auto){
-                mam(100);
-                b = "string";
+foo: function void(a: integer) {}
+            func: function integer() {
+                foo("haha");
             }
-            main: function void(){}
-        

@@ -1,6 +1,1 @@
-
-            foo: function void(a: integer, b: integer){}
-            main: function void(){
-                foo(3, 4);
-            }
-        
+a: array[2, 2] of integer = {{1, "string"}, {3, 4}};

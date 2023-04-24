@@ -1,1 +1,1 @@
-Redeclared Variable: readInteger
+Type mismatch in Variable Declaration: VarDecl(a, IntegerType, BinExpr(&&, BinExpr(==, IntegerLit(2), UnExpr(-, IntegerLit(3))), BinExpr(<, IntegerLit(3), IntegerLit(12))))

@@ -1,8 +1,1 @@
-
-            foo: function void(a: float, b: float){}
-            main: function void(){
-                x: auto = x;
-                foo(x, x+2);
-                x = 3.3;
-            }
-        
+a: array[2, 2] of integer = {{1, 2, 3}, {4, 5}};

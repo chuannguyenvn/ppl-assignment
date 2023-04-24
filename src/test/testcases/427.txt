@@ -1,6 +1,1 @@
-
-            main: function void(){
-                x = 43;
-                x: integer;
-            }
-        
+a: boolean = (2 + 3 * 12) < (-1 / 2.1 + 9.2);

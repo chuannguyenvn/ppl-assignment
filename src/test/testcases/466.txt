@@ -1,6 +1,9 @@
-
-            foo: function string(){return "zam";}
-            main: function void(){
-                v: string = foo();
+foo: function string(a: boolean) { 
+                b: integer = 14;
+                if (a == true) {
+                    if (b < 18) return "hihihi";
+                } else {
+                    if (b > 14) return "hahaha";
+                    else return 13;
+                }
             }
-        

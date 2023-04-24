@@ -1,1 +1,1 @@
-Invalid statement in function: man
+Redeclared Variable: foo

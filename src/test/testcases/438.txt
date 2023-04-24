@@ -1,7 +1,8 @@
-
-            V: function integer(){}
-            main: function void(){
-                V: integer;
-                V ();     
+fun: function void() {
+            i: integer;
+            a: integer = 0;
+            for(i = 0, i < 10, i+1) {
+                a: float = 15;
+                a = a+10;
             }
-        
+        }

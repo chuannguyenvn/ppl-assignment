@@ -1,1 +1,1 @@
-[]
+Illegal array literal: ArrayLit([ArrayLit([BooleanLit(True), BinExpr(==, IntegerLit(2), IntegerLit(1)), BinExpr(<, FloatLit(3.4), FloatLit(18.9))]), ArrayLit([StringLit(KC), StringLit(MVPat)])])

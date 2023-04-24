@@ -1,1 +1,1 @@
-Undeclared Function: jruU9
+Type mismatch in statement: AssignStmt(Id(c), FuncCall(foo, []))

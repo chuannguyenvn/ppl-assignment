@@ -1,9 +1,5 @@
-
-            foo:function auto(x:integer){
-                return;
-            }
-            main:function void(){
-                x:integer;
-                x = foo(1);
-            }
+fibo: function auto(n: auto) {
+            if ((n == 1) || (n == 2)) return 1;
+            else return fibo(n - 1) + fibo(n - 2);
+        }
         

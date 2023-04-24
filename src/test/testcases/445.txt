@@ -1,7 +1,17 @@
-
-            main: function void(){
-                x, y: auto = x, y;
-                z: integer = (x + 1)+y;
-                y = 100.0;
+fun: function void() {
+            i: integer = 0;
+            for (i = 0, i < 15, i+1) {
+                if (i == 13) break;
             }
-        
+            while (i < 20) {
+                if (i == 17) continue;
+                else i = i + 1;
+            }
+            do {
+                if (i == 29) break;
+                else {
+                    i = i + 2;
+                    continue;
+                }
+            } while(i < 40);
+        }

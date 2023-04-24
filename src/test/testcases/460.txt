@@ -1,6 +1,4 @@
-
-            main: function void(){
-                x, y: auto = 1000, 22.4;
-                v: array[2] of float = {x,y};
+func: function integer(a: integer, b: boolean) {}
+            func2: function integer() inherit func{
+                preventDefault();
             }
-        

@@ -1,6 +1,2 @@
-
-            main: function void(){
-                a: float = v;
-            }
-            v: integer = 3;
-        
+foo: function auto() { a: array[2] of string = {"KC", "SB"}; return a[0]; }
+            a: integer = foo();

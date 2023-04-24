@@ -1,6 +1,1 @@
-
-            mamn: function void(out man: string){ 
-                man: integer;
-            }
-            main: function void(){}
-        
+func2: function void(b: float, c: string) { c: boolean = true; }

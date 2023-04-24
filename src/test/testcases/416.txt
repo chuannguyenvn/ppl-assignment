@@ -1,4 +1,2 @@
-
-            main: function integer(){}
-            main: function void(){}
-        
+func: function void(inherit a: integer, b: float) {}
+            func2: function void(b: float, c: string, c: array[2] of integer) inherit func {}

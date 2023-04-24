@@ -1,5 +1,2 @@
-
-            main: function void(){
-                v: array[2] of integer = {1, 2.3};
-            }
-        
+a: array[4, 3] of integer;
+            b: array[3] of integer = a[a[1, 2] + 2];

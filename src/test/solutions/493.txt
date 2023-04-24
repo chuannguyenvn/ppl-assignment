@@ -1,1 +1,1 @@
-Undeclared Identifier: x
+Type mismatch in expression: FuncCall(func, [BinExpr(*, IntegerLit(9), FloatLit(10.4)), BooleanLit(True)])

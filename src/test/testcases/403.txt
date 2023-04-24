@@ -1,5 +1,1 @@
-
-            main: function void(){
-                x, y: integer = 100.3, 20;
-            }
-        
+a: integer = 1e-4;
